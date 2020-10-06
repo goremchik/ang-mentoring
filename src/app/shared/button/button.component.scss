@@ -1,0 +1,26 @@
+@import '../shared-variables';
+
+.btn {
+    border-radius: 3px;
+    background-color: $btn-default;
+    color: $white;
+    letter-spacing: -0.08px;
+    line-height: 30px;
+    font-weight: 600;
+    padding: 3px 17px;
+    border: none;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+
+    &--success {
+        background-color: $btn-success;
+    }
+
+    &--small {
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.1px;
+        padding: 6px 9px;
+    }
+}
