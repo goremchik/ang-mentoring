@@ -1,0 +1,36 @@
+.icon {
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 7px;
+    display: inline-block;
+
+    &--hidden {
+        display: none;
+    }
+
+    &--user::before {
+        content: '';
+    }
+    
+    &--logout::before {
+        content: '';
+    }
+    
+    &--plus-circle {
+        font-weight: 900;
+        border-radius: 50%;
+        border: 1px solid;
+        padding: 2px;
+
+        &:before {
+            content: '\f067';
+        }
+    }
+
+    &--edit::before {
+        content: '\f304';
+    }
+    
+    &--delete::before {
+        content: '\f1f8';
+    }
+}

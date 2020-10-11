@@ -3,8 +3,14 @@
         <h3 class="course__title">Video Course 1. Name tag</h3>
 
         <div class="course__date-container">
-            <span class="course__time">1h 28 min</span>   
-            <span class="course__date">08/28/2020</span>   
+            <span class="course__time">
+                <app-icon code="time"></app-icon>
+                1h 28 min
+            </span>   
+            <span class="course__date">
+                <app-icon code="date"></app-icon>
+                08/28/2020
+            </span>   
         </div>
     </div>
 
@@ -17,14 +23,8 @@
             course schedules that contain descriptions for all courses offered during a particular semester.
         </div>
         <div class="course__actions">
-            <app-button class="course__edit">
-                <i class="course__edit-icon"></i>
-                <span class="course__edit-text">Edit</span>
-            </app-button>
-            <app-button class="course__delete">
-                <i class="course__delete-icon"></i>
-                <span class="course__delete-text">Delete</span>
-            </app-button>
+            <app-button class="course__edit" text="Edit" icon="edit"></app-button>
+            <app-button class="course__delete" text="Delete" icon="delete"></app-button>
         </div>
     </div>
 </div>

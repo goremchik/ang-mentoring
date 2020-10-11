@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface ICourse {
-  id: string;
-  title: string;
-  creationDate: Date;
-  duration: number;
-  description: number;
-}
+import { ICourse } from '../../../core';
 
 @Component({
   selector: 'app-course-item',

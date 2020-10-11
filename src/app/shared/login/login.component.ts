@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface IUser {
-  id: string;
-  firstName: string;
-  lastName: string;
-}
+import { IUser } from '../../core';
 
 @Component({
   selector: 'app-login',
