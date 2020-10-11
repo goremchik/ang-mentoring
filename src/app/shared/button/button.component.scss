@@ -12,6 +12,9 @@
     font-family: inherit;
     outline: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &--success {
         background-color: $btn-success;
