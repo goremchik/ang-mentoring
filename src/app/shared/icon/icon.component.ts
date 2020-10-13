@@ -8,6 +8,7 @@ import { Icon } from '../../core';
 })
 export class IconComponent implements OnInit {
   @Input() code: Icon;
+
   constructor() { }
 
   ngOnInit(): void {

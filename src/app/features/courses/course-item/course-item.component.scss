@@ -13,6 +13,11 @@
         color: $header-color;
     }
 
+    &__date-container {
+        color: $light-text;
+        line-height: 18px;
+    }
+
     &__date {
         margin-left: 24px;
     }

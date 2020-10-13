@@ -8,6 +8,7 @@ import { Icon } from '../../core';
 })
 export class ButtonComponent implements OnInit {
   @Input() text: string;
+  @Input() type = 'button';
   @Input() icon: Icon;
 
   constructor() { }

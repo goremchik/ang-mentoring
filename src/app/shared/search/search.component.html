@@ -1,4 +1,16 @@
-<div class="search">
-    <app-input></app-input>
-    <app-button class="search__btn" text="Search"></app-button>
-</div>
+<form 
+    class="search"
+    (submit)="onSubmit($event)"
+>
+    <app-input
+        value={{searchValue}}
+        name="search"
+        placeholder="Text to search"
+        (inputChanged)="onInput($event)"
+    ></app-input>
+    <app-button
+        class="search__btn" 
+        text="Search"
+        type="submit"
+    ></app-button>
+</form>

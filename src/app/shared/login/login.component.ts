@@ -16,4 +16,7 @@ export class LoginComponent implements OnInit, IUser {
   ngOnInit(): void {
   }
 
+  onClick() {
+    console.log('Login');
+  }
 }

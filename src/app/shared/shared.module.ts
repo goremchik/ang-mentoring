@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { LogoComponent } from './logo/logo.component';
 import { HeaderComponent } from './header/header.component';
@@ -31,6 +32,7 @@ import { IconComponent } from './icon/icon.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
   ],
   exports: [
     LogoComponent,
