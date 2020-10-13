@@ -1,0 +1,18 @@
+.courses {
+    &__container {
+        display: flex;
+        justify-content: center;
+        padding: 21px 0 17px 0;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 17px;
+    }
+
+    &__add-btn {
+        display: block;
+        margin-top: 30px;
+    }
+}

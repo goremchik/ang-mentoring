@@ -1,0 +1,22 @@
+@import 'variables';
+
+.header-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: $header-height;
+    background-color: $bg-secondary;
+    color: $white
+}
+
+.footer-block {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    height: $header-height;
+    background-color: $bg-secondary;
+    color: $white
+}

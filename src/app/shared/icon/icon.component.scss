@@ -1,0 +1,46 @@
+.icon {
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 7px;
+    display: inline-block;
+
+    &--hidden {
+        display: none;
+    }
+
+    &--user {
+        font-weight: 900;
+        &::before {
+            content: '\f007';
+        }
+    }
+
+    &--logout {
+        font-weight: 900;
+        transform: rotate(180deg);
+        padding: 0 0 0 7px;
+
+        &::before {
+            content: '\f2f5';
+        }
+    }
+    
+    &--plus-circle {
+        font-weight: 900;
+        font-size: 78%;
+
+        &:before {
+            content: '\f067';
+            border-radius: 50%;
+            border: 1px solid;
+            padding: 2px 3px;
+        }
+    }
+
+    &--edit::before {
+        content: '\f304';
+    }
+    
+    &--delete::before {
+        content: '\f1f8';
+    }
+}

@@ -1,0 +1,40 @@
+@import 'variables';
+
+.course {
+    &__header {
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 24px;
+        color: $header-color;
+    }
+
+    &__date {
+        margin-left: 24px;
+    }
+
+    &__body {
+        display: flex;
+    }
+
+    &__actions {
+        display: flex;
+    }
+
+    &__delete {
+        margin-left: 12px;
+    }
+
+    &__edit {
+        margin-left: 40px;
+    }
+
+    &__description {
+        line-height: 18px;
+        color: $dark-text2;
+    }
+}

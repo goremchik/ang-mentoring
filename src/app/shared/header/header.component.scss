@@ -1,0 +1,17 @@
+
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    &__nav {
+        display: flex;
+        line-height: 24px;
+        letter-spacing: 0;
+        font-size: 14px;
+    }
+
+    &__logout {
+        display: block;
+        margin-left: 24px;
+    }
+}
