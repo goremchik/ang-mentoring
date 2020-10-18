@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
   @Input() value = '';
   @Input() name = '';
   @Input() placeholder = '';
@@ -13,13 +13,8 @@ export class InputComponent implements OnInit {
 
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  onInput(val) {
-    console.log('input onInput event', val);
+  onInput(value): void {
+    console.log('input onInput event', value);
     this.inputChanged.emit(this.value);
   }
 }

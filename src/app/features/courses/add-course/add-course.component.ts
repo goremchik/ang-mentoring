@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-course',
   templateUrl: './add-course.component.html',
   styleUrls: ['./add-course.component.scss']
 })
-export class AddCourseComponent implements OnInit {
+export class AddCourseComponent {
+  @Output() add = new EventEmitter<string>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  onClick() {
-    console.log('Add course');
+  onClick(): void {
+    this.add.emit();
   }
 }

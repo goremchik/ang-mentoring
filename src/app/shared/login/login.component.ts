@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+// Core
+import { Component } from '@angular/core';
+
+// Models
 import { IUser } from '../../core';
 
 @Component({
@@ -6,17 +9,12 @@ import { IUser } from '../../core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, IUser {
+export class LoginComponent implements IUser {
   id: string;
   firstName: string;
   lastName: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  onClick() {
+  onClick(): void {
     console.log('Login');
   }
 }

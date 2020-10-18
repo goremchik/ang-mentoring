@@ -1,6 +1,6 @@
 <div class="course">
     <div class="course__header">
-        <h3 class="course__title">{{course.title}}</h3>
+        <h3 class="course__title">{{course?.title}}</h3>
 
         <div class="course__date-container">
             <span class="course__time">
@@ -9,13 +9,13 @@
             </span>   
             <span class="course__date">
                 <app-icon code="date"></app-icon>
-                {{course.creationDate | date:'MM/dd/yyyy'}}
+                {{course?.creationDate | date:'MM/dd/yyyy'}}
             </span>   
         </div>
     </div>
 
     <div class="course__body">
-        <div class="course__description">{{course.description}} </div>
+        <div class="course__description">{{course?.description}} </div>
         <div class="course__actions">
             <app-button 
                 class="course__edit" 

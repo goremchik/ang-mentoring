@@ -1,7 +1,9 @@
+// Core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// Components
 import { LogoComponent } from './logo/logo.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
