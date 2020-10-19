@@ -3,5 +3,5 @@ export interface ICourse {
     title: string;
     creationDate: Date;
     duration: number;
-    description: number;
+    description: string;
 }

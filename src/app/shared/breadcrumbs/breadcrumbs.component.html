@@ -3,8 +3,9 @@
         <a 
             class="breadcrumbs__item breadcrumbs__item--selected"
             href="#"
+            *ngFor="let breadcrumb of breadcrumbs"
         >
-            Courses
+            {{breadcrumb}}
         </a>
     </div>
 </section>

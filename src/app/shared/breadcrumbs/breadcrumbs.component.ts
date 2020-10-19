@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./breadcrumbs.component.scss']
 })
 export class BreadcrumbsComponent implements OnInit {
-
-  constructor() { }
+  breadcrumbs: string[];
 
   ngOnInit(): void {
+    this.breadcrumbs = ['Courses'];
   }
-
 }

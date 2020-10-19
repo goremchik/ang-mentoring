@@ -1,30 +1,34 @@
 <div class="course">
     <div class="course__header">
-        <h3 class="course__title">Video Course 1. Name tag</h3>
+        <h3 class="course__title">{{course?.title}}</h3>
 
         <div class="course__date-container">
             <span class="course__time">
                 <app-icon code="time"></app-icon>
-                1h 28 min
+                {{getDuration()}}
             </span>   
             <span class="course__date">
                 <app-icon code="date"></app-icon>
-                08/28/2020
+                {{course?.creationDate | date:'MM/dd/yyyy'}}
             </span>   
         </div>
     </div>
 
     <div class="course__body">
-        <div class="course__description">
-            Learn about where you can find course descriptions, what information they include, 
-            how they work, and details about various components of a course description. 
-            Course descriptions report information about a university or college's classes. 
-            They're published both in course catalogs that outline degree requirements and in 
-            course schedules that contain descriptions for all courses offered during a particular semester.
-        </div>
+        <div class="course__description">{{course?.description}} </div>
         <div class="course__actions">
-            <app-button class="course__edit" text="Edit" icon="edit"></app-button>
-            <app-button class="course__delete" text="Delete" icon="delete"></app-button>
+            <app-button 
+                class="course__edit" 
+                text="Edit" 
+                icon="edit"
+                (click)="onEditClick()"
+            ></app-button>
+            <app-button 
+                class="course__delete" 
+                text="Delete" 
+                icon="delete"
+                (click)="onDeleteClick()"
+            ></app-button>
         </div>
     </div>
 </div>

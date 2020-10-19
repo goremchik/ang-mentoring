@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+// Core
+import { Component, Input } from '@angular/core';
+
+// Models
 import { Icon } from '../../core';
 
 @Component({
@@ -6,13 +9,8 @@ import { Icon } from '../../core';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
   @Input() text: string;
+  @Input() type = 'button';
   @Input() icon: Icon;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

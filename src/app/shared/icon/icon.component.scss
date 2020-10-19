@@ -2,6 +2,7 @@
     font-family: 'Font Awesome 5 Free';
     padding-right: 7px;
     display: inline-block;
+    color: inherit;
 
     &--hidden {
         display: none;
@@ -12,6 +13,14 @@
         &::before {
             content: '\f007';
         }
+    }
+
+    &--time::before {
+        content: '\f017';
+    }
+
+    &--date::before {
+        content: '\f073';
     }
 
     &--logout {
@@ -33,6 +42,15 @@
             border-radius: 50%;
             border: 1px solid;
             padding: 2px 3px;
+        }
+    }
+
+    &--play-circle {
+        font-weight: 400;
+        font-size: 155%;
+        
+        &:before {
+            content: '\f144';
         }
     }
 

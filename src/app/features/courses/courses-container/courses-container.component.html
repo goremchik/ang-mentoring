@@ -1,15 +1,25 @@
-<app-page-item class="courses">
+<section class="courses">
     <app-breadcrumbs></app-breadcrumbs>
 
     <section class="courses__container">
         <div class="container">
             <div class="courses__header">
                 <app-search></app-search>
-                <app-add-course class="courses__add-btn"></app-add-course>
+                <app-add-course 
+                    class="courses__add-btn"
+                    (add)="onAdd()"
+                ></app-add-course>
             </div>
             
-            <app-courses-list></app-courses-list>
-            <app-load-more class="content-block content-block--centered"></app-load-more>
+            <app-courses-list 
+                [courses]="courses"
+                (edit)="onEdit($event)"
+                (delete)="onDelete($event)"
+            ></app-courses-list>
+            <app-load-more 
+                class="content-block content-block--centered"
+                (loadMore)="onLoadMore()"
+            ></app-load-more>
         </div>
     </section>
-</app-page-item>
+</section>

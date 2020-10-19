@@ -1,11 +1,9 @@
 <ul class="courses-list">
-    <li class="courses-list__item content-block">
-        <app-course-item ></app-course-item>
-    </li>
-    <li class="courses-list__item content-block">
-        <app-course-item ></app-course-item>
-    </li>
-    <li class="courses-list__item content-block">
-        <app-course-item ></app-course-item>
+    <li *ngFor="let course of courses" class="courses-list__item content-block">
+        <app-course-item 
+            [course]="course"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)"
+        ></app-course-item>
     </li>
 </ul>

@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+// Core
+import { Component, Input } from '@angular/core';
+
+// Models
 import { Icon } from '../../core';
 
 @Component({
@@ -6,11 +9,6 @@ import { Icon } from '../../core';
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss']
 })
-export class IconComponent implements OnInit {
+export class IconComponent {
   @Input() code: Icon;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }
