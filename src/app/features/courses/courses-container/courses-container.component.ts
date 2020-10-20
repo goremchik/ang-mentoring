@@ -13,7 +13,7 @@ const description = `
 	course schedules that contain descriptions for all courses offered during a particular semester.
 `;
 
-const courses: ICourse[] = [
+export const courses: ICourse[] = [
   {
     id: '1',
     title: 'Video Course 2. Name tag 1',

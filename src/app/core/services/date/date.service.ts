@@ -9,7 +9,7 @@ export class DateService {
 
   constructor() { }
 
-  public getDuration(duration = 0): string {
+  getDuration(duration = 0): string {
     let minutes = duration;
     let hours = 0;
 

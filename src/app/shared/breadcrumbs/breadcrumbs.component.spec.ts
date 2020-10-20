@@ -22,4 +22,8 @@ describe('BreadcrumbsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should init breadcrumbs', () => {
+    expect(component.breadcrumbs).toEqual(['Courses']);
+  });
 });

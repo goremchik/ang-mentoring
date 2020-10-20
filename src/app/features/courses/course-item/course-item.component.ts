@@ -7,23 +7,20 @@ import { ICourse } from '../../../core';
 // Services
 import { DateService } from '../../../core/services/date/date.service';
 
-export const MINUTES_IN_HOUR = 60;
-
 @Component({
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
-  styleUrls: ['./course-item.component.scss']
+  styleUrls: ['./course-item.component.scss'],
+  providers:  [ DateService ],
 })
 export class CourseItemComponent {
   @Input() course: ICourse;
   @Output() edit = new EventEmitter<string>();
   @Output() delete = new EventEmitter<string>();
 
-  constructor(
-    private dateService: DateService,
-  ) { }
+  constructor(private dateService: DateService) { }
 
-  getDuration(): string {
+  public getDuration(): string {
     return this.dateService.getDuration(this.course?.duration);
   }
 
