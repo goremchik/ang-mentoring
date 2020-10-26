@@ -1,4 +1,7 @@
+// Core
 import { Component, Input , Output, EventEmitter } from '@angular/core';
+
+// Models
 import { ICourse } from '../../../core';
 
 @Component({

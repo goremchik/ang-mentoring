@@ -1,11 +1,15 @@
+// Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+// Components
 import { LogoutComponent } from './logout.component';
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
   let fixture: ComponentFixture<LogoutComponent>;
   let de;
+
+  const SELECTOR_LINK = 'a';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,20 +32,16 @@ describe('LogoutComponent', () => {
   it('should call onClick', () => {
     spyOn(component, 'onClick');
 
-    const link = de.nativeElement.querySelector('a');
+    const link = de.nativeElement.querySelector(SELECTOR_LINK);
     link.click();
 
-    return fixture.whenStable().then(() => {
-      expect(component.onClick).toHaveBeenCalled();
-    });
+    expect(component.onClick).toHaveBeenCalled();
   });
 
   it('onClick should call console log', () => {
     spyOn(console, 'log');
     component.onClick();
 
-    return fixture.whenStable().then(() => {
-      expect(console.log).toHaveBeenCalledWith('Logout');
-    });
+    expect(console.log).toHaveBeenCalledWith('Logout');
   });
 });

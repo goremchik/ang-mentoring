@@ -1,5 +1,7 @@
+// Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+// Components
 import { PageItemComponent } from './page-item.component';
 
 describe('PageItemComponent', () => {

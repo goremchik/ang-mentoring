@@ -1,5 +1,7 @@
+// Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+// Components
 import { ButtonComponent } from './button.component';
 
 describe('ButtonComponent', () => {

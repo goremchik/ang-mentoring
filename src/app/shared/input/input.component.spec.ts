@@ -1,6 +1,8 @@
+// Core
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
+// Components
 import { InputComponent } from './input.component';
 
 describe('InputComponent', () => {
@@ -8,6 +10,9 @@ describe('InputComponent', () => {
   let fixture: ComponentFixture<InputComponent>;
   const inputValue = 'value';
   let de;
+
+  const SELECTOR_INPUT = 'input';
+  const EVENT_INPUT = 'input';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,23 +37,19 @@ describe('InputComponent', () => {
     fixture.detectChanges();
     spyOn(component, 'onInput');
 
-    const input = de.nativeElement.querySelector('input');
+    const input = de.nativeElement.querySelector(SELECTOR_INPUT);
     input.value = inputValue;
-    input.dispatchEvent(new Event('input'));
-    tick(100);
+    input.dispatchEvent(new Event(EVENT_INPUT));
+    tick(1);
     fixture.detectChanges();
 
-    return fixture.whenStable().then(() => {
-      expect(component.onInput).toHaveBeenCalledWith(inputValue);
-    });
+    expect(component.onInput).toHaveBeenCalledWith(inputValue);
   }));
 
   it('onInput should call console log', () => {
     spyOn(component.inputChanged, 'emit');
     component.onInput(inputValue);
 
-    return fixture.whenStable().then(() => {
-      expect(component.inputChanged.emit).toHaveBeenCalledWith(inputValue);
-    });
+    expect(component.inputChanged.emit).toHaveBeenCalledWith(inputValue);
   });
 });

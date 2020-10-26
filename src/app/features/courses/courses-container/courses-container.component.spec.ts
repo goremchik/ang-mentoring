@@ -1,16 +1,22 @@
+// Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { CoursesContainerComponent, courses } from './courses-container.component';
+// Components
+import { CoursesContainerComponent } from './courses-container.component';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { AddCourseComponent } from '../add-course/add-course.component';
 import { LoadMoreComponent } from '../../../shared/load-more/load-more.component';
+
+// Mocks
+import { courses } from '../../../mock';
 
 describe('CoursesContainerComponent', () => {
   let component: CoursesContainerComponent;
   let fixture: ComponentFixture<CoursesContainerComponent>;
   let de;
-  const courseId = '1';
+
+  const courseId = courses[0].id;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,18 +50,14 @@ describe('CoursesContainerComponent', () => {
     const list = de.query(By.directive(CoursesListComponent)).componentInstance;
     list.edit.emit(courseId);
 
-    return fixture.whenStable().then(() => {
-      expect(component.onEdit).toHaveBeenCalledWith(courseId);
-    });
+    expect(component.onEdit).toHaveBeenCalledWith(courseId);
   });
 
   it('onEdit should call console.log', () => {
     spyOn(console, 'log');
     component.onEdit(courseId);
 
-    return fixture.whenStable().then(() => {
-      expect(console.log).toHaveBeenCalledWith('Edit course: ', courseId);
-    });
+    expect(console.log).toHaveBeenCalledWith('Edit course: ', courseId);
   });
 
   it('remove event should call onDelete', () => {
@@ -63,18 +65,14 @@ describe('CoursesContainerComponent', () => {
     const list = de.query(By.directive(CoursesListComponent)).componentInstance;
     list.delete.emit(courseId);
 
-    return fixture.whenStable().then(() => {
-      expect(component.onDelete).toHaveBeenCalledWith(courseId);
-    });
+    expect(component.onDelete).toHaveBeenCalledWith(courseId);
   });
 
   it('onInput should call console.log', () => {
     spyOn(console, 'log');
     component.onDelete(courseId);
 
-    return fixture.whenStable().then(() => {
-      expect(console.log).toHaveBeenCalledWith('Delete course: ', courseId);
-    });
+    expect(console.log).toHaveBeenCalledWith('Delete course: ', courseId);
   });
 
   it('add event should call onAdd', () => {
@@ -82,18 +80,14 @@ describe('CoursesContainerComponent', () => {
     const button = de.query(By.directive(AddCourseComponent)).componentInstance;
     button.add.emit();
 
-    return fixture.whenStable().then(() => {
-      expect(component.onAdd).toHaveBeenCalled();
-    });
+    expect(component.onAdd).toHaveBeenCalled();
   });
 
   it('onAdd should call console.log', () => {
     spyOn(console, 'log');
     component.onAdd();
 
-    return fixture.whenStable().then(() => {
-      expect(console.log).toHaveBeenCalledWith('Add course');
-    });
+    expect(console.log).toHaveBeenCalledWith('Add course');
   });
 
 
@@ -102,17 +96,13 @@ describe('CoursesContainerComponent', () => {
     const button = de.query(By.directive(LoadMoreComponent)).componentInstance;
     button.loadMore.emit();
 
-    return fixture.whenStable().then(() => {
-      expect(component.onLoadMore).toHaveBeenCalled();
-    });
+    expect(component.onLoadMore).toHaveBeenCalled();
   });
 
   it('onLoadMore should call console.log', () => {
     spyOn(console, 'log');
     component.onLoadMore();
 
-    return fixture.whenStable().then(() => {
-      expect(console.log).toHaveBeenCalledWith('Load more');
-    });
+    expect(console.log).toHaveBeenCalledWith('Load more');
   });
 });

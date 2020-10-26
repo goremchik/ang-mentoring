@@ -1,11 +1,15 @@
+// Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+// Components
 import { LoadMoreComponent } from './load-more.component';
 
 describe('LoadMoreComponent', () => {
   let component: LoadMoreComponent;
   let fixture: ComponentFixture<LoadMoreComponent>;
   let de;
+
+  const SELECTOR_LINK = 'a';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,20 +32,16 @@ describe('LoadMoreComponent', () => {
   it('should call onClick', () => {
     spyOn(component, 'onClick');
 
-    const link = de.nativeElement.querySelector('a');
+    const link = de.nativeElement.querySelector(SELECTOR_LINK);
     link.click();
 
-    return fixture.whenStable().then(() => {
-      expect(component.onClick).toHaveBeenCalled();
-    });
+    expect(component.onClick).toHaveBeenCalled();
   });
 
   it('onClick should call console log', () => {
     spyOn(component.loadMore, 'emit');
     component.onClick();
 
-    return fixture.whenStable().then(() => {
-      expect(component.loadMore.emit).toHaveBeenCalled();
-    });
+    expect(component.loadMore.emit).toHaveBeenCalled();
   });
 });
