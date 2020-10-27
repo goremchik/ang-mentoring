@@ -2,9 +2,13 @@
 
 .load-more {
     padding: 0 10px;
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
     line-height: 24px;
     font-size: 12px;
     color: $link-color;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

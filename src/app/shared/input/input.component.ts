@@ -1,3 +1,4 @@
+// Core
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -14,7 +15,6 @@ export class InputComponent {
   @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
 
   onInput(value): void {
-    console.log('input onInput event', value);
-    this.inputChanged.emit(this.value);
+    this.inputChanged.emit(value);
   }
 }

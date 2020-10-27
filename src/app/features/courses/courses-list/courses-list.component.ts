@@ -1,4 +1,7 @@
+// Core
 import { Component, Input , Output, EventEmitter } from '@angular/core';
+
+// Models
 import { ICourse } from '../../../core';
 
 @Component({
@@ -12,12 +15,10 @@ export class CoursesListComponent {
   @Output() delete = new EventEmitter<string>();
 
   onEdit(courseId: string): void {
-    console.log('CoursesListComponent Edit course: ', courseId);
     this.edit.emit(courseId);
   }
 
   onDelete(courseId: string): void {
-    console.log('CoursesListComponent Delete course: ', courseId);
     this.delete.emit(courseId);
   }
 }

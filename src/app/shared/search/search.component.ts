@@ -1,3 +1,4 @@
+// Core
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,11 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
-  searchValue: string;
+  searchValue = '';
 
   onInput(value): void {
     this.searchValue = value;
-    console.log('On input ', this.searchValue);
+    console.log('On input: ', this.searchValue);
   }
 
   onSubmit(e: Event): void {

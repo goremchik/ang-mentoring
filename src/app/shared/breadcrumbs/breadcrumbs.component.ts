@@ -1,4 +1,8 @@
+// Core
 import { Component, OnInit } from '@angular/core';
+
+// Mocks
+import { breadcrumbs } from '../../mock';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -9,6 +13,6 @@ export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: string[];
 
   ngOnInit(): void {
-    this.breadcrumbs = ['Courses'];
+    this.breadcrumbs = breadcrumbs;
   }
 }
