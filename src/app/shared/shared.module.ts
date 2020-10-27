@@ -17,8 +17,18 @@ import { ButtonComponent } from './button/button.component';
 import { InputComponent } from './input/input.component';
 import { IconComponent } from './icon/icon.component';
 
+// Directives
+import { DateStatusDirective } from '../shared/directives/date-status/date-status.directive';
+
+// Pipes
+import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
+import { OrderByPipe } from '../shared/pipes/order-by/order-by.pipe';
+import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
+
+
 @NgModule({
   declarations: [
+    // Components
     LogoComponent,
     HeaderComponent,
     LoginComponent,
@@ -31,12 +41,21 @@ import { IconComponent } from './icon/icon.component';
     ButtonComponent,
     InputComponent,
     IconComponent,
+
+    // Pipes
+    DurationPipe,
+    OrderByPipe,
+    FilterPipe,
+
+    // Directives
+    DateStatusDirective,
   ],
   imports: [
     CommonModule,
     FormsModule,
   ],
   exports: [
+    // Components
     LogoComponent,
     HeaderComponent,
     LoginComponent,
@@ -49,6 +68,14 @@ import { IconComponent } from './icon/icon.component';
     ButtonComponent,
     InputComponent,
     IconComponent,
+
+    // Pipes
+    DurationPipe,
+    OrderByPipe,
+    FilterPipe,
+
+    // Directives
+    DateStatusDirective,
   ],
 })
 export class SharedModule { }

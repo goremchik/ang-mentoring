@@ -7,4 +7,5 @@ export enum Icon {
     Time = 'time',
     Date = 'date',
     PlayCircle = 'play-circle',
+    Star = 'star',
 }

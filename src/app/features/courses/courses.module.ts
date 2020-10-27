@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // Modules
 import { SharedModule } from '../../shared/shared.module';
+import { CoreModule } from '../../core/core.module';
 
 // Components
 import { AddCourseComponent } from './add-course/add-course.component';
@@ -21,6 +22,7 @@ import { CoursesContainerComponent } from './courses-container/courses-container
   imports: [
     CommonModule,
     SharedModule,
+    CoreModule,
   ],
   exports: [
     AddCourseComponent,

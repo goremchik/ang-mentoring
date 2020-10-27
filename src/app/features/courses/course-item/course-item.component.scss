@@ -1,6 +1,7 @@
 @import 'variables';
 
 .course {
+    padding: 24px;
     &__header {
         margin-bottom: 8px;
         display: flex;
@@ -41,5 +42,13 @@
     &__description {
         line-height: 18px;
         color: $dark-text2;
+    }
+
+    &__header-icon {
+        color: $top-rated-color;
+    }
+
+    &--top-rated {
+        background-color: $bg-top-rated;
     }
 }

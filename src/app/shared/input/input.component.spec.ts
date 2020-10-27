@@ -1,5 +1,7 @@
 // Core
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {
+  async, ComponentFixture, TestBed, tick, fakeAsync,
+} from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 // Components

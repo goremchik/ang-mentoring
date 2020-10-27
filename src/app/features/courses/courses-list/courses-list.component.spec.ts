@@ -6,6 +6,9 @@ import { By } from '@angular/platform-browser';
 import { CoursesListComponent } from './courses-list.component';
 import { CourseItemComponent } from '../course-item/course-item.component';
 
+// Pipes
+import { DurationPipe } from '../../../shared/pipes/duration/duration.pipe';
+
 // Mocks
 import { courses } from '../../../mock';
 
@@ -19,7 +22,7 @@ describe('CoursesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesListComponent, CourseItemComponent ]
+      declarations: [ CoursesListComponent, CourseItemComponent, DurationPipe ]
     })
     .compileComponents();
   }));

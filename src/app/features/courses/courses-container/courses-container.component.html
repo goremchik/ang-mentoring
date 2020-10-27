@@ -4,22 +4,30 @@
     <section class="courses__container">
         <div class="container">
             <div class="courses__header">
-                <app-search></app-search>
+                <app-search (searchChange)="onSearchChange($event)"></app-search>
                 <app-add-course 
                     class="courses__add-btn"
                     (add)="onAdd()"
                 ></app-add-course>
             </div>
             
-            <app-courses-list 
-                [courses]="courses"
-                (edit)="onEdit($event)"
-                (delete)="onDelete($event)"
-            ></app-courses-list>
-            <app-load-more 
-                class="content-block content-block--centered"
-                (loadMore)="onLoadMore()"
-            ></app-load-more>
+            <div *ngIf="courses.length">
+                <app-courses-list
+                    [courses]="courses | orderBy"
+                    (edit)="onEdit($event)"
+                    (delete)="onDelete($event)"
+                ></app-courses-list>
+                <app-load-more
+                    class="content-block content-block--centered"
+                    (loadMore)="onLoadMore()"
+                ></app-load-more>
+            </div>
+
+            <div *ngIf="!courses.length" 
+                class="content-block content-block--centered courses__no-msg"
+            >
+                No data. Fell free to add new course.
+            </div>
         </div>
     </section>
 </section>
