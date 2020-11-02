@@ -2,7 +2,7 @@
 import { Component, Input } from '@angular/core';
 
 // Models
-import { Icon } from '../../core';
+import { Icon } from '../../../core';
 
 @Component({
   selector: 'app-icon',

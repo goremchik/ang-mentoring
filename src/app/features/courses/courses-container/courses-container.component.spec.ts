@@ -6,8 +6,8 @@ import { By } from '@angular/platform-browser';
 import { CoursesContainerComponent } from './courses-container.component';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { AddCourseComponent } from '../add-course/add-course.component';
-import { LoadMoreComponent } from '../../../shared/load-more/load-more.component';
-import { SearchComponent } from '../../../shared/search/search.component';
+import { LoadMoreComponent } from '../../../shared/components/load-more/load-more.component';
+import { SearchComponent } from '../../../shared/components/search/search.component';
 
 // Pipes
 import { OrderByPipe } from '../../../shared/pipes/order-by/order-by.pipe';

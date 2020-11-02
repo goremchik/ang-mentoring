@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // Mocks
-import { breadcrumbs } from '../../mock';
+import { breadcrumbs } from '../../../mock';
 
 @Component({
   selector: 'app-breadcrumbs',
