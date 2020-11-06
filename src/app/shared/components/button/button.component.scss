@@ -7,7 +7,7 @@
     letter-spacing: -0.08px;
     line-height: 30px;
     font-weight: 600;
-    padding: 3px 17px;
+    padding: 0 17px;
     border: none;
     font-family: inherit;
     outline: none;
@@ -15,9 +15,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+    height: 36px;
 
     &--success {
         background-color: $btn-success;
+    }
+
+    &--white {
+        background-color: $white;
+        color: $gray-text;
+        border: 1px solid $placeholder-color;
     }
 
     &--small {
@@ -25,5 +33,15 @@
         line-height: 12px;
         letter-spacing: -0.1px;
         padding: 6px 9px;
+    }
+
+    &[disabled] {
+        cursor: default;
+        background-color: $button-disabled;
+        color: $light-text;
+    }
+
+    .login & {
+        padding: 3px 24px;
     }
 }

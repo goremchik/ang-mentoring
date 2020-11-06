@@ -1,0 +1,23 @@
+@import 'variables';
+
+.login-form {
+    position: relative;
+
+    &__actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 24px;
+    }
+
+    &__input {
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    &__link {
+        color: $link;
+        font-size: 12px;
+        line-height: 2;
+    }
+}

@@ -1,4 +1,8 @@
-<button type={{type}} class="btn">
+<button 
+    type="{{type}}" 
+    class="btn btn--{{modifier}}"
+    [appDisableEl]="btnDisabled"
+>
     <app-icon [code]="icon" class="btn__icon"></app-icon>
     <span class="btn__text">{{text}}</span>
 </button>

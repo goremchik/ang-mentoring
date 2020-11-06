@@ -23,7 +23,7 @@
                 ></app-load-more>
             </div>
 
-            <div *ngIf="!courses.length" 
+            <div *ngIf="!courses.length"
                 class="content-block content-block--centered courses__no-msg"
             >
                 No data. Fell free to add new course.
@@ -31,3 +31,13 @@
         </div>
     </section>
 </section>
+
+<app-dialog
+    title="Delete course?"
+    confirmText="Yes, delete"
+    hasActions={{true}}
+    (confirm)="onDeleteConfirm()"
+>
+    <p>Are you sure you want to delete</p>
+    <p>{{courseToRemove?.title}}</p>
+</app-dialog>

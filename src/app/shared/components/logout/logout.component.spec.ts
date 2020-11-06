@@ -30,18 +30,18 @@ describe('LogoutComponent', () => {
   });
 
   it('should call onClick', () => {
-    spyOn(component, 'onClick');
+    const spy = spyOn(component, 'onClick');
 
     const link = de.nativeElement.querySelector(SELECTOR_LINK);
     link.click();
 
-    expect(component.onClick).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('onClick should call console log', () => {
-    spyOn(console, 'log');
+  it('onClick should logout', () => {
+    const spy = spyOn(component.authService, 'logout');
     component.onClick();
 
-    expect(console.log).toHaveBeenCalledWith('Logout');
+    expect(spy).toHaveBeenCalled();
   });
 });

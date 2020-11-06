@@ -1,7 +1,7 @@
 <div class="header">
     <app-logo></app-logo>
     <nav class="header__nav">
-        <app-login></app-login>
-        <app-logout class="header__logout"></app-logout>
+        <app-login *ngIf="!isLoggedIn"></app-login>
+        <app-logout *ngIf="isLoggedIn" class="header__logout"></app-logout>
     </nav>
 </div>

@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 // Components
 import { LogoComponent } from './components/logo/logo.component';
@@ -16,6 +17,7 @@ import { PageItemComponent } from './components/page-item/page-item.component';
 import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
 import { IconComponent } from './components/icon/icon.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 // Directives
 import { DateStatusDirective } from '../shared/directives/date-status/date-status.directive';
@@ -24,7 +26,7 @@ import { DateStatusDirective } from '../shared/directives/date-status/date-statu
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../shared/pipes/order-by/order-by.pipe';
 import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
-
+import { DisableElDirective } from './directives/disable-el/disable-el.directive';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
     ButtonComponent,
     InputComponent,
     IconComponent,
+    DialogComponent,
 
     // Pipes
     DurationPipe,
@@ -49,10 +52,13 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
 
     // Directives
     DateStatusDirective,
+
+    DisableElDirective,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
   ],
   exports: [
     // Components
@@ -68,6 +74,7 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
     ButtonComponent,
     InputComponent,
     IconComponent,
+    DialogComponent,
 
     // Pipes
     DurationPipe,

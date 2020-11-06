@@ -1,8 +1,13 @@
-<input
-    name={{name}}
-    placeholder={{placeholder}}
-    type={{type}}
-    class="input"
-    [(ngModel)]="value"
-    (ngModelChange)="onInput($event)"
-/>
+<label class="input">
+    <span class="input__label" *ngIf="!!label">{{label}}</span>
+    <span class="input__required" *ngIf="required">*required</span>
+
+    <input
+        name={{name}}
+        placeholder={{placeholder}}
+        type={{type}}
+        class="input__item"
+        [(ngModel)]="value"
+        (ngModelChange)="onInput($event)"
+    />
+</label>

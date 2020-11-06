@@ -9,8 +9,6 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let de;
 
-  const SELECTOR_LINK = 'a';
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ]
@@ -27,21 +25,5 @@ describe('LoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should call onClick', () => {
-    spyOn(component, 'onClick');
-
-    const link = de.nativeElement.querySelector(SELECTOR_LINK);
-    link.click();
-
-    expect(component.onClick).toHaveBeenCalled();
-  });
-
-  it('onClick should call console log', () => {
-    spyOn(console, 'log');
-    component.onClick();
-
-    expect(console.log).toHaveBeenCalledWith('Login');
   });
 });

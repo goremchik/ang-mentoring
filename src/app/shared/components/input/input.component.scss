@@ -1,18 +1,37 @@
 @import 'variables';
 
 .input {
-    line-height: 18px;
-    color: $dark-text2;
-    padding: 9px 12px;
-    border: 1px solid $input-border;
-    border-radius: 3px;
-    box-sizing: border-box;
-    width: 240px;
-    outline: none;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-    &::placeholder, 
-    &::-webkit-input-placeholder,
-    &:-ms-input-placeholder {
-        color: $placeholder-color;
+    &__item {
+        line-height: 18px;
+        color: $dark-text2;
+        padding: 9px 12px;
+        border: 1px solid $input-border;
+        border-radius: 3px;
+        box-sizing: border-box;
+        outline: none;
+        width: 100%;
+
+        &::placeholder, 
+        &::-webkit-input-placeholder,
+        &:-ms-input-placeholder {
+            color: $placeholder-color;
+        }
+    }
+
+    &__label {
+        font-weight: 600;
+        line-height: 24px;
+        margin-bottom: 8px;
+        color: $dark-text2;
+    }
+
+    &__required {
+        font-size: 12px;
+        line-height: 24px;
+        color: $dark-text2;
     }
 }

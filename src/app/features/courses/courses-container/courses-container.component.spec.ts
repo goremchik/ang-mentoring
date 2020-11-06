@@ -6,21 +6,43 @@ import { By } from '@angular/platform-browser';
 import { CoursesContainerComponent } from './courses-container.component';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { AddCourseComponent } from '../add-course/add-course.component';
-import { LoadMoreComponent } from '../../../shared/components/load-more/load-more.component';
-import { SearchComponent } from '../../../shared/components/search/search.component';
+import { LoadMoreComponent } from 'src/app/shared/components/load-more/load-more.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 
 // Pipes
-import { OrderByPipe } from '../../../shared/pipes/order-by/order-by.pipe';
+import { OrderByPipe } from 'src/app/shared/pipes/order-by/order-by.pipe';
+
+// Services
+import { CourseService } from 'src/app/core/services/courses/courses.service';
 
 // Mocks
-import { courses } from '../../../mock';
+import { courses } from 'src/app/mock';
+
+
 
 describe('CoursesContainerComponent', () => {
   let component: CoursesContainerComponent;
   let fixture: ComponentFixture<CoursesContainerComponent>;
   let de;
 
+  const CourseServiceStub: Partial<CourseService> = {
+    courses,
+    getList() {
+      return this.courses;
+    },
+    removeItem() {
+      const [ first, ...other ] = courses;
+      this.courses = other;
+    },
+    getItemById() {
+      return courses[0];
+    },
+  };
+
   beforeEach(async(() => {
+    CourseServiceStub.courses = courses;
+
     TestBed.configureTestingModule({
       declarations: [
         // Components
@@ -29,10 +51,12 @@ describe('CoursesContainerComponent', () => {
         AddCourseComponent,
         LoadMoreComponent,
         SearchComponent,
+        DialogComponent,
 
         // Pipes
         OrderByPipe,
-      ]
+      ],
+      providers: [{ provide: CourseService, useValue: CourseServiceStub }],
     })
     .compileComponents();
   }));
@@ -57,7 +81,7 @@ describe('CoursesContainerComponent', () => {
 
 
   describe('Event listeners ', () => {
-    const courseId = courses[0].id;
+    const courseId = '1';
     const searchValue = 'description 1';
 
     it('edit event should call onEdit', () => {
@@ -83,11 +107,12 @@ describe('CoursesContainerComponent', () => {
       expect(component.onDelete).toHaveBeenCalledWith(courseId);
     });
 
-    it('onInput should call console.log', () => {
-      spyOn(console, 'log');
+    it('onDelete should set removed element and open dialog', () => {
+      spyOn(component.dialogChild, 'open');
       component.onDelete(courseId);
 
-      expect(console.log).toHaveBeenCalledWith('Delete course: ', courseId);
+      expect(component.dialogChild.open).toHaveBeenCalled();
+      expect(component.courseToRemove).toEqual(courses[0]);
     });
 
     it('add event should call onAdd', () => {
@@ -106,11 +131,11 @@ describe('CoursesContainerComponent', () => {
     });
 
     it('load more should call onLoadMore', () => {
-      spyOn(component, 'onLoadMore');
+      const spy = spyOn(component, 'onLoadMore');
       const button = de.query(By.directive(LoadMoreComponent)).componentInstance;
       button.loadMore.emit();
 
-      expect(component.onLoadMore).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
     });
 
     it('onLoadMore should call console.log', () => {
@@ -121,11 +146,11 @@ describe('CoursesContainerComponent', () => {
     });
 
     it('search change should call onSearchChange', () => {
-      spyOn(component, 'onSearchChange');
+      const spy = spyOn(component, 'onSearchChange');
       const search = de.query(By.directive(SearchComponent)).componentInstance;
       search.searchChange.emit(searchValue);
 
-      expect(component.onSearchChange).toHaveBeenCalledWith(searchValue);
+      expect(spy).toHaveBeenCalledWith(searchValue);
     });
 
     it('onSearchChange should filter courses', () => {
@@ -133,6 +158,20 @@ describe('CoursesContainerComponent', () => {
 
       expect(component.searchValue).toEqual(searchValue);
       expect(component.courses.length).toEqual(1);
+    });
+
+    it('dialog confirm should call onDeleteConfirm', () => {
+      const spy = spyOn(component, 'onDeleteConfirm');
+      const dialog = de.query(By.directive(DialogComponent)).componentInstance;
+      dialog.confirm.emit();
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('onDeleteConfirm should delete course', () => {
+      component.courseToRemove = courses[0];
+      component.onDeleteConfirm();
+      expect(component.courses.find(({ id }) => id === courseId)).toBeFalsy();
     });
   });
 
