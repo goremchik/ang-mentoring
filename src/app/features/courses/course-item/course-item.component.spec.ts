@@ -1,9 +1,11 @@
-
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // Components
 import { CourseItemComponent } from './course-item.component';
+
+// Pipes
+import { DurationPipe } from '../../../shared/pipes/duration/duration.pipe';
 
 // Models
 import { ICourse } from '../../../core';
@@ -22,7 +24,7 @@ describe('CourseItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent ]
+      declarations: [ CourseItemComponent, DurationPipe ]
     })
     .compileComponents();
   }));

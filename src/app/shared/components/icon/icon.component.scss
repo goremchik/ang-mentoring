@@ -61,4 +61,12 @@
     &--delete::before {
         content: '\f1f8';
     }
+
+    &--star {
+        font-weight: 900;
+
+        &::before {
+            content: '\f005';
+        }
+}
 }

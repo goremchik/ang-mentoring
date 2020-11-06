@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 
 // Models
-import { IUser } from '../../core';
+import { IUser } from '../../../core';
 
 @Component({
   selector: 'app-login',

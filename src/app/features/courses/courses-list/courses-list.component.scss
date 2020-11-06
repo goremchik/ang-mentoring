@@ -1,5 +1,9 @@
+@import 'variables';
+
 .courses-list {
     &__item {
+        overflow: hidden;
+        border: 2px solid $light-text;
         margin-bottom: 24px;
     }
 }

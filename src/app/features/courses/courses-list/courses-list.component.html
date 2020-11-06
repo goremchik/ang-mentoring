@@ -1,5 +1,8 @@
 <ul class="courses-list">
-    <li *ngFor="let course of courses" class="courses-list__item content-block">
+    <li *ngFor="let course of courses" 
+        class="courses-list__item content-block"
+        [appDateStatus]="course.creationDate" 
+    >
         <app-course-item 
             [course]="course"
             (edit)="onEdit($event)"

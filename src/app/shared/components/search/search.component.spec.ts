@@ -65,6 +65,5 @@ describe('SearchComponent', () => {
 
     expect(event.preventDefault).toHaveBeenCalled();
     expect(console.log).toHaveBeenCalledWith('Entered value: ', inputValue);
-    expect(component.searchValue).toBe('');
   });
 });

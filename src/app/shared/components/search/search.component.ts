@@ -1,5 +1,5 @@
 // Core
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class SearchComponent {
   searchValue = '';
+  @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
 
   onInput(value): void {
     this.searchValue = value;
@@ -17,6 +18,6 @@ export class SearchComponent {
   onSubmit(e: Event): void {
     e.preventDefault();
     console.log('Entered value: ', this.searchValue);
-    this.searchValue = '';
+    this.searchChange.emit(this.searchValue);
   }
 }

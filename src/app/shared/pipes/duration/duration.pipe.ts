@@ -1,15 +1,13 @@
-import { Injectable } from '@angular/core';
+// Core
+import { Pipe, PipeTransform } from '@angular/core';
 
 export const MINUTES_IN_HOUR = 60;
 
-@Injectable({
-  providedIn: 'root'
+@Pipe({
+  name: 'duration'
 })
-export class DateService {
-
-  constructor() { }
-
-  getDuration(duration = 0): string {
+export class DurationPipe implements PipeTransform {
+  transform(duration = 0): string {
     let minutes = duration;
     let hours = 0;
 
