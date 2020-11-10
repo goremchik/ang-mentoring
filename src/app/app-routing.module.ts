@@ -7,12 +7,12 @@ import { CoursesPageComponent } from './pages/courses-page/courses-page.componen
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 // Services
-import { AuthGuardService } from './core/services/auth-guard/auth-guard.service';
+import { AuthGuard } from './core/guards/auth-guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/courses', pathMatch: 'full' },
-  { path: 'login', component: LoginPageComponent },
-  { path: 'courses', component: CoursesPageComponent, canActivate: [AuthGuardService] }
+  { path: 'login', component: LoginPageComponent, canActivate: [AuthGuard] },
+  { path: 'courses', component: CoursesPageComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

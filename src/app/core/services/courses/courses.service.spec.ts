@@ -15,7 +15,9 @@ describe('CourseService', () => {
   const courseId = '1';
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [ CourseService ],
+    });
     service = TestBed.inject(CourseService);
   });
 

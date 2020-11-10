@@ -12,6 +12,9 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CoursesContainerComponent } from './courses-container/courses-container.component';
 
+// Services
+import { CourseService } from 'src/app/core/services/courses/courses.service';
+
 @NgModule({
   declarations: [
     AddCourseComponent,
@@ -30,5 +33,6 @@ import { CoursesContainerComponent } from './courses-container/courses-container
     CourseItemComponent,
     CoursesContainerComponent,
   ],
+  providers: [ CourseService ],
 })
 export class CoursesModule { }

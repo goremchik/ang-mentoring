@@ -7,9 +7,7 @@ import { ICourse } from '../../index';
 // Mocks
 import { courses } from 'src/app/mock/courses';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CourseService {
   courses: ICourse[] = courses;
 

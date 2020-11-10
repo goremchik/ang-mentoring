@@ -19,8 +19,6 @@ import { CourseService } from 'src/app/core/services/courses/courses.service';
 // Mocks
 import { courses } from 'src/app/mock';
 
-
-
 describe('CoursesContainerComponent', () => {
   let component: CoursesContainerComponent;
   let fixture: ComponentFixture<CoursesContainerComponent>;
@@ -56,7 +54,10 @@ describe('CoursesContainerComponent', () => {
         // Pipes
         OrderByPipe,
       ],
-      providers: [{ provide: CourseService, useValue: CourseServiceStub }],
+      providers: [
+        { provide: CourseService, useValue: CourseServiceStub },
+        CourseService,
+      ],
     })
     .compileComponents();
   }));
