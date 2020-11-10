@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect, fakeAsync, tick } from '@angular/core/testing';
 
 import { AuthActionComponent } from './auth-action.component';
 
@@ -12,7 +12,8 @@ describe('AuthActionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthActionComponent ]
+      declarations: [ AuthActionComponent ],
+      providers: [ { provide: ComponentFixtureAutoDetect, useValue: true } ],
     })
     .compileComponents();
   }));
@@ -28,17 +29,15 @@ describe('AuthActionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should call onLogoutClick', () => {
-  //   const spy = spyOn(component, 'onLogoutClick');
-  //   component.isLoggedIn = true;
-  //   fixture.detectChanges();
+  it('should call onLogoutClick', () => {
+    const spy = spyOn(component, 'onLogoutClick');
+    component.isLoggedIn = true;
+    fixture.detectChanges();
 
-  //   return fixture.whenStable().then(() => {
-  //     const logout = de.nativeElement.querySelector(SELECTOR_LOGOUT);
-  //     logout.click();
-  //     expect(spy).toHaveBeenCalled();
-  //   });
-  // });
+    const logout = de.nativeElement.querySelector(SELECTOR_LOGOUT);
+    logout.click();
+    expect(spy).toHaveBeenCalled();
+  });
 
   it('onLogoutClick should logout', () => {
     const spy = spyOn(component.authService, 'logout');
@@ -51,13 +50,11 @@ describe('AuthActionComponent', () => {
     expect(login).toBeTruthy();
   });
 
-  // it('should show logout link', () => {
-  //   component.isLoggedIn = true;
-  //   fixture.detectChanges();
+  it('should show logout link', () => {
+    component.isLoggedIn = true;
+    fixture.detectChanges();
 
-  //   return fixture.whenStable().then(() => {
-  //     const logout = de.nativeElement.querySelector(SELECTOR_LOGOUT);
-  //     expect(logout).toBeTruthy();
-  //   });
-  // });
+    const logout = de.nativeElement.querySelector(SELECTOR_LOGOUT);
+    expect(logout).toBeTruthy();
+  });
 });

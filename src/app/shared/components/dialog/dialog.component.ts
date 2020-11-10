@@ -2,12 +2,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 // Models
-import { IDialog } from '../../../core';
+import { IDialog } from 'src/app/core';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent implements IDialog {
   @Input() title = '';

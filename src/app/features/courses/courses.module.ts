@@ -11,6 +11,8 @@ import { AddCourseComponent } from './add-course/add-course.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CoursesContainerComponent } from './courses-container/courses-container.component';
+import { AddCourseFormComponent } from './add-course-form/add-course-form.component';
+import { AddCourseContainerComponent } from './add-course-container/add-course-container.component';
 
 // Services
 import { CourseService } from 'src/app/core/services/courses/courses.service';
@@ -21,6 +23,8 @@ import { CourseService } from 'src/app/core/services/courses/courses.service';
     CoursesListComponent,
     CourseItemComponent,
     CoursesContainerComponent,
+    AddCourseFormComponent,
+    AddCourseContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,8 @@ import { CourseService } from 'src/app/core/services/courses/courses.service';
     CoursesListComponent,
     CourseItemComponent,
     CoursesContainerComponent,
+    AddCourseFormComponent,
+    AddCourseContainerComponent,
   ],
   providers: [ CourseService ],
 })

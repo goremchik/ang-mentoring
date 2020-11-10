@@ -1,0 +1,13 @@
+<label class="input input--{{modifier}}">
+    <span class="input__label" *ngIf="!!label">{{label}}</span>
+    <span class="input__required" *ngIf="required">*required</span>
+
+    <textarea
+        name={{name}}
+        placeholder={{placeholder}}
+        class="input__item"
+        [(ngModel)]="value"
+        (ngModelChange)="onInput($event)"
+        rows="5"
+    >{{value}}</textarea>
+</label>

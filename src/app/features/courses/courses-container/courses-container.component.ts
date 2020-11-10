@@ -1,5 +1,6 @@
 // Core
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Models
 import { ICourse } from 'src/app/core';
@@ -17,7 +18,7 @@ import { DialogComponent } from 'src/app/shared/components/dialog/dialog.compone
   selector: 'app-courses-container',
   templateUrl: './courses-container.component.html',
   styleUrls: ['./courses-container.component.scss'],
-  providers: [ FilterPipe ]
+  providers: [ FilterPipe ],
 })
 export class CoursesContainerComponent implements OnInit {
   courses: ICourse[] = [];
@@ -28,6 +29,7 @@ export class CoursesContainerComponent implements OnInit {
 
   constructor(
     private filterPipe: FilterPipe,
+    private router: Router,
     public courseService: CourseService,
   ) {}
 
@@ -40,10 +42,6 @@ export class CoursesContainerComponent implements OnInit {
     this.courses = this.filterPipe.transform(this.courseService.getList(), value);
   }
 
-  onEdit(courseId: string): void {
-    console.log('Edit course: ', courseId);
-  }
-
   onDelete(courseId: string): void {
     this.courseToRemove = this.courseService.getItemById(courseId);
     this.dialogChild.open();
@@ -52,10 +50,6 @@ export class CoursesContainerComponent implements OnInit {
   onDeleteConfirm(): void {
     this.courseService.removeItem(this.courseToRemove.id);
     this.courses = this.courseService.getList();
-  }
-
-  onAdd(): void {
-    console.log('Add course');
   }
 
   onLoadMore(): void {

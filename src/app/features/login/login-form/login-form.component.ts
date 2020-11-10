@@ -2,7 +2,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 // Models
-import { IAuth } from '../../../core';
+import { IAuth } from 'src/app/core';
 
 @Component({
   selector: 'app-login-form',

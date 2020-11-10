@@ -1,5 +1,9 @@
 @import 'variables';
 
+:host {
+    width: 100%;
+}
+
 .course {
     padding: 24px;
     &__header {
@@ -24,7 +28,9 @@
     }
 
     &__body {
+        width: 100%;
         display: flex;
+        justify-content: space-between;
     }
 
     &__actions {

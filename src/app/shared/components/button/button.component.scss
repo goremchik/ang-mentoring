@@ -17,6 +17,7 @@
     justify-content: center;
     box-sizing: border-box;
     height: 36px;
+    text-decoration: none;
 
     &--success {
         background-color: $btn-success;
@@ -33,6 +34,11 @@
         line-height: 12px;
         letter-spacing: -0.1px;
         padding: 6px 9px;
+    }
+
+    &--grey {
+        background-color: $button-disabled;
+        color: $light-text;
     }
 
     &[disabled] {

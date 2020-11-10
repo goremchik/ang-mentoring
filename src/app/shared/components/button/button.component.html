@@ -1,4 +1,5 @@
-<button 
+<button
+    *ngIf="type !== 'link'"
     type="{{type}}" 
     class="btn btn--{{modifier}}"
     [appDisableEl]="btnDisabled"
@@ -6,3 +7,12 @@
     <app-icon [code]="icon" class="btn__icon"></app-icon>
     <span class="btn__text">{{text}}</span>
 </button>
+<a
+    *ngIf="type === 'link'"
+    class="btn btn--{{modifier}}"
+    [appDisableEl]="btnDisabled"
+    [routerLink]="[link]"
+>
+    <app-icon [code]="icon" class="btn__icon"></app-icon>
+    <span class="btn__text">{{text}}</span>
+</a>
