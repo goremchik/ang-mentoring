@@ -1,0 +1,33 @@
+<div [ngClass]="{ dialog: true, 'dialog--opened': opened }">
+    <div class="dialog__mask"></div>
+    <div class="dialog__body">
+        <app-icon 
+            class="dialog__close" 
+            code="cross"
+            (click)="close()"
+        ></app-icon>
+
+        <header class="dialog__header" *ngIf="title">
+            <h2>{{title}}</h2>
+        </header>
+
+        <main class="dialog__content">
+            <ng-content></ng-content>
+        </main>
+
+        <footer class="dialog__footer" *ngIf="hasActions">
+            <app-button
+                class="dialog__cancel"
+                text="{{cancelText}}" 
+                modifier="white"
+                (click)="onCancelClick()"
+            ></app-button>
+            <app-button
+                class="dialog__confirm"
+                text="{{confirmText}}" 
+                modifier="success"
+                (click)="onConfirmClick()"
+            ></app-button>
+        </footer>
+    </div>
+</div>

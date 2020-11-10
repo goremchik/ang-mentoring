@@ -4,10 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Components
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+
+// Services
+import { AuthGuard } from './core/guards/auth-guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/courses', pathMatch: 'full' },
-  { path: 'courses', component: CoursesPageComponent }
+  { path: 'login', component: LoginPageComponent, canActivate: [AuthGuard] },
+  { path: 'courses', component: CoursesPageComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

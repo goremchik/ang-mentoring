@@ -48,7 +48,7 @@ describe('InputComponent', () => {
     expect(component.onInput).toHaveBeenCalledWith(inputValue);
   }));
 
-  it('onInput should call console log', () => {
+  it('onInput should dispatch inputChanged event', () => {
     spyOn(component.inputChanged, 'emit');
     component.onInput(inputValue);
 

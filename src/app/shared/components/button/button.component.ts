@@ -2,7 +2,7 @@
 import { Component, Input } from '@angular/core';
 
 // Models
-import { Icon } from '../../../core';
+import { Icon } from 'src/app/core';
 
 @Component({
   selector: 'app-button',
@@ -13,4 +13,6 @@ export class ButtonComponent {
   @Input() text: string;
   @Input() type = 'button';
   @Input() icon: Icon;
+  @Input() btnDisabled = false;
+  @Input() modifier = 'default';
 }

@@ -68,5 +68,15 @@
         &::before {
             content: '\f005';
         }
-}
+    }
+
+    &--cross {
+        padding: 0;
+        font-weight: 900;
+        font-size: 16px;
+
+        &::before {
+            content: '\f00d';
+        }
+    }
 }

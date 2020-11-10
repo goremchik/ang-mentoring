@@ -3,6 +3,7 @@
     (submit)="onSubmit($event)"
 >
     <app-input
+        class="search__input"
         value={{searchValue}}
         name="search"
         placeholder="Text to search"
@@ -13,5 +14,6 @@
         text="Search"
         type="submit"
         (click)="onSubmit($event)"
+        modifier="success"
     ></app-button>
 </form>

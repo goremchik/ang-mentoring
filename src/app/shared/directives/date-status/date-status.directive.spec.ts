@@ -25,6 +25,7 @@ class TestComponent {
 
 describe('DateStatusDirective', () => {
   let fixture;
+  let nativeEl;
 
   const SELECTOR_FRESH = 'div:first-of-type';
   const SELECTOR_UPCOMING = 'div:nth-of-type(2)';
@@ -36,6 +37,7 @@ describe('DateStatusDirective', () => {
     })
     .createComponent(TestComponent);
     fixture.detectChanges();
+    nativeEl = fixture.nativeElement;
   });
 
   it('should create an instance', () => {
@@ -44,23 +46,17 @@ describe('DateStatusDirective', () => {
   });
 
   it('fresh item should be with border', () => {
-    return fixture.whenStable().then(() => {
-      const freshItem = fixture.nativeElement.querySelector(SELECTOR_FRESH);
-      expect(freshItem.style.borderColor).toEqual('green');
-    });
+    const freshItem = nativeEl.querySelector(SELECTOR_FRESH);
+    expect(freshItem.style.borderColor).toEqual('green');
   });
 
   it('upcoming item should be with border', () => {
-    return fixture.whenStable().then(() => {
-      const upcomingItem = fixture.nativeElement.querySelector(SELECTOR_UPCOMING);
-      expect(upcomingItem.style.borderColor).toEqual('blue');
-    });
+    const upcomingItem = nativeEl.querySelector(SELECTOR_UPCOMING);
+    expect(upcomingItem.style.borderColor).toEqual('blue');
   });
 
   it('default item should be without inner border style', () => {
-    return fixture.whenStable().then(() => {
-      const defaultItem = fixture.nativeElement.querySelector(SELECTOR_DEFAULT);
-      expect(defaultItem.style.borderColor).toEqual('');
-    });
+    const defaultItem = nativeEl.querySelector(SELECTOR_DEFAULT);
+    expect(defaultItem.style.borderColor).toEqual('');
   });
 });
