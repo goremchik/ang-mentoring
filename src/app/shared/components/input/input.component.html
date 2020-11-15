@@ -3,9 +3,9 @@
     <span class="input__required" *ngIf="required">*required</span>
 
     <input
-        name={{name}}
-        placeholder={{placeholder}}
-        type="{{type}}"
+        [name]="name"
+        [placeholder]="placeholder"
+        [type]="type"
         class="input__item"
         [(ngModel)]="value"
         (ngModelChange)="onInput($event)"

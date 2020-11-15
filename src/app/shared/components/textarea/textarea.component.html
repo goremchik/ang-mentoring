@@ -3,8 +3,8 @@
     <span class="input__required" *ngIf="required">*required</span>
 
     <textarea
-        name={{name}}
-        placeholder={{placeholder}}
+        [name]="name"
+        [placeholder]="placeholder"
         class="input__item"
         [(ngModel)]="value"
         (ngModelChange)="onInput($event)"

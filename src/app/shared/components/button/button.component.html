@@ -1,6 +1,6 @@
 <button
     *ngIf="type !== 'link'"
-    type="{{type}}" 
+    [type]="type" 
     class="btn btn--{{modifier}}"
     [appDisableEl]="btnDisabled"
 >
