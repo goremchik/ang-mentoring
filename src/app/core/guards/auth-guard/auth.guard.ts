@@ -1,6 +1,6 @@
 // Core
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, CanActivateChild, Router, UrlTree, ActivatedRouteSnapshot } from '@angular/router';
 
 // Services
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -10,7 +10,7 @@ export const LOGIN_URL = 'login';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     public router: Router,
     private authService: AuthenticationService,
@@ -29,5 +29,9 @@ export class AuthGuard implements CanActivate {
     } else {
       return this.router.parseUrl(`/${LOGIN_URL}`);
     }
+  }
+
+  canActivateChild(next: ActivatedRouteSnapshot): boolean | UrlTree {
+    return this.canActivate(next);
   }
 }

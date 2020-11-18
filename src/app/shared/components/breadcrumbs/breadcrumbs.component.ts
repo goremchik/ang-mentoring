@@ -1,8 +1,10 @@
 // Core
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
-// Mocks
-import { breadcrumbs } from '../../../mock';
+// Utils
+import { routeUtils } from 'src/app/utils';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -12,7 +14,14 @@ import { breadcrumbs } from '../../../mock';
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: string[];
 
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+  ) {}
+
   ngOnInit(): void {
-    this.breadcrumbs = breadcrumbs;
+    const title = this.titleService.getTitle();
+    this.breadcrumbs = routeUtils.getBreadcrumbs(this.activatedRoute)
+      .map((breadcrumb: string) => breadcrumb.replace('{{title}}', title));
   }
 }

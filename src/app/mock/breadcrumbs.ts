@@ -1,1 +1,1 @@
-export const breadcrumbs = ['Courses'];
+export const breadcrumbs = ['Courses', '{{title}}'];

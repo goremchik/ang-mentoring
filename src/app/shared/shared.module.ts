@@ -30,6 +30,7 @@ import { DisableElDirective } from './directives/disable-el/disable-el.directive
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../shared/pipes/order-by/order-by.pipe';
 import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
     // Directives
     DateStatusDirective,
     DisableElDirective,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,

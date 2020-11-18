@@ -1,10 +1,12 @@
 // Core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 // Modules
-import { SharedModule } from '../../shared/shared.module';
-import { CoreModule } from '../../core/core.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CoreModule } from 'src/app/core/core.module';
+import { CoursesRoutingModule } from './courses-routing.module';
 
 // Components
 import { AddCourseComponent } from './add-course/add-course.component';
@@ -30,6 +32,8 @@ import { CourseService } from 'src/app/core/services/courses/courses.service';
     CommonModule,
     SharedModule,
     CoreModule,
+    RouterModule,
+    CoursesRoutingModule,
   ],
   exports: [
     AddCourseComponent,

@@ -69,41 +69,21 @@ describe('AddCourseContainerComponent', () => {
 
   it('onFormSubmit should create course and redirect', () => {
     const spyCreate = spyOn(component.courseService, 'createCourse');
-    const spyRedirect = spyOn(component, 'redirectToHome');
+    const spyRedirect = spyOn(component.router, 'navigate');
     component.onFormSubmit(bareFormData);
 
     expect(spyCreate).toHaveBeenCalledWith(formData);
-    expect(spyRedirect).toHaveBeenCalled();
+    expect(spyRedirect).toHaveBeenCalledWith(homePage);
   });
 
   it('onFormSubmit should update course and redirect', () => {
     const spyCreate = spyOn(component.courseService, 'updateItem');
-    const spyRedirect = spyOn(component, 'redirectToHome');
+    const spyRedirect = spyOn(component.router, 'navigate');
 
     component.course = courses[0];
     component.onFormSubmit(bareFormData);
 
     expect(spyCreate).toHaveBeenCalledWith(updatedFormData);
-    expect(spyRedirect).toHaveBeenCalled();
-  });
-
-  it('formCancel event should call onFormCancel', () => {
-    spyOn(component, 'onFormCancel');
-    const form = de.query(By.directive(AddCourseFormComponent)).componentInstance;
-    form.formCancel.emit();
-
-    expect(component.onFormCancel).toHaveBeenCalled();
-  });
-
-  it('onFormCancel should redirect', () => {
-    const spy = spyOn(component, 'redirectToHome');
-    component.onFormCancel();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('redirectToHome should redirect to home', () => {
-    const spy = spyOn(component.router, 'navigate');
-    component.redirectToHome();
-    expect(spy).toHaveBeenCalledWith(homePage);
+    expect(spyRedirect).toHaveBeenCalledWith(homePage);
   });
 });

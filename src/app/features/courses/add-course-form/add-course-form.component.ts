@@ -1,5 +1,5 @@
 // Core
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 
 // Models
 import { ICourse } from 'src/app/core';
@@ -9,16 +9,24 @@ import { ICourse } from 'src/app/core';
   templateUrl: './add-course-form.component.html',
   styleUrls: ['./add-course-form.component.scss']
 })
-export class AddCourseFormComponent {
+export class AddCourseFormComponent implements OnInit {
   @Input() course: ICourse;
   @Output() formSubmit = new EventEmitter<any>();
-  @Output() formCancel = new EventEmitter();
 
   title = '';
   description = '';
   duration = '';
   creationDate = '';
   authors = '';
+
+  ngOnInit() {
+    this.title = this.title || this.course?.title || '';
+    this.description = this.description || this.course?.description || '';
+    this.duration = this.duration || this.course?.duration.toString() || '';
+    this.creationDate = this.creationDate
+      || this.course?.creationDate.toString() || '';
+    this.authors = this.authors || this.course?.authors?.join(',') || '';
+  }
 
   onSubmit(e: Event): void {
     e.preventDefault();
@@ -43,12 +51,7 @@ export class AddCourseFormComponent {
       && !!this.duration;
   }
 
-  onCancel(): void {
-    this.formCancel.emit();
-  }
-
   inputHandler(value, name): void {
     this[name] = value;
-    console.log();
   }
 }
