@@ -1,22 +1,20 @@
 // Core
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output, ChangeDetectionStrategy
+} from '@angular/core';
 
 // Models
-import { ICourse } from '../../../core';
+import { ICourse } from 'src/app/core';
 
 @Component({
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseItemComponent {
   @Input() course: ICourse;
-  @Output() edit = new EventEmitter<string>();
   @Output() delete = new EventEmitter<string>();
-
-  onEditClick(): void {
-    this.edit.emit(this.course.id);
-  }
 
   onDeleteClick(): void {
     this.delete.emit(this.course.id);

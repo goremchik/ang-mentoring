@@ -1,5 +1,6 @@
 // Core
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 // Components
@@ -24,6 +25,11 @@ describe('CoursesListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CoursesListComponent, CourseItemComponent, DurationPipe ]
     })
+    .overrideComponent(CoursesListComponent, {
+      set: {
+        changeDetection: ChangeDetectionStrategy.Default
+      }
+    })
     .compileComponents();
   }));
 
@@ -37,21 +43,6 @@ describe('CoursesListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('edit event should call onEdit', () => {
-    spyOn(component, 'onEdit');
-    const item = de.query(By.directive(CourseItemComponent)).componentInstance;
-    item.edit.emit(courseId);
-
-    expect(component.onEdit).toHaveBeenCalledWith(courseId);
-  });
-
-  it('onEdit should re-emit edit event', () => {
-    spyOn(component.edit, 'emit');
-    component.onEdit(courseId);
-
-    expect(component.edit.emit).toHaveBeenCalledWith(courseId);
   });
 
   it('delete event should call onDelete', () => {
@@ -71,18 +62,18 @@ describe('CoursesListComponent', () => {
 
   it('should render courses list', () => {
     return fixture.whenStable().then(() => {
-      const links = fixture.nativeElement.querySelectorAll(SELECTOR_ITEM);
-      expect(links.length).toEqual(3);
+      const items = fixture.nativeElement.querySelectorAll(SELECTOR_ITEM);
+      expect(items.length).toEqual(3);
     });
   });
 
-  it('should render empty list', () => {
+  it('should render empty list', fakeAsync(() => {
     component.courses = [];
     fixture.detectChanges();
 
     return fixture.whenStable().then(() => {
-      const links = fixture.nativeElement.querySelectorAll(SELECTOR_ITEM);
-      expect(links.length).toEqual(0);
+      const items = fixture.nativeElement.querySelectorAll(SELECTOR_ITEM);
+      expect(items.length).toEqual(0);
     });
-  });
+  }));
 });

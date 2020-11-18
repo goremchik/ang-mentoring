@@ -1,0 +1,19 @@
+.add-course {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+
+    &__container {
+        flex-direction: column;
+        max-width: 730px;
+        width: 100%;
+        padding: 24px 24px 32px;
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 31px;
+        margin-bottom: 12px;
+    }
+}

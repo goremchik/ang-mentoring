@@ -15,17 +15,21 @@ import { LoadMoreComponent } from './components/load-more/load-more.component';
 import { PageItemComponent } from './components/page-item/page-item.component';
 import { ButtonComponent } from './components/button/button.component';
 import { InputComponent } from './components/input/input.component';
+import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
+import { DurationInputComponent } from './components/duration-input/duration-input.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 
 // Directives
 import { DateStatusDirective } from '../shared/directives/date-status/date-status.directive';
+import { DisableElDirective } from './directives/disable-el/disable-el.directive';
 
 // Pipes
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../shared/pipes/order-by/order-by.pipe';
 import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
-import { DisableElDirective } from './directives/disable-el/disable-el.directive';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,10 @@ import { DisableElDirective } from './directives/disable-el/disable-el.directive
     PageItemComponent,
     ButtonComponent,
     InputComponent,
+    AutocompleteInputComponent,
+    DurationInputComponent,
+    TextareaComponent,
+    DatePickerComponent,
     IconComponent,
     DialogComponent,
 
@@ -69,6 +77,10 @@ import { DisableElDirective } from './directives/disable-el/disable-el.directive
     PageItemComponent,
     ButtonComponent,
     InputComponent,
+    AutocompleteInputComponent,
+    DurationInputComponent,
+    TextareaComponent,
+    DatePickerComponent,
     IconComponent,
     DialogComponent,
 

@@ -1,6 +1,7 @@
 // Core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 // Modules
 import { SharedModule } from '../../shared/shared.module';
@@ -19,6 +20,7 @@ import { LoginContainerComponent } from './login-container/login-container.compo
     CommonModule,
     SharedModule,
     CoreModule,
+    RouterModule,
   ],
   exports: [
     LoginFormComponent,

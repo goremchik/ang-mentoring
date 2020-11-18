@@ -3,8 +3,8 @@
         class="login-form__input"
         label="E-mail:"
         name="email"
-        value={{email}}
-        required={{true}}
+        [value]="email"
+        [required]="true"
         placeholder="Enter e-mail"
         type="text"
         (inputChanged)="onEmailChange($event)"
@@ -14,15 +14,15 @@
         class="login-form__input"
         label="Password:"
         name="password"
-        value={{password}}
-        required={{true}}
+        [value]="password"
+        [required]="true"
         placeholder="Enter password"
         type="password"
         (inputChanged)="onPasswordChange($event)"
     ></app-input>
 
     <div class="login-form__actions">
-        <a class="login-form__link" href="#forgot-password">
+        <a class="login-form__link" [routerLink]="['#forgot-password']">
             Forgot password?
         </a>
         <app-button 

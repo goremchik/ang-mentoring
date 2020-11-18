@@ -18,13 +18,13 @@
         <footer class="dialog__footer" *ngIf="hasActions">
             <app-button
                 class="dialog__cancel"
-                text="{{cancelText}}" 
+                [text]="cancelText" 
                 modifier="white"
                 (click)="onCancelClick()"
             ></app-button>
             <app-button
                 class="dialog__confirm"
-                text="{{confirmText}}" 
+                [text]="confirmText" 
                 modifier="success"
                 (click)="onConfirmClick()"
             ></app-button>

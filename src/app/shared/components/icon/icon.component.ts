@@ -1,13 +1,14 @@
 // Core
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 // Models
-import { Icon } from '../../../core';
+import { Icon } from 'src/app/core';
 
 @Component({
   selector: 'app-icon',
   templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss']
+  styleUrls: ['./icon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
   @Input() code: Icon;

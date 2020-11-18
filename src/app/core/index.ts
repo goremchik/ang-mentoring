@@ -4,3 +4,6 @@ export * from './models/course.model';
 export * from './models/icon.model';
 export * from './models/date-shift.model';
 export * from './models/dialog.model';
+export * from './models/input-modifiers.model';
+export * from './models/button-modifier.model';
+export * from './models/button-type.model';

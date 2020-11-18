@@ -28,20 +28,4 @@ describe('AddCourseComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should call onClick', () => {
-    spyOn(component, 'onClick');
-
-    const button = de.nativeElement.querySelector(SELECTOR_BUTTON);
-    button.click();
-
-    expect(component.onClick).toHaveBeenCalled();
-  });
-
-  it('onClick should emit event', () => {
-    spyOn(component.add, 'emit');
-    component.onClick();
-
-    expect(component.add.emit).toHaveBeenCalled();
-  });
 });

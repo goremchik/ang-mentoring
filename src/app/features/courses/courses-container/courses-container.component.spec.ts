@@ -1,6 +1,7 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 // Components
 import { CoursesContainerComponent } from './courses-container.component';
@@ -42,6 +43,7 @@ describe('CoursesContainerComponent', () => {
     CourseServiceStub.courses = courses;
 
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
       declarations: [
         // Components
         CoursesContainerComponent,
@@ -85,21 +87,6 @@ describe('CoursesContainerComponent', () => {
     const courseId = '1';
     const searchValue = 'description 1';
 
-    it('edit event should call onEdit', () => {
-      spyOn(component, 'onEdit');
-      const list = de.query(By.directive(CoursesListComponent)).componentInstance;
-      list.edit.emit(courseId);
-
-      expect(component.onEdit).toHaveBeenCalledWith(courseId);
-    });
-
-    it('onEdit should call console.log', () => {
-      spyOn(console, 'log');
-      component.onEdit(courseId);
-
-      expect(console.log).toHaveBeenCalledWith('Edit course: ', courseId);
-    });
-
     it('remove event should call onDelete', () => {
       spyOn(component, 'onDelete');
       const list = de.query(By.directive(CoursesListComponent)).componentInstance;
@@ -114,21 +101,6 @@ describe('CoursesContainerComponent', () => {
 
       expect(component.dialogChild.open).toHaveBeenCalled();
       expect(component.courseToRemove).toEqual(courses[0]);
-    });
-
-    it('add event should call onAdd', () => {
-      spyOn(component, 'onAdd');
-      const button = de.query(By.directive(AddCourseComponent)).componentInstance;
-      button.add.emit();
-
-      expect(component.onAdd).toHaveBeenCalled();
-    });
-
-    it('onAdd should call console.log', () => {
-      spyOn(console, 'log');
-      component.onAdd();
-
-      expect(console.log).toHaveBeenCalledWith('Add course');
     });
 
     it('load more should call onLoadMore', () => {

@@ -19,7 +19,6 @@ describe('CourseItemComponent', () => {
   let de;
 
   const course: ICourse = courses[0];
-  const SELECTOR_EDIT_BTN = '.course__edit';
   const SELECTOR_DELETE_BTN = '.course__delete';
 
   beforeEach(async(() => {
@@ -39,22 +38,6 @@ describe('CourseItemComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should call onEditClick', () => {
-    spyOn(component, 'onEditClick');
-
-    const button = de.nativeElement.querySelector(SELECTOR_EDIT_BTN);
-    button.click();
-
-    expect(component.onEditClick).toHaveBeenCalled();
-  });
-
-  it('onEditClick should emit edit event', () => {
-    spyOn(component.edit, 'emit');
-    component.onEditClick();
-
-    expect(component.edit.emit).toHaveBeenCalledWith(component.course.id);
   });
 
   it('should call onDeleteClick', () => {

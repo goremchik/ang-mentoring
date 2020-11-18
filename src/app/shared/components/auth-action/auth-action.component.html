@@ -3,8 +3,8 @@
     User login
 </a>
 
-<a  *ngIf="isLoggedIn logout"
-    class="auth-action"
+<a  *ngIf="isLoggedIn"
+    class="auth-action logout"
     (click)="onLogoutClick()"
     [routerLink]="['/login']"
 >

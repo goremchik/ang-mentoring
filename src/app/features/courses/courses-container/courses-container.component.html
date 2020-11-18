@@ -5,16 +5,12 @@
         <div class="container">
             <div class="courses__header">
                 <app-search (searchChange)="onSearchChange($event)"></app-search>
-                <app-add-course 
-                    class="courses__add-btn"
-                    (add)="onAdd()"
-                ></app-add-course>
+                <app-add-course class="courses__add-btn"></app-add-course>
             </div>
             
             <div *ngIf="courses.length">
                 <app-courses-list
                     [courses]="courses | orderBy"
-                    (edit)="onEdit($event)"
                     (delete)="onDelete($event)"
                 ></app-courses-list>
                 <app-load-more
@@ -35,7 +31,7 @@
 <app-dialog
     title="Delete course?"
     confirmText="Yes, delete"
-    hasActions={{true}}
+    [hasActions]="true"
     (confirm)="onDeleteConfirm()"
 >
     <p>Are you sure you want to delete</p>

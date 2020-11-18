@@ -1,0 +1,75 @@
+<form class="form" (submit)="onSubmit($event)">
+    <app-input
+        class="form__input"
+        name="title" 
+        placeholder="Add title"
+        label="Title:"
+        modifier="full"
+        [required]="true"
+        [value]="title || course?.title"
+        (inputChanged)="inputHandler($event, 'title')"
+    ></app-input>
+
+    <app-textarea
+        class="form__input"
+        name="description" 
+        placeholder="Add description"
+        label="Description:"
+        modifier="full"
+        [required]="true"
+        [value]="description || course?.description"
+        (inputChanged)="inputHandler($event, 'description')"
+    ></app-textarea>
+
+    <app-duration-input
+        class="form__input"
+        name="duration" 
+        placeholder="minutes"
+        label="Duration:"
+        modifier="quarter"
+        [required]="true"
+        [value]="duration || course?.duration"
+        (inputChanged)="inputHandler($event, 'duration')"
+    ></app-duration-input>
+
+    <app-date-picker
+        class="form__input"
+        name="creationDate" 
+        placeholder="MM/DD/YYYY"
+        label="Date:"
+        modifier="quarter"
+        [required]="true"
+        [value]="creationDate || course?.creationDate"
+        (inputChanged)="inputHandler($event, 'creationDate')"
+    ></app-date-picker>
+
+    <app-autocomplete-input
+        class="form__input"
+        name="authors" 
+        placeholder="Start typing"
+        label="Authors:"
+        modifier="half"
+        [required]="true"
+        [value]="authors || course?.authors"
+        (inputChanged)="inputHandler($event, 'authors')"
+    ></app-autocomplete-input>
+
+    <div class="form__actions">
+        <app-button
+            class="form__cancel"
+            type="button"
+            text="Cancel"
+            modifier="grey"
+            (click)="onCancel()"
+        ></app-button>
+
+        <app-button
+            class="form__save"
+            text="Save"
+            type="submit"
+            modifier="success"
+            [btnDisabled]="!this.isValid()"
+            (click)="onSubmit($event)"
+        ></app-button>
+    </div>
+</form>

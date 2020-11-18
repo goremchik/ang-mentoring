@@ -1,0 +1,16 @@
+.form {
+    &__input {
+        margin-top: 12px;
+        display: block;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 29px;
+    }
+
+    &__cancel {
+        margin-right: 12px;
+    }
+}
