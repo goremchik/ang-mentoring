@@ -2,13 +2,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-// Services
-import { AuthGuard } from 'src/app/core/guards/auth-guard/auth.guard';
+// components
+import { AuthPageComponent } from './auth-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
+    component: AuthPageComponent,
     loadChildren: () =>
       import('src/app/features/login/login.module').then(m => m.LoginModule)
   },
@@ -16,6 +16,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AuthRoutingPageModule { }

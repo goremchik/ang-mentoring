@@ -1,4 +1,4 @@
-<a class="auth-action login" [routerLink]="['/login']" *ngIf="!isLoggedIn">
+<a class="auth-action login" [routerLink]="['/auth']" *ngIf="!isLoggedIn">
     <app-icon code="user"></app-icon>
     User login
 </a>
@@ -6,7 +6,7 @@
 <a  *ngIf="isLoggedIn"
     class="auth-action logout"
     (click)="onLogoutClick()"
-    [routerLink]="['/login']"
+    [routerLink]="['/auth']"
 >
     <app-icon code="logout"></app-icon>
     Log out

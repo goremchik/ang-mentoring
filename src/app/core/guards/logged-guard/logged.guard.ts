@@ -8,7 +8,7 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class LoggedGuard implements CanActivate {
   constructor(
     public router: Router,
     private authService: AuthenticationService,
@@ -17,8 +17,8 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean | UrlTree {
     const isAuthenticated = this.authService.isAuthenticated();
 
-    if (!isAuthenticated) {
-      return this.router.parseUrl('/auth');
+    if (isAuthenticated) {
+      return this.router.parseUrl('/');
     }
 
     return true;

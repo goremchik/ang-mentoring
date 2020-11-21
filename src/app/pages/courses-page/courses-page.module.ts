@@ -4,9 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 // Modules
-import { CoursesModule } from 'src/app/features/courses/courses.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { CoursesRoutingPageModule } from './courses-routing-page.module';
+import { SharedModule } from '../../shared/shared.module';
 
 // Components
 import { CoursesPageComponent } from './courses-page.component';
@@ -15,11 +14,9 @@ import { CoursesPageComponent } from './courses-page.component';
   declarations: [ CoursesPageComponent ],
   imports: [
     CommonModule,
-    CoursesModule,
     RouterModule,
-    SharedModule,
     CoursesRoutingPageModule,
+    SharedModule,
   ],
-  exports: [ CoursesPageComponent ]
 })
 export class CoursesPageModule { }

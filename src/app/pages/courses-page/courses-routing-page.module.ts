@@ -5,13 +5,11 @@ import { Routes, RouterModule } from '@angular/router';
 // Components
 import { CoursesPageComponent } from './courses-page.component';
 
-// Services
-import { AuthGuard } from 'src/app/core/guards/auth-guard/auth.guard';
-
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
+    component: CoursesPageComponent,
+    data: { breadcrumb: 'Courses' },
     loadChildren: () =>
       import('src/app/features/courses/courses.module').then(m => m.CoursesModule)
   },
@@ -19,6 +17,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class CoursesRoutingPageModule { }
