@@ -11,7 +11,7 @@ export function getBreadcrumbs(route: ActivatedRoute): string[] {
       }
       try {
         route = route.parent;
-      } catch(e) {
+      } catch (e) {
         route = null;
       }
   } while (route);
