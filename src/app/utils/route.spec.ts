@@ -2,7 +2,7 @@
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 // Utils
-import { getBreadcrumbs, getTitle } from './route';
+import { getTitle } from './route';
 
 // Mocks
 import { breadcrumbs } from 'src/app/mock';
@@ -13,17 +13,6 @@ describe('Route utils', () => {
 
     beforeEach(() => {
         route.snapshot.data = {};
-    });
-
-    describe('getBreadcrumbs', () => {
-        it('should return empty list', () => {
-            expect(getBreadcrumbs(route)).toEqual([]);
-        });
-
-        it('should return breadcrumbs', () => {
-            route.snapshot.data = { breadcrumb: 'Courses' };
-            expect(getBreadcrumbs(route)).toEqual([breadcrumbs[0]]);
-        });
     });
 
     describe('getTitle', () => {

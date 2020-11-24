@@ -4,11 +4,10 @@
             <a
               class="breadcrumbs__link"
               *ngIf="i < breadcrumbs.length - 1"
-              [routerLinkActive]="'breadcrumbs__link--selected'"
               [routerLink]="breadcrumb.url"
             >{{breadcrumb.label}}</a>
             <span
-              class="breadcrumbs__link"
+              class="breadcrumbs__link breadcrumbs__link--selected"
               *ngIf="i === breadcrumbs.length - 1"
             >{{breadcrumb.label}}</span>
         </li>

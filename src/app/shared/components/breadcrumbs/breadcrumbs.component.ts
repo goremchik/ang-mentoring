@@ -1,13 +1,11 @@
 // Core
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injector, InjectionToken } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-export interface BreadcrumbModel {
-  label: string;
-  url: string;
-}
+// Models
+import { BreadcrumbModel } from 'src/app/core';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -19,11 +17,12 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   breadcrumbs: BreadcrumbModel[];
   breadcrumbsSubscription: Subscription;
-  regexp = /{{(.*?)}}/g;
+  regexp = /{{(.*?)}}/;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private injector: Injector
   ) {}
 
   ngOnInit(): void {
@@ -55,13 +54,13 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       }
 
       let label: string = child.snapshot.data[BreadcrumbsComponent.ROUTE_DATA_BREADCRUMB];
-
-      if (!!label) {
+      if (label) {
         if (this.checkId(label)) {
-          label = this.replaceId(label, child);
+          const serviceToken = child.snapshot.data.service;
+          label = this.replaceId(label, child, serviceToken);
         }
 
-        breadcrumbs.push({label, url});
+        breadcrumbs.push({ label, url });
       }
 
       return this.createBreadcrumbs(child, url, breadcrumbs);
@@ -79,9 +78,22 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     return this.regexp.test(str);
   }
 
-  private replaceId(str: string, route: ActivatedRoute): string {
+  private replaceId(
+    str: string, route: ActivatedRoute, serviceToken: InjectionToken<string>,
+  ): string {
     const { id } = route.snapshot.params;
+    let value = str;
 
-    return str.replace(this.regexp, id);
+    if (serviceToken) {
+      const service: any = this.injector.get(serviceToken);
+      const item = service.getItemById(id);
+      const [, key] = str.match(this.regexp);
+
+      if (key) {
+        value = str.replace(this.regexp, item[key]);
+      }
+    }
+
+    return value;
   }
 }

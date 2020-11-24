@@ -5,6 +5,8 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 // Services
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
+export const ROOT_URL = '/';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +20,7 @@ export class LoggedGuard implements CanActivate {
     const isAuthenticated = this.authService.isAuthenticated();
 
     if (isAuthenticated) {
-      return this.router.parseUrl('/');
+      return this.router.parseUrl(ROOT_URL);
     }
 
     return true;

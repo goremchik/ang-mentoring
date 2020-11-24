@@ -1,5 +1,4 @@
 // Core
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -7,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 // Guards
-import { LoggedGuard } from './logged.guard';
+import { LoggedGuard, ROOT_URL } from './logged.guard';
 
 describe('LoggedGuard', () => {
   let service: LoggedGuard;
@@ -29,5 +28,14 @@ describe('LoggedGuard', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should redirect to root when logged in', () => {
+    expect(service.canActivate()).toEqual(true);
+  });
+
+  it('should allow redirect when not logged in', () => {
+    isLogin = true;
+    expect(service.canActivate()).toEqual(service.router.parseUrl(ROOT_URL));
   });
 });

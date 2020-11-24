@@ -1,11 +1,13 @@
 // Core
-import { Injectable } from '@angular/core';
+import { Injectable, InjectionToken } from '@angular/core';
 
 // Models
 import { ICourse } from '../../index';
 
 // Mocks
 import { courses } from 'src/app/mock/courses';
+
+export const COURSES_SERVICE_TOKEN = new InjectionToken<string>('CourseService');
 
 @Injectable()
 export class CourseService {

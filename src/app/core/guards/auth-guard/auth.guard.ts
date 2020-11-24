@@ -5,6 +5,8 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 // Services
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
+export const AUTH_URL = '/auth';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +20,7 @@ export class AuthGuard implements CanActivate {
     const isAuthenticated = this.authService.isAuthenticated();
 
     if (!isAuthenticated) {
-      return this.router.parseUrl('/auth');
+      return this.router.parseUrl(AUTH_URL);
     }
 
     return true;
