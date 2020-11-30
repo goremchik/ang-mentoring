@@ -1,12 +1,16 @@
 // Core
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 // Services
-import { AuthenticationService, STORAGE_AUTH } from './authentication.service';
+import { AuthenticationService, STORAGE_AUTH, getAuthUrl } from './authentication.service';
 import { BrowserStorageService } from '../browser-storage/browser-storage.service';
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
+
+  const token = 'token';
   const STORAGE_VALUE = 'value';
   const BrowserStorageServiceStub: Partial<BrowserStorageService> = {
     getItem: () => STORAGE_VALUE,
@@ -16,6 +20,7 @@ describe('AuthenticationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
       providers: [
         { provide: BrowserStorageService, useValue: BrowserStorageServiceStub },
       ],
@@ -31,18 +36,30 @@ describe('AuthenticationService', () => {
     expect(service.isAuthenticated()).toBeTrue();
   });
 
+  it('should return token from storage)', () => {
+    expect(service.getToken()).toBe(STORAGE_VALUE);
+  });
+
+  it('should set token', () => {
+    const spy = spyOn(service.storage, 'setItem');
+    service.setToken({ token });
+
+    expect(service.getToken()).toBe(token);
+    expect(spy).toHaveBeenCalledWith(STORAGE_AUTH, token);
+  });
+
   it('should logout', async () => {
     const spy = spyOn(service.storage, 'removeItem');
-    await service.logout();
+    service.logout();
     expect(spy).toHaveBeenCalledWith(STORAGE_AUTH);
     expect(service.isAuthenticated()).toBeFalse();
   });
 
-  it('should logout', async () => {
-    const spy = spyOn(service.storage, 'setItem');
-    const loginData = { email: '1', password: '1' };
-    await service.login(loginData);
-    expect(spy).toHaveBeenCalledWith(STORAGE_AUTH, loginData);
-    expect(service.isAuthenticated()).toBeTrue();
+  it('should login', async () => {
+    const url = '/api/auth/login';
+    const spy = spyOn(service.http, 'post').and.returnValue(of({ token }));
+    const loginData = { login: '1', password: '1' };
+    service.login(loginData).subscribe();
+    expect(spy).toHaveBeenCalledWith(url, loginData);
   });
 });

@@ -10,7 +10,7 @@ import { AutocompleteInputComponent } from './autocomplete-input.component';
 describe('AutocompleteInputComponent', () => {
   let component: AutocompleteInputComponent;
   let fixture: ComponentFixture<AutocompleteInputComponent>;
-  const inputValue = 'value';
+  const inputValue = [{ id: 1, name: 'name', lastName: 'test' }];
   let de;
 
   const SELECTOR_INPUT = 'input';
@@ -35,22 +35,10 @@ describe('AutocompleteInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call onInput', fakeAsync(() => {
-    fixture.detectChanges();
-    spyOn(component, 'onInput');
-
-    const input = de.nativeElement.querySelector(SELECTOR_INPUT);
-    input.value = inputValue;
-    input.dispatchEvent(new Event(EVENT_INPUT));
-    tick(1);
-    fixture.detectChanges();
-
-    expect(component.onInput).toHaveBeenCalledWith(inputValue);
-  }));
-
   it('onInput should dispatch inputChanged event', () => {
     spyOn(component.inputChanged, 'emit');
-    component.onInput(inputValue);
+    component.value = inputValue;
+    component.onInput();
 
     expect(component.inputChanged.emit).toHaveBeenCalledWith(inputValue);
   });

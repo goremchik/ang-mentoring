@@ -27,7 +27,7 @@ export class LoginFormComponent {
     }
 
     this.formSubmit.emit({
-      email: this.email,
+      login: this.email,
       password: this.password,
     });
     return true;

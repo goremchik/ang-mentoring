@@ -2,6 +2,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 // Components
 import { AddCourseContainerComponent } from './add-course-container.component';
@@ -18,32 +20,43 @@ describe('AddCourseContainerComponent', () => {
   let fixture: ComponentFixture<AddCourseContainerComponent>;
   let de;
 
+  const CourseServiceStub: Partial<CourseService> = {
+    updateItem: () => of(null),
+    createCourse: () => of(null),
+    getItemById: () => of(courses[0]),
+  };
+  const authors = [{ id: 1, name: 'name', lastName: 'test' }];
+
   const bareFormData = {
     title: 'title',
     description: 'description',
-    authors: 'authors',
+    authors,
     duration: '10',
     creationDate: '10/09/2020',
+    topRated: false,
   };
 
   const formData = {
     id: null,
     title: 'title',
     description: 'description',
-    authors: ['authors'],
+    authors,
     duration: 10,
     creationDate: new Date('10/09/2020'),
+    topRated: false,
   };
 
-  const updatedFormData = { ...formData, id: '1' };
+  const updatedFormData = { ...formData, id: '1', topRated: true };
 
   const homePage = ['/'];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, HttpClientTestingModule ],
       declarations: [ AddCourseContainerComponent, AddCourseFormComponent ],
-      providers: [ CourseService ],
+      providers: [
+        { provide: CourseService, useValue: CourseServiceStub },
+      ],
     })
     .compileComponents();
   }));
@@ -68,8 +81,10 @@ describe('AddCourseContainerComponent', () => {
   });
 
   it('onFormSubmit should create course and redirect', () => {
-    const spyCreate = spyOn(component.courseService, 'createCourse');
+    const spyCreate = spyOn(component.courseService, 'createCourse')
+      .and.returnValue(of(null));
     const spyRedirect = spyOn(component.router, 'navigate');
+    component.course = null;
     component.onFormSubmit(bareFormData);
 
     expect(spyCreate).toHaveBeenCalledWith(formData);
@@ -77,13 +92,14 @@ describe('AddCourseContainerComponent', () => {
   });
 
   it('onFormSubmit should update course and redirect', () => {
-    const spyCreate = spyOn(component.courseService, 'updateItem');
+    const spyUpdate = spyOn(component.courseService, 'updateItem')
+      .and.returnValue(of(null));
     const spyRedirect = spyOn(component.router, 'navigate');
 
     component.course = courses[0];
     component.onFormSubmit(bareFormData);
 
-    expect(spyCreate).toHaveBeenCalledWith(updatedFormData);
+    expect(spyUpdate).toHaveBeenCalledWith(updatedFormData);
     expect(spyRedirect).toHaveBeenCalledWith(homePage);
   });
 });

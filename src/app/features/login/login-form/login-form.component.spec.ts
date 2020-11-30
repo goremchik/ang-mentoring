@@ -1,6 +1,7 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 // Components
 import { LoginFormComponent } from './login-form.component';
@@ -22,6 +23,7 @@ describe('LoginFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [
         LoginFormComponent,
         ButtonComponent,
@@ -72,7 +74,7 @@ describe('LoginFormComponent', () => {
     });
 
     it('onSubmit with valid data should emit formSubmit event', () => {
-      const submitData = { email: testEmail, password: testPassword };
+      const submitData = { login: testEmail, password: testPassword };
       const spy = spyOn(component.formSubmit, 'emit');
       component.onSubmit(new Event('submit'));
 

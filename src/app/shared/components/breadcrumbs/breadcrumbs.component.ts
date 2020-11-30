@@ -1,8 +1,8 @@
 // Core
 import { Component, OnInit, OnDestroy, Injector, InjectionToken } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subscription, Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 // Models
 import { BreadcrumbModel } from 'src/app/core';
@@ -53,14 +53,14 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
         url += `/${routeURL}`;
       }
 
-      let label: string = child.snapshot.data[BreadcrumbsComponent.ROUTE_DATA_BREADCRUMB];
+      const label: string = child.snapshot.data[BreadcrumbsComponent.ROUTE_DATA_BREADCRUMB];
+      let label$: string | Observable<string>;
       if (label) {
         if (this.checkId(label)) {
           const serviceToken = child.snapshot.data.service;
-          label = this.replaceId(label, child, serviceToken);
+          label$ = this.replaceId(label, child, serviceToken);
         }
-
-        breadcrumbs.push({ label, url });
+        breadcrumbs.push({ label: label$ || label, url });
       }
 
       return this.createBreadcrumbs(child, url, breadcrumbs);
@@ -80,20 +80,18 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   private replaceId(
     str: string, route: ActivatedRoute, serviceToken: InjectionToken<string>,
-  ): string {
-    const { id } = route.snapshot.params;
-    let value = str;
-
+  ): string | Observable<string> {
     if (serviceToken) {
-      const service: any = this.injector.get(serviceToken);
-      const item = service.getItemById(id);
       const [, key] = str.match(this.regexp);
-
-      if (key) {
-        value = str.replace(this.regexp, item[key]);
-      }
+      const service: any = this.injector.get(serviceToken);
+      const { id } = route.snapshot.params;
+      return service.getItemById(id).pipe(map((item) => item[key]));
     }
 
-    return value;
+    return str;
+  }
+
+  public getBreadcrumb({ label }): Observable<string> {
+    return !label || typeof label === 'string' ? of(label || '') : label;
   }
 }

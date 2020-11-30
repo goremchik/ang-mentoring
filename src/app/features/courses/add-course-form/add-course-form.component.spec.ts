@@ -13,14 +13,13 @@ describe('AddCourseFormComponent', () => {
   let de;
 
   const newTitle = 'new title';
-  const SELECTOR_CANCEL = '.form__cancel';
   const SELECTOR_SUBMIT = '.form__save';
 
   const title = 'test title';
   const description = 'test description';
   const duration = '10';
   const creationDate = '10/20/2020';
-  const authors = 'test authors';
+  const authors = [{ id: 1, name: 'test', lastName: 'test' }];
   const formData = { title, description, duration, creationDate, authors };
 
   beforeEach(async(() => {
@@ -52,15 +51,15 @@ describe('AddCourseFormComponent', () => {
     component.description = '';
     component.duration = '';
     component.creationDate = '';
-    component.authors = '';
+    component.authors = [];
     component.course = courses[0];
-    component.ngOnInit();
+    component.ngOnChanges();
 
     expect(component.title).toEqual(courses[0].title);
     expect(component.description).toEqual(courses[0].description);
     expect(component.duration).toEqual(courses[0].duration.toString());
     expect(component.creationDate).toEqual(courses[0].creationDate.toString());
-    expect(component.authors).toEqual(courses[0].authors[0]);
+    expect(component.authors).toEqual(courses[0].authors);
   });
 
   it('should call onSubmit', () => {

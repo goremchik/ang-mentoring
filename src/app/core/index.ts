@@ -8,3 +8,4 @@ export * from './models/input-modifiers.model';
 export * from './models/button-modifier.model';
 export * from './models/button-type.model';
 export * from './models/breadcrumb.model';
+export * from './models/token.model';

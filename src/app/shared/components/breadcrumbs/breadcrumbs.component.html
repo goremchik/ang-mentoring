@@ -5,11 +5,11 @@
               class="breadcrumbs__link"
               *ngIf="i < breadcrumbs.length - 1"
               [routerLink]="breadcrumb.url"
-            >{{breadcrumb.label}}</a>
+            >{{getBreadcrumb(breadcrumb) | async}}</a>
             <span
               class="breadcrumbs__link breadcrumbs__link--selected"
               *ngIf="i === breadcrumbs.length - 1"
-            >{{breadcrumb.label}}</span>
+            >{{getBreadcrumb(breadcrumb) | async}}</span>
         </li>
     </ul>
 </section>

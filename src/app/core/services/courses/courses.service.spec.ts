@@ -1,5 +1,7 @@
 // Core
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 // Services
 import { CourseService } from './courses.service';
@@ -13,9 +15,18 @@ import { ICourse } from '../../';
 describe('CourseService', () => {
   let service: CourseService;
   const courseId = '1';
+  const date = new Date();
+  const courseBare = {
+    description: 'description',
+    duration: 0,
+    creationDate: date,
+    authors: [],
+    isTopRated: false,
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
       providers: [ CourseService ],
     });
     service = TestBed.inject(CourseService);
@@ -25,35 +36,75 @@ describe('CourseService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return courses list', () => {
-    expect(service.getList()).toBe(courses);
+  it('getList should make request to get list', () => {
+    const spy = spyOn(service.http, 'get').and.returnValue(of({ courses }));
+    service.getList();
+    expect(spy).toHaveBeenCalledWith('api/courses/', {
+      params: { textFragment: '', start: '0', count: '5', sort: '' },
+    });
   });
 
-  it('should find course by id', () => {
-    expect(service.getItemById(courseId)).toBe(courses[0]);
+  it('getItemById should make request to get course', () => {
+    const spy = spyOn(service.http, 'get').and.returnValue(of(null));
+    service.getItemById(courseId);
+    expect(spy).toHaveBeenCalledWith(`api/courses/${courseId}`);
   });
 
-  it('should remove course', () => {
+  it('removeItem should make request to remove course', () => {
+    const spy = spyOn(service.http, 'delete').and.returnValue(of(null));
     service.removeItem(courseId);
-    expect(service.courses.find(({ id }) => id === courseId)).toBeFalsy();
+    expect(spy).toHaveBeenCalledWith(`api/courses/${courseId}`);
   });
 
-  it('should update course', () => {
+  it('updateItem should make request to update course', () => {
     const newTitle = 'new';
-    const newCourse: ICourse = {
-      id: '1', title: newTitle, description: '', duration: 0, creationDate: null,
-    };
-
+    const newCourse: ICourse = { id: courseId, title: newTitle, ...courseBare };
+    const spy = spyOn(service.http, 'patch').and.returnValue(of(null));
     service.updateItem(newCourse);
-    expect(service.getItemById('1').title).toBe(newTitle);
+
+    expect(spy).toHaveBeenCalledWith(
+      `api/courses/${courseId}`,
+      service.mapCourseToData(newCourse)
+    );
   });
 
-  it('should create course', () => {
-    const newCourse: ICourse = {
-      id: '4', title: '', description: '', duration: 0, creationDate: null,
-    };
+  it('createCourse should make request to create course', () => {
+    const newCourse: ICourse = { id: null, title: 'title', ...courseBare };
 
+    const spy = spyOn(service.http, 'post').and.returnValue(of(null));
     service.createCourse(newCourse);
-    expect(service.getItemById('4')).toBe(newCourse);
+
+    expect(spy).toHaveBeenCalledWith(
+      'api/courses/',
+      service.mapCourseToData(newCourse)
+    );
+  });
+
+  const courseData: ICourse = {
+    id: '1',
+    authors: [],
+    topRated: false,
+    title: 'title',
+    description: 'description',
+    duration: 0,
+    creationDate: new Date(0),
+  };
+
+  const serverData = {
+    id: 1,
+    authors: [],
+    isTopRated: false,
+    name: 'title',
+    description: 'description',
+    length: 0,
+    date: '1970-01-01T00:00:00.000Z',
+  };
+
+  it('mapCourseToData should convert course to request data', () => {
+    expect(service.mapCourseToData(courseData)).toEqual(serverData);
+  });
+
+  it('mapDataToCourse should convert request data to course', () => {
+    expect(service.mapDataToCourse(serverData)).toEqual(courseData);
   });
 });

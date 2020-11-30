@@ -29,29 +29,34 @@ export class AddCourseContainerComponent implements OnInit {
 
   ngOnInit() {
     const { snapshot: { params = {} } } = this.activatedRoute;
-    this.course = this.courseService.getItemById(params.id);
-
-    const title = params.id
-      ? this.course.title
-      : routeUtils.getTitle(this.activatedRoute);
-    this.titleService.setTitle(title);
+    const subscription = this.courseService.getItemById(params.id)
+      .subscribe((data) => {
+        this.course = data;
+        const title = params.id
+          ? this.course.title
+          : routeUtils.getTitle(this.activatedRoute);
+        this.titleService.setTitle(title);
+        subscription.unsubscribe();
+      });
   }
 
   onFormSubmit(courseBareData: any): void {
-    // TODO: Will be changed in future MRs
     const courseData: ICourse = {
       id: this.course?.id || null,
       title: courseBareData.title,
       description: courseBareData.description,
       duration: +courseBareData.duration,
       creationDate: new Date(courseBareData.creationDate),
-      authors: [courseBareData.authors],
+      authors: courseBareData.authors,
+      topRated: this.course?.topRated || false,
     };
 
     if (this.course) {
-      this.courseService.updateItem(courseData);
+      const subscription = this.courseService.updateItem(courseData)
+        .subscribe(() => subscription.unsubscribe());
     } else {
-      this.courseService.createCourse(courseData);
+      const subscription = this.courseService.createCourse(courseData)
+        .subscribe(() => subscription.unsubscribe());
     }
 
     this.router.navigate(['/']);
