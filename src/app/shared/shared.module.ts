@@ -30,6 +30,10 @@ import { DisableElDirective } from './directives/disable-el/disable-el.directive
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../shared/pipes/order-by/order-by.pipe';
 import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+
+// Services
+import { COURSES_SERVICE_TOKEN, CourseService } from '../core/services/courses/courses.service';
 
 @NgModule({
   declarations: [
@@ -59,6 +63,7 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
     // Directives
     DateStatusDirective,
     DisableElDirective,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -93,5 +98,6 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
     DateStatusDirective,
     DisableElDirective,
   ],
+  providers: [{ provide: COURSES_SERVICE_TOKEN, useClass: CourseService }],
 })
 export class SharedModule { }

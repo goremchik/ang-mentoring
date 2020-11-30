@@ -1,6 +1,7 @@
 // Core
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 // Models
 import { ICourse } from 'src/app/core';
@@ -13,6 +14,9 @@ import { CourseService } from 'src/app/core/services/courses/courses.service';
 
 // Components
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+
+// Utils
+import { routeUtils } from 'src/app/utils';
 
 @Component({
   selector: 'app-courses-container',
@@ -29,12 +33,14 @@ export class CoursesContainerComponent implements OnInit {
 
   constructor(
     private filterPipe: FilterPipe,
-    private router: Router,
+    private activatedRoute: ActivatedRoute,
     public courseService: CourseService,
+    public titleService: Title,
   ) {}
 
   ngOnInit(): void {
     this.courses = this.courseService.getList();
+    this.titleService.setTitle(routeUtils.getTitle(this.activatedRoute));
   }
 
   onSearchChange(value): void {

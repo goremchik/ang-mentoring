@@ -5,12 +5,12 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 // Services
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
-export const AUTH_URL = '/auth';
+export const ROOT_URL = '/';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class LoggedGuard implements CanActivate {
   constructor(
     public router: Router,
     private authService: AuthenticationService,
@@ -19,8 +19,8 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean | UrlTree {
     const isAuthenticated = this.authService.isAuthenticated();
 
-    if (!isAuthenticated) {
-      return this.router.parseUrl(AUTH_URL);
+    if (isAuthenticated) {
+      return this.router.parseUrl(ROOT_URL);
     }
 
     return true;

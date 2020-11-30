@@ -1,6 +1,7 @@
 // Core
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 // Models
 import { ICourse } from 'src/app/core';
@@ -8,18 +9,33 @@ import { ICourse } from 'src/app/core';
 // Services
 import { CourseService } from 'src/app/core/services/courses/courses.service';
 
+// Utils
+import { routeUtils } from 'src/app/utils';
+
 @Component({
   selector: 'app-add-course-container',
   templateUrl: './add-course-container.component.html',
   styleUrls: ['./add-course-container.component.scss']
 })
-export class AddCourseContainerComponent {
+export class AddCourseContainerComponent implements OnInit {
   course: ICourse;
 
   constructor(
     public courseService: CourseService,
     public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public titleService: Title,
   ) {}
+
+  ngOnInit() {
+    const { snapshot: { params = {} } } = this.activatedRoute;
+    this.course = this.courseService.getItemById(params.id);
+
+    const title = params.id
+      ? this.course.title
+      : routeUtils.getTitle(this.activatedRoute);
+    this.titleService.setTitle(title);
+  }
 
   onFormSubmit(courseBareData: any): void {
     // TODO: Will be changed in future MRs
@@ -37,14 +53,7 @@ export class AddCourseContainerComponent {
     } else {
       this.courseService.createCourse(courseData);
     }
-    this.redirectToHome();
-  }
 
-  onFormCancel(): void {
-    this.redirectToHome();
-  }
-
-  redirectToHome(): void {
     this.router.navigate(['/']);
   }
 }

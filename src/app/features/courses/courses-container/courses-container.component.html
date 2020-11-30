@@ -1,13 +1,11 @@
 <section class="courses">
-    <app-breadcrumbs></app-breadcrumbs>
-
     <section class="courses__container">
         <div class="container">
             <div class="courses__header">
                 <app-search (searchChange)="onSearchChange($event)"></app-search>
                 <app-add-course class="courses__add-btn"></app-add-course>
             </div>
-            
+
             <div *ngIf="courses.length">
                 <app-courses-list
                     [courses]="courses | orderBy"

@@ -1,9 +1,10 @@
 .add-course {
     display: flex;
-    justify-content: center;
-    margin: 24px 0;
-
+    align-items: center;
+    flex-direction: column;
+    
     &__container {
+        margin: 24px 0;
         flex-direction: column;
         max-width: 730px;
         width: 100%;
@@ -15,5 +16,9 @@
         font-weight: 600;
         line-height: 31px;
         margin-bottom: 12px;
+    }
+
+    &__breadcrumbs {
+        width: 100%;
     }
 }

@@ -6,10 +6,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 // Guards
-import { AuthGuard, AUTH_URL } from './auth.guard';
+import { LoggedGuard, ROOT_URL } from './logged.guard';
 
-describe('AuthGuard', () => {
-  let service: AuthGuard;
+describe('LoggedGuard', () => {
+  let service: LoggedGuard;
   let isLogin = false;
   const AuthenticationServiceStub: Partial<AuthenticationService> = {
     isAuthenticated: () => isLogin
@@ -23,19 +23,19 @@ describe('AuthGuard', () => {
         { provide: AuthenticationService, useValue: AuthenticationServiceStub },
     ],
     });
-    service = TestBed.inject(AuthGuard);
+    service = TestBed.inject(LoggedGuard);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should allow redirect when logged in', () => {
-    isLogin = true;
+  it('should redirect to root when logged in', () => {
     expect(service.canActivate()).toEqual(true);
   });
 
-  it('should redirect to auth when not logged in', () => {
-    expect(service.canActivate()).toEqual(service.router.parseUrl(AUTH_URL));
+  it('should allow redirect when not logged in', () => {
+    isLogin = true;
+    expect(service.canActivate()).toEqual(service.router.parseUrl(ROOT_URL));
   });
 });

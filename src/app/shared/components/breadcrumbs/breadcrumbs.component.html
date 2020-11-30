@@ -1,11 +1,15 @@
 <section class="breadcrumbs">
-    <div class="container">
-        <a 
-            class="breadcrumbs__item breadcrumbs__item--selected"
-            [routerLink]="['#']"
-            *ngFor="let breadcrumb of breadcrumbs"
-        >
-            {{breadcrumb}}
-        </a>
-    </div>
+    <ul class="breadcrumbs__container container">
+        <li class="breadcrumbs__item" *ngFor="let breadcrumb of breadcrumbs; let i = index">
+            <a
+              class="breadcrumbs__link"
+              *ngIf="i < breadcrumbs.length - 1"
+              [routerLink]="breadcrumb.url"
+            >{{breadcrumb.label}}</a>
+            <span
+              class="breadcrumbs__link breadcrumbs__link--selected"
+              *ngIf="i === breadcrumbs.length - 1"
+            >{{breadcrumb.label}}</span>
+        </li>
+    </ul>
 </section>

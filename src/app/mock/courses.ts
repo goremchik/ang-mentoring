@@ -17,24 +17,27 @@ const currDate = new Date();
 export const courses: ICourse[] = [
   {
     id: '1',
-    title: 'Video Course 1.',
+    title: 'Video Course 1',
     creationDate: currDate,
     duration: 78,
     description: description + 'description 1',
     topRated: true,
+    authors: ['test'],
   },
   {
     id: '2',
-    title: 'Video Course 2.',
+    title: 'Video Course 2',
     creationDate: dateUtils.shiftDate(currDate, { daysShift: 1 }),
     duration: 79,
     description: description + 'description 2',
+    authors: ['test'],
   },
   {
     id: '3',
-    title: 'Video Course 3.',
+    title: 'Video Course 3',
     creationDate: dateUtils.shiftDate(currDate, { daysShift: -15 }),
     duration: 80,
     description: description + 'description 3',
+    authors: ['test'],
   },
 ];

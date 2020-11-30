@@ -1,11 +1,10 @@
 <section class="add-course">
     <div class="add-course__container content-block">
         <h2 class="add-course__title">{{course ? 'Edit' : 'New'}} course</h2>
-        <app-add-course-form 
+        <app-add-course-form
             [course]="course"
             class="add-course__form"
             (formSubmit)="onFormSubmit($event)"
-            (formCancel)="onFormCancel()"
         ></app-add-course-form>
     </div>
 </section>

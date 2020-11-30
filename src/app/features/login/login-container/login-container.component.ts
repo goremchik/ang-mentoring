@@ -1,6 +1,7 @@
 // Core
-import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewChild , OnInit} from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 // Models
 import { IAuth } from 'src/app/core';
@@ -11,19 +12,28 @@ import { AuthenticationService } from 'src/app/core/services/authentication/auth
 // Components
 import { LoginFormComponent } from '../login-form/login-form.component';
 
+// Utils
+import { routeUtils } from 'src/app/utils';
+
 @Component({
   selector: 'app-login-container',
   templateUrl: './login-container.component.html',
   styleUrls: ['./login-container.component.scss'],
 })
-export class LoginContainerComponent {
+export class LoginContainerComponent implements OnInit {
   showError = false;
   @ViewChild(LoginFormComponent) form: LoginFormComponent;
 
   constructor(
     public authService: AuthenticationService,
     public router: Router,
+    public titleService: Title,
+    public activatedRoute: ActivatedRoute,
   ) {}
+
+  ngOnInit(): void {
+    this.titleService.setTitle(routeUtils.getTitle(this.activatedRoute));
+  }
 
   onFormSubmit(authData: IAuth): void {
     // Later it will be async call

@@ -7,3 +7,4 @@ export * from './models/dialog.model';
 export * from './models/input-modifiers.model';
 export * from './models/button-modifier.model';
 export * from './models/button-type.model';
+export * from './models/breadcrumb.model';

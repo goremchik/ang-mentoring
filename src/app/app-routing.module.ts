@@ -3,19 +3,27 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
-import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { AddCoursePageComponent } from './pages/add-course-page/add-course-page.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 // Services
 import { AuthGuard } from './core/guards/auth-guard/auth.guard';
+import { LoggedGuard } from './core/guards/logged-guard/logged.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/courses', pathMatch: 'full' },
-  { path: 'login', component: LoginPageComponent, canActivate: [AuthGuard] },
-  { path: 'courses', component: CoursesPageComponent, canActivate: [AuthGuard] },
-  { path: 'courses/new', component: AddCoursePageComponent, canActivate: [AuthGuard] },
-  { path: 'courses/:id', component: AddCoursePageComponent, canActivate: [AuthGuard] },
+  {
+    path: 'courses',
+    canActivate: [ AuthGuard ],
+    loadChildren: () =>
+      import('./pages/courses-page/courses-page.module').then(m => m.CoursesPageModule)
+  },
+  {
+    path: 'auth',
+    canActivate: [ LoggedGuard ],
+    loadChildren: () =>
+      import('./pages/auth-page/auth-page.module').then(m => m.AuthPageModule)
+  },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 // Modules
-import { SharedModule } from '../../shared/shared.module';
-import { CoreModule } from '../../core/core.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CoreModule } from 'src/app/core/core.module';
+import { LoginRoutingModule } from './login-routing.module';
 
 // Components
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -21,6 +22,7 @@ import { LoginContainerComponent } from './login-container/login-container.compo
     SharedModule,
     CoreModule,
     RouterModule,
+    LoginRoutingModule,
   ],
   exports: [
     LoginFormComponent,

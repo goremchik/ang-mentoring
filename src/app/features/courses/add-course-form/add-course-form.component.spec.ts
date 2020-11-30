@@ -4,6 +4,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 // Components
 import { AddCourseFormComponent } from './add-course-form.component';
 
+// Mocks
+import { courses } from 'src/app/mock';
+
 describe('AddCourseFormComponent', () => {
   let component: AddCourseFormComponent;
   let fixture: ComponentFixture<AddCourseFormComponent>;
@@ -44,6 +47,22 @@ describe('AddCourseFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should init course data', () => {
+    component.title = '';
+    component.description = '';
+    component.duration = '';
+    component.creationDate = '';
+    component.authors = '';
+    component.course = courses[0];
+    component.ngOnInit();
+
+    expect(component.title).toEqual(courses[0].title);
+    expect(component.description).toEqual(courses[0].description);
+    expect(component.duration).toEqual(courses[0].duration.toString());
+    expect(component.creationDate).toEqual(courses[0].creationDate.toString());
+    expect(component.authors).toEqual(courses[0].authors[0]);
+  });
+
   it('should call onSubmit', () => {
     const spy = spyOn(component, 'onSubmit');
     const button = de.nativeElement.querySelector(SELECTOR_SUBMIT);
@@ -57,20 +76,6 @@ describe('AddCourseFormComponent', () => {
     component.onSubmit(new Event('submit'));
 
     expect(spy).toHaveBeenCalledWith(formData);
-  });
-
-  it('cancel btn click should call onCancel', () => {
-    spyOn(component, 'onCancel');
-    const button = de.nativeElement.querySelector(SELECTOR_CANCEL);
-    button.click();
-
-    expect(component.onCancel).toHaveBeenCalled();
-  });
-
-  it('onCancel should emit formCancel event', () => {
-    const spy = spyOn(component.formCancel, 'emit');
-    component.onCancel();
-    expect(spy).toHaveBeenCalled();
   });
 
   it('form should be valid', () => {

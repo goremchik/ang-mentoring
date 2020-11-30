@@ -1,23 +1,22 @@
 // Core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 // Modules
-import { CoursesModule } from '../../features/courses/courses.module';
+import { CoursesRoutingPageModule } from './courses-routing-page.module';
+import { SharedModule } from '../../shared/shared.module';
 
 // Components
 import { CoursesPageComponent } from './courses-page.component';
 
 @NgModule({
-  declarations: [
-    CoursesPageComponent,
-  ],
+  declarations: [ CoursesPageComponent ],
   imports: [
     CommonModule,
-    CoursesModule,
+    RouterModule,
+    CoursesRoutingPageModule,
+    SharedModule,
   ],
-  exports: [
-    CoursesPageComponent,
-  ]
 })
 export class CoursesPageModule { }
