@@ -48,7 +48,9 @@ describe('BreadcrumbsComponent', () => {
     { ...breadcrumbBare, label: of(title) }
   ];
 
-  const SELECTOR_LINK = '.breadcrumbs__item';
+  const SELECTOR_BREADCRUMB = '.breadcrumbs__item';
+  const SELECTOR_CURRENT_BREADCRUMB = '.breadcrumbs__link--selected';
+  const SELECTOR_LINK = '.breadcrumbs__link';
 
   const obj: Partial<CourseService> = {
     getItemById: () => of(courses[0])
@@ -76,15 +78,18 @@ describe('BreadcrumbsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render breadcrumbs', () => {
-    const links = fixture.nativeElement.querySelectorAll(SELECTOR_LINK);
+  it('should render all breadcrumbs', () => {
+    const links = fixture.nativeElement.querySelectorAll(SELECTOR_BREADCRUMB);
     expect(links.length).toEqual(breadcrumbsMock.length);
   });
 
-  // I have tried to use:
-  // spyOn(service, 'getItemById').and.returnValue(of(courses[0]))
-  // But it didn't help
-  // it('should init breadcrumbs and get breadcrumb from title', () => {
-  //   expect(component.breadcrumbs).toEqual(breadcrumbs);
-  // });
+  it('should render id specific breadcrumb', () => {
+    const item = fixture.nativeElement.querySelector(SELECTOR_CURRENT_BREADCRUMB);
+    expect(item.textContent).toEqual(title);
+  });
+
+  it('should render correct link in parent breadcrumb', () => {
+    const item = fixture.nativeElement.querySelector(SELECTOR_LINK);
+    expect(item.getAttribute('href')).toEqual('/courses');
+  });
 });

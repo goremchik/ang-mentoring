@@ -1,10 +1,12 @@
 // Core
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpEventType } from '@angular/common/http';
 import { of } from 'rxjs';
 
 // Services
 import { CourseService } from './courses.service';
+import { HttpService } from '../http/http.service';
 
 // Mocks
 import { courses } from 'src/app/mock/courses';
@@ -27,7 +29,7 @@ describe('CourseService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ CourseService ],
+      providers: [ CourseService, HttpService ],
     });
     service = TestBed.inject(CourseService);
   });
@@ -37,7 +39,9 @@ describe('CourseService', () => {
   });
 
   it('getList should make request to get list', () => {
-    const spy = spyOn(service.http, 'get').and.returnValue(of({ courses }));
+    const spy = spyOn(service.http, 'get').and.returnValue(
+      of({ type: HttpEventType.User, courses })
+    );
     service.getList();
     expect(spy).toHaveBeenCalledWith('api/courses/', {
       params: { textFragment: '', start: '0', count: '5', sort: '' },
@@ -106,5 +110,22 @@ describe('CourseService', () => {
 
   it('mapDataToCourse should convert request data to course', () => {
     expect(service.mapDataToCourse(serverData)).toEqual(courseData);
+  });
+
+  const err = 'error';
+  it('handleError should call logger and return null', () => {
+    const spy = spyOn(service.logger, 'error');
+    const observer = service.handleError(err);
+
+    expect(spy).toHaveBeenCalledWith(err);
+    observer.subscribe(res => expect(res).toEqual(null));
+  });
+
+  it('handleArrayError should call logger and return empty array', () => {
+    const spy = spyOn(service.logger, 'error');
+    const observer = service.handleArrayError(err);
+
+    expect(spy).toHaveBeenCalledWith(err);
+    observer.subscribe(res => expect(res).toEqual([]));
   });
 });

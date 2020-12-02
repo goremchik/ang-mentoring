@@ -12,6 +12,7 @@
                     (delete)="onDelete($event)"
                 ></app-courses-list>
                 <app-load-more
+                    *ngIf="courses.length >= coursesCount"
                     class="content-block content-block--centered"
                     (loadMore)="onLoadMore()"
                 ></app-load-more>

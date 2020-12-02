@@ -2,7 +2,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
 
 // Models
 import { ICourse } from 'src/app/core';
@@ -41,11 +40,10 @@ export class CoursesContainerComponent implements OnInit {
   }
 
   loadCourses(): void {
-    const subscription = this.courseService
+    this.courseService
       .getList(this.searchValue, 0, this.coursesCount, 'date')
       .subscribe(courses => {
         this.courses = courses;
-        subscription.unsubscribe();
       });
   }
 
@@ -64,10 +62,9 @@ export class CoursesContainerComponent implements OnInit {
   }
 
   onDeleteConfirm(): void {
-    const subscription = this.courseService.removeItem(this.courseToRemove.id)
+    this.courseService.removeItem(this.courseToRemove.id)
       .subscribe(() => {
         this.loadCourses();
-        subscription.unsubscribe();
       });
   }
 

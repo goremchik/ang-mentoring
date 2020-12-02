@@ -1,10 +1,11 @@
 // Core
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpEventType } from '@angular/common/http';
 import { of } from 'rxjs';
 
 // Services
-import { AuthenticationService, STORAGE_AUTH, getAuthUrl } from './authentication.service';
+import { AuthenticationService, STORAGE_AUTH } from './authentication.service';
 import { BrowserStorageService } from '../browser-storage/browser-storage.service';
 
 describe('AuthenticationService', () => {
@@ -57,7 +58,9 @@ describe('AuthenticationService', () => {
 
   it('should login', async () => {
     const url = '/api/auth/login';
-    const spy = spyOn(service.http, 'post').and.returnValue(of({ token }));
+    const spy = spyOn(service.http, 'post').and.returnValue(
+      of({ type: HttpEventType.User, token })
+    );
     const loginData = { login: '1', password: '1' };
     service.login(loginData).subscribe();
     expect(spy).toHaveBeenCalledWith(url, loginData);

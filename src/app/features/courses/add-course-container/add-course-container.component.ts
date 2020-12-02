@@ -29,15 +29,18 @@ export class AddCourseContainerComponent implements OnInit {
 
   ngOnInit() {
     const { snapshot: { params = {} } } = this.activatedRoute;
-    const subscription = this.courseService.getItemById(params.id)
+    this.courseService.getItemById(params.id)
       .subscribe((data) => {
         this.course = data;
         const title = params.id
           ? this.course.title
           : routeUtils.getTitle(this.activatedRoute);
         this.titleService.setTitle(title);
-        subscription.unsubscribe();
       });
+  }
+
+  successHandler = () => {
+    this.router.navigate(['/']);
   }
 
   onFormSubmit(courseBareData: any): void {
@@ -52,13 +55,11 @@ export class AddCourseContainerComponent implements OnInit {
     };
 
     if (this.course) {
-      const subscription = this.courseService.updateItem(courseData)
-        .subscribe(() => subscription.unsubscribe());
+      this.courseService.updateItem(courseData)
+        .subscribe(this.successHandler);
     } else {
-      const subscription = this.courseService.createCourse(courseData)
-        .subscribe(() => subscription.unsubscribe());
+      this.courseService.createCourse(courseData)
+        .subscribe(this.successHandler);
     }
-
-    this.router.navigate(['/']);
   }
 }

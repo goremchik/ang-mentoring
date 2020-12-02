@@ -18,23 +18,24 @@ import { OrderByPipe } from 'src/app/shared/pipes/order-by/order-by.pipe';
 
 // Services
 import { CourseService } from 'src/app/core/services/courses/courses.service';
+import { HttpService } from 'src/app/core/services/http/http.service';
 
 // Mocks
-import { courses } from 'src/app/mock';
+import { courses as coursesMock } from 'src/app/mock';
 
 describe('CoursesContainerComponent', () => {
   let component: CoursesContainerComponent;
   let fixture: ComponentFixture<CoursesContainerComponent>;
   let de;
+  let courses;
 
   const CourseServiceStub: Partial<CourseService> = {
-    courses,
     getList() {
-      return of(this.courses);
+      return of(courses);
     },
     removeItem() {
-      const [ first, ...other ] = courses;
-      this.courses = other;
+      const [ first, ...other ] = coursesMock;
+      courses = other;
       return of(null);
     },
     getItemById() {
@@ -43,7 +44,7 @@ describe('CoursesContainerComponent', () => {
   };
 
   beforeEach(async(() => {
-    CourseServiceStub.courses = courses;
+    courses = coursesMock;
 
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule, HttpClientTestingModule ],
@@ -61,6 +62,7 @@ describe('CoursesContainerComponent', () => {
       ],
       providers: [
         CourseService,
+        HttpService,
         { provide: CourseService, useValue: CourseServiceStub },
       ],
     })
@@ -70,6 +72,7 @@ describe('CoursesContainerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CoursesContainerComponent);
     component = fixture.componentInstance;
+    component.coursesCount = 3;
     fixture.detectChanges();
     de = fixture.debugElement;
   });
@@ -125,7 +128,7 @@ describe('CoursesContainerComponent', () => {
       const spy = spyOn(component, 'loadCourses');
       component.onLoadMore();
 
-      expect(component.coursesCount).toBe(10);
+      expect(component.coursesCount).toBe(8);
       expect(spy).toHaveBeenCalled();
     });
 

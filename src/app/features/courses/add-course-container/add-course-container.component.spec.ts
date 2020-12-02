@@ -14,6 +14,7 @@ import { courses } from 'src/app/mock/courses';
 
 // Services
 import { CourseService } from 'src/app/core/services/courses/courses.service';
+import { HttpService } from 'src/app/core/services/http/http.service';
 
 describe('AddCourseContainerComponent', () => {
   let component: AddCourseContainerComponent;
@@ -55,6 +56,7 @@ describe('AddCourseContainerComponent', () => {
       imports: [ RouterTestingModule, HttpClientTestingModule ],
       declarations: [ AddCourseContainerComponent, AddCourseFormComponent ],
       providers: [
+        HttpService,
         { provide: CourseService, useValue: CourseServiceStub },
       ],
     })
@@ -80,26 +82,28 @@ describe('AddCourseContainerComponent', () => {
     expect(spy).toHaveBeenCalledWith(bareFormData);
   });
 
-  it('onFormSubmit should create course and redirect', () => {
+  it('onFormSubmit should create course', () => {
     const spyCreate = spyOn(component.courseService, 'createCourse')
       .and.returnValue(of(null));
-    const spyRedirect = spyOn(component.router, 'navigate');
     component.course = null;
     component.onFormSubmit(bareFormData);
 
     expect(spyCreate).toHaveBeenCalledWith(formData);
-    expect(spyRedirect).toHaveBeenCalledWith(homePage);
   });
 
-  it('onFormSubmit should update course and redirect', () => {
+  it('onFormSubmit should update course', () => {
     const spyUpdate = spyOn(component.courseService, 'updateItem')
       .and.returnValue(of(null));
-    const spyRedirect = spyOn(component.router, 'navigate');
 
     component.course = courses[0];
     component.onFormSubmit(bareFormData);
 
     expect(spyUpdate).toHaveBeenCalledWith(updatedFormData);
+  });
+
+  it('successHandler should redirect to home', () => {
+    const spyRedirect = spyOn(component.router, 'navigate');
+    component.successHandler();
     expect(spyRedirect).toHaveBeenCalledWith(homePage);
   });
 });

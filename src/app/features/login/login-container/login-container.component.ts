@@ -1,11 +1,10 @@
 // Core
 import {
-  Component, ViewChild, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy
+  Component, ViewChild, OnInit, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
 
 // Models
 import { IAuth } from 'src/app/core';
@@ -25,9 +24,8 @@ import { routeUtils } from 'src/app/utils';
   styleUrls: ['./login-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginContainerComponent implements OnInit, OnDestroy {
+export class LoginContainerComponent implements OnInit {
   errorText = '';
-  subscription: Subscription;
   @ViewChild(LoginFormComponent) form: LoginFormComponent;
 
   constructor(
@@ -42,10 +40,6 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
     this.titleService.setTitle(routeUtils.getTitle(this.activatedRoute));
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
   handleError = (err: HttpErrorResponse): void => {
     this.errorText = err.error;
     this.ref.markForCheck();
@@ -58,7 +52,7 @@ export class LoginContainerComponent implements OnInit, OnDestroy {
 
   onFormSubmit(authData: IAuth): void {
     this.errorText = '';
-    this.subscription = this.authService.login(authData)
+    this.authService.login(authData)
       .subscribe(this.handleSuccess, this.handleError);
   }
 }

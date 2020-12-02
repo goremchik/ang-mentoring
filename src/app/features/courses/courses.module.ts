@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -19,9 +18,6 @@ import { AddCourseContainerComponent } from './add-course-container/add-course-c
 
 // Services
 import { CourseService } from 'src/app/core/services/courses/courses.service';
-
-// Interceptors
-import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -47,9 +43,6 @@ import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
     AddCourseFormComponent,
     AddCourseContainerComponent,
   ],
-  providers: [
-    CourseService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ],
+  providers: [ CourseService ],
 })
 export class CoursesModule { }
