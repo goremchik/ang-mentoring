@@ -7,7 +7,7 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 
 // Services
-import { AuthenticationService } from '../services/authentication/authentication.service';
+import { BrowserStorageService } from '../services/browser-storage/browser-storage.service';
 
 describe('AuthInterceptor', () => {
   let http: HttpClient;
@@ -15,8 +15,8 @@ describe('AuthInterceptor', () => {
   let token = '';
 
   const API_URL = '/api/test';
-  const AuthenticationServiceStub: Partial<AuthenticationService> = {
-    getToken: () => token,
+  const BrowserStorageServiceStub: Partial<BrowserStorageService> = {
+    getItem: () => token,
   };
 
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('AuthInterceptor', () => {
       imports: [ HttpClientTestingModule ],
       providers: [
         HttpClient,
-        { provide: AuthenticationService, useValue: AuthenticationServiceStub },
+        { provide: BrowserStorageService, useValue: BrowserStorageServiceStub },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
       ],
     });

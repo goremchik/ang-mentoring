@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 
 // Components
 import { CoursesContainerComponent } from './courses-container.component';
@@ -23,28 +23,32 @@ import { HttpService } from 'src/app/core/services/http/http.service';
 // Mocks
 import { courses as coursesMock } from 'src/app/mock';
 
+// Models
+import { ICourse } from 'src/app/core';
+
 describe('CoursesContainerComponent', () => {
   let component: CoursesContainerComponent;
   let fixture: ComponentFixture<CoursesContainerComponent>;
   let de;
-  let courses;
+  let stubCourses;
 
   const CourseServiceStub: Partial<CourseService> = {
     getList() {
-      return of(courses);
+      return of(stubCourses);
     },
     removeItem() {
       const [ first, ...other ] = coursesMock;
-      courses = other;
+      stubCourses = other;
       return of(null);
     },
     getItemById() {
-      return of(courses[0]);
+      return of(coursesMock[0]);
     },
+    subject$$: new BehaviorSubject<ICourse[]>([]),
   };
 
   beforeEach(async(() => {
-    courses = coursesMock;
+    stubCourses = coursesMock;
 
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule, HttpClientTestingModule ],
@@ -79,12 +83,13 @@ describe('CoursesContainerComponent', () => {
 
 
   describe('Initialization', () => {
-    it('should create', () => {
-      expect(component).toBeTruthy();
-    });
-
     it('should init courses', () => {
-      expect(component.courses).toEqual(courses);
+      component.courseService.subject$$.next(coursesMock);
+
+      component.courses$$.subscribe(courses => {
+        fixture.detectChanges();
+        expect(courses).toEqual(coursesMock);
+      });
     });
   });
 
@@ -94,30 +99,38 @@ describe('CoursesContainerComponent', () => {
     const searchValue = 'description 1';
 
     it('remove event should call onDelete', () => {
-      spyOn(component, 'onDelete');
+      const spy = spyOn(component, 'onDelete');
+      component.courseService.subject$$.next(coursesMock);
+      fixture.detectChanges();
+
       const list = de.query(By.directive(CoursesListComponent)).componentInstance;
       list.delete.emit(courseId);
 
-      expect(component.onDelete).toHaveBeenCalledWith(courseId);
+      expect(spy).toHaveBeenCalledWith(courseId);
     });
 
     it('onDelete should set removed element and open dialog', () => {
-      spyOn(component.dialogChild, 'open');
+      const spy = spyOn(component.dialogChild, 'open');
+      component.courseService.subject$$.next(coursesMock);
+      fixture.detectChanges();
       component.onDelete(courseId);
 
-      expect(component.dialogChild.open).toHaveBeenCalled();
-      expect(component.courseToRemove).toEqual(courses[0]);
+      expect(spy).toHaveBeenCalled();
+      expect(component.courseToRemove).toEqual(coursesMock[0]);
     });
 
     it('loadCourses should get courses list', () => {
       const spy = spyOn(component.courseService, 'getList')
-        .and.returnValue(of(courses));
+        .and.returnValue(of(coursesMock));
       component.loadCourses();
       expect(spy).toHaveBeenCalled();
     });
 
     it('load more should call onLoadMore', () => {
       const spy = spyOn(component, 'onLoadMore');
+      component.courseService.subject$$.next(coursesMock);
+      fixture.detectChanges();
+
       const button = de.query(By.directive(LoadMoreComponent)).componentInstance;
       button.loadMore.emit();
 
@@ -140,12 +153,10 @@ describe('CoursesContainerComponent', () => {
       expect(spy).toHaveBeenCalledWith(searchValue);
     });
 
-    it('onSearchChange should filter courses', () => {
-      const searchSpy = spyOn(component, 'loadCourses');
+    it('onSearchChange should call next action', () => {
+      const searchSpy = spyOn(component.searchSubject$, 'next');
       component.onSearchChange(searchValue);
-
-      expect(component.searchValue).toEqual(searchValue);
-      expect(searchSpy).toHaveBeenCalled();
+      expect(searchSpy).toHaveBeenCalledWith(searchValue);
     });
 
     it('dialog confirm should call onDeleteConfirm', () => {
@@ -159,9 +170,9 @@ describe('CoursesContainerComponent', () => {
     it('onDeleteConfirm should delete course', () => {
       const spy = spyOn(component.courseService, 'removeItem')
         .and.returnValue(of(null));
-      component.courseToRemove = courses[0];
+      component.courseToRemove = coursesMock[0];
       component.onDeleteConfirm();
-      expect(spy).toHaveBeenCalledWith(courses[0].id);
+      expect(spy).toHaveBeenCalledWith(coursesMock[0].id);
     });
   });
 
@@ -172,6 +183,9 @@ describe('CoursesContainerComponent', () => {
     const SELECTOR_NO_MSG = '.courses__no-msg';
 
     it('should render courses list and load more button', () => {
+      component.courseService.subject$$.next(coursesMock);
+      fixture.detectChanges();
+
       return fixture.whenStable().then(() => {
         const list = fixture.nativeElement.querySelector(SELECTOR_LIST);
         const loadBtn = fixture.nativeElement.querySelector(SELECTOR_LOAD_BTN);
@@ -184,7 +198,7 @@ describe('CoursesContainerComponent', () => {
     });
 
     it('should render no courses msg', () => {
-      component.courses = [];
+      component.courseService.subject$$.next([]);
       fixture.detectChanges();
 
       return fixture.whenStable().then(() => {

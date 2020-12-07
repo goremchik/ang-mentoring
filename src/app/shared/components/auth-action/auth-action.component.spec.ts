@@ -1,7 +1,12 @@
+// Core
 import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+// Components
 import { AuthActionComponent } from './auth-action.component';
+
+// Mocks
+import { user } from 'src/app/mock';
 
 describe('AuthActionComponent', () => {
   let component: AuthActionComponent;
@@ -33,7 +38,7 @@ describe('AuthActionComponent', () => {
 
   it('should call onLogoutClick', () => {
     const spy = spyOn(component, 'onLogoutClick');
-    component.isLoggedIn = true;
+    component.authService.subject$$.next(user);
     fixture.detectChanges();
 
     const logout = de.nativeElement.querySelector(SELECTOR_LOGOUT);
@@ -53,7 +58,7 @@ describe('AuthActionComponent', () => {
   });
 
   it('should show logout link', () => {
-    component.isLoggedIn = true;
+    component.authService.subject$$.next(user);
     fixture.detectChanges();
 
     const logout = de.nativeElement.querySelector(SELECTOR_LOGOUT);

@@ -9,4 +9,5 @@ export enum Icon {
     PlayCircle = 'play-circle',
     Star = 'star',
     Cross = 'cross',
+    Loading = 'loading',
 }

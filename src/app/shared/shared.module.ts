@@ -34,6 +34,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 
 // Services
 import { COURSES_SERVICE_TOKEN, CourseService } from '../core/services/courses/courses.service';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { COURSES_SERVICE_TOKEN, CourseService } from '../core/services/courses/c
     DateStatusDirective,
     DisableElDirective,
     NotFoundComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
