@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AuthActionComponent } from './auth-action.component';
 
@@ -12,6 +13,7 @@ describe('AuthActionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ AuthActionComponent ],
       providers: [ { provide: ComponentFixtureAutoDetect, useValue: true } ],
     })

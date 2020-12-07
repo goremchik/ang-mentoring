@@ -1,8 +1,9 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
 // Services
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
@@ -16,14 +17,16 @@ describe('LoginContainerComponent', () => {
   let fixture: ComponentFixture<LoginContainerComponent>;
   let de;
 
-  const userData = { email: 'e', password: 'p' };
-  const AuthenticationServiceStub: Partial<AuthenticationService> = {
-    login: async () => userData,
+  const token = 'token';
+  const userData = { login: 'e', password: 'p' };
+  const AuthenticationServiceStub = {
+    login: () => null,
   };
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [RouterTestingModule],
       declarations: [ LoginContainerComponent, LoginFormComponent ],
       providers: [
         { provide: AuthenticationService, useValue: AuthenticationServiceStub }
@@ -52,15 +55,29 @@ describe('LoginContainerComponent', () => {
     expect(spy).toHaveBeenCalledWith(userData);
   });
 
-  it('onFormSubmit should login, clear form and redirect to home page', () => {
-    const spyLogin = spyOn(component.authService, 'login');
-    const spyClear = spyOn(component.form, 'clearForm');
-    const spyNavigate = spyOn(component.router, 'navigate');
-
+  it('onFormSubmit should clear error and login', () => {
+    const spyLogin = spyOn(component.authService, 'login')
+      .and.returnValue(of({ token }));
     component.onFormSubmit(userData);
 
     expect(spyLogin).toHaveBeenCalledWith(userData);
+    expect(component.errorText).toBe('');
+  });
+
+  it('handleError should set error text', () => {
+    const error = 'error';
+    component.handleError(new HttpErrorResponse({ error }));
+    expect(component.errorText).toBe(error);
+  });
+
+  it('handleSuccess should login, clear form and redirect to home page', () => {
+    const spyClear = spyOn(component.form, 'clearForm');
+    const spyNavigate = spyOn(component.router, 'navigate');
+
+    component.handleSuccess();
+
     expect(spyClear).toHaveBeenCalled();
     expect(spyNavigate).toHaveBeenCalledWith(['/']);
   });
+  
 });

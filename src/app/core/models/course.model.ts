@@ -1,3 +1,5 @@
+import { IAuthors } from './authors.model';
+import { from } from 'rxjs';
 export interface ICourse {
     id: string;
     title: string;
@@ -5,5 +7,5 @@ export interface ICourse {
     duration: number;
     description: string;
     topRated?: boolean;
-    authors?: string[];
+    authors?: IAuthors[];
 }

@@ -1,10 +1,8 @@
 <section class="login">
     <div class="login__content content-block">
         <h2 class="login__title">Login</h2>
-        <!-- Error handling will de done with real api -->
-        <p class="login__error" *ngIf="showError">
-            Wrong e-mail or password
-        </p>
+        <p class="login__error" *ngIf="errorText">{{ errorText }}</p>
+
         <app-login-form 
             class="login__form"
             (formSubmit)="onFormSubmit($event)"

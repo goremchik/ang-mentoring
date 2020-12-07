@@ -1,42 +1,57 @@
 // Core
 import { Injectable } from '@angular/core';
+import { HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 // Models
-import { IAuth, IUser } from '../../';
+import { IAuth, IUser, IToken } from '../../';
 
 // Services
 import { BrowserStorageService } from '../browser-storage/browser-storage.service';
+import { HttpService } from '../http/http.service';
 
-export const STORAGE_AUTH = 'auth';
+export const STORAGE_AUTH = 'token';
 
+export const getAuthUrl = (path: string): string => `/api/auth/${path}`;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  // TODO: will be removed after using real API
-  private authData: IAuth;
-  private user: IUser;
+  private token: string;
 
-  constructor(public storage: BrowserStorageService) {
-    this.authData = storage.getItem(STORAGE_AUTH);
+  constructor(
+    public storage: BrowserStorageService,
+    public http: HttpService,
+  ) {
+    this.token = storage.getItem(STORAGE_AUTH);
   }
 
-  async login(authData: IAuth): Promise<IAuth> {
-    this.storage.setItem(STORAGE_AUTH, authData);
-    this.authData = authData;
-    return authData;
+  setToken = (data): void => {
+    this.token = data.token;
+    this.storage.setItem(STORAGE_AUTH, this.token);
   }
 
-  async logout(): Promise<void> {
+  login(authData: IAuth): Observable<IToken> {
+    return this.http.post<IToken>(getAuthUrl('login'), authData).pipe(
+      tap(this.setToken),
+    );
+  }
+
+  logout(): void {
     this.storage.removeItem(STORAGE_AUTH);
-    this.authData = null;
+    this.token = null;
+  }
+
+  getToken(): string {
+    return this.token;
   }
 
   isAuthenticated(): boolean {
-    return !!this.authData;
+    return !!this.token;
   }
 
-  getUserInfo(): IUser {
-    return this.user;
+  getUserInfo(): Observable<HttpEvent<IUser>> {
+    return this.http.post<IUser>(getAuthUrl('userinfo'), { token: this.token });
   }
 }

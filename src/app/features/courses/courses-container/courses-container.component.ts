@@ -6,9 +6,6 @@ import { Title } from '@angular/platform-browser';
 // Models
 import { ICourse } from 'src/app/core';
 
-// Pipes
-import { FilterPipe } from 'src/app/shared';
-
 // Services
 import { CourseService } from 'src/app/core/services/courses/courses.service';
 
@@ -22,43 +19,57 @@ import { routeUtils } from 'src/app/utils';
   selector: 'app-courses-container',
   templateUrl: './courses-container.component.html',
   styleUrls: ['./courses-container.component.scss'],
-  providers: [ FilterPipe ],
 })
 export class CoursesContainerComponent implements OnInit {
   courses: ICourse[] = [];
   searchValue = '';
   courseToRemove: ICourse;
+  coursesCount = 5;
 
   @ViewChild(DialogComponent) dialogChild: DialogComponent;
 
   constructor(
-    private filterPipe: FilterPipe,
     private activatedRoute: ActivatedRoute,
     public courseService: CourseService,
     public titleService: Title,
   ) {}
 
   ngOnInit(): void {
-    this.courses = this.courseService.getList();
+    this.loadCourses();
     this.titleService.setTitle(routeUtils.getTitle(this.activatedRoute));
+  }
+
+  loadCourses(): void {
+    this.courseService
+      .getList(this.searchValue, 0, this.coursesCount, 'date')
+      .subscribe(courses => {
+        this.courses = courses;
+      });
   }
 
   onSearchChange(value): void {
     this.searchValue = value;
-    this.courses = this.filterPipe.transform(this.courseService.getList(), value);
+    this.loadCourses();
+  }
+
+  getLoadedCourseById(courseId): ICourse {
+    return this.courses.find(({ id }) => id === courseId);
   }
 
   onDelete(courseId: string): void {
-    this.courseToRemove = this.courseService.getItemById(courseId);
+    this.courseToRemove = this.getLoadedCourseById(courseId);
     this.dialogChild.open();
   }
 
   onDeleteConfirm(): void {
-    this.courseService.removeItem(this.courseToRemove.id);
-    this.courses = this.courseService.getList();
+    this.courseService.removeItem(this.courseToRemove.id)
+      .subscribe(() => {
+        this.loadCourses();
+      });
   }
 
   onLoadMore(): void {
-    console.log('Load more');
+    this.coursesCount += 5;
+    this.loadCourses();
   }
 }

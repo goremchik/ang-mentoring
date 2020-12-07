@@ -13,12 +13,10 @@ export class SearchComponent {
 
   onInput(value): void {
     this.searchValue = value;
-    console.log('On input: ', this.searchValue);
   }
 
   onSubmit(e: Event): void {
     e.preventDefault();
-    console.log('Entered value: ', this.searchValue);
     this.searchChange.emit(this.searchValue);
   }
 }

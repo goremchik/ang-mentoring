@@ -8,10 +8,11 @@
 
             <div *ngIf="courses.length">
                 <app-courses-list
-                    [courses]="courses | orderBy"
+                    [courses]="courses"
                     (delete)="onDelete($event)"
                 ></app-courses-list>
                 <app-load-more
+                    *ngIf="courses.length >= coursesCount"
                     class="content-block content-block--centered"
                     (loadMore)="onLoadMore()"
                 ></app-load-more>

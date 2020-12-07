@@ -38,11 +38,8 @@ describe('SearchComponent', () => {
     expect(component.onInput).toHaveBeenCalledWith(inputValue);
   });
 
-  it('onInput should change value and call console.log', () => {
-    spyOn(console, 'log');
+  it('onInput should change value', () => {
     component.onInput(inputValue);
-
-    expect(console.log).toHaveBeenCalledWith('On input: ', inputValue);
     expect(component.searchValue).toBe(inputValue);
   });
 
@@ -55,15 +52,15 @@ describe('SearchComponent', () => {
     expect(component.onSubmit).toHaveBeenCalled();
   });
 
-  it('onSubmit should call console.log and clear value', () => {
+  it('onSubmit should emit event', () => {
     const event = new Event('submit');
-    spyOn(console, 'log');
-    spyOn(event, 'preventDefault');
+    const spyEmit = spyOn(component.searchChange, 'emit');
+    const spyEvent = spyOn(event, 'preventDefault');
 
     component.searchValue = inputValue;
     component.onSubmit(event);
 
-    expect(event.preventDefault).toHaveBeenCalled();
-    expect(console.log).toHaveBeenCalledWith('Entered value: ', inputValue);
+    expect(spyEvent).toHaveBeenCalled();
+    expect(spyEmit).toHaveBeenCalledWith(inputValue);
   });
 });

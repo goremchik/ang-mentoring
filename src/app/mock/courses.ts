@@ -22,7 +22,7 @@ export const courses: ICourse[] = [
     duration: 78,
     description: description + 'description 1',
     topRated: true,
-    authors: ['test'],
+    authors: [{ id: 1, name: 'test', lastName: 'last'}],
   },
   {
     id: '2',
@@ -30,7 +30,7 @@ export const courses: ICourse[] = [
     creationDate: dateUtils.shiftDate(currDate, { daysShift: 1 }),
     duration: 79,
     description: description + 'description 2',
-    authors: ['test'],
+    authors: [{ id: 1, name: 'test', lastName: 'last'}],
   },
   {
     id: '3',
@@ -38,6 +38,6 @@ export const courses: ICourse[] = [
     creationDate: dateUtils.shiftDate(currDate, { daysShift: -15 }),
     duration: 80,
     description: description + 'description 3',
-    authors: ['test'],
+    authors: [{ id: 1, name: 'test', lastName: 'last'}],
   },
 ];

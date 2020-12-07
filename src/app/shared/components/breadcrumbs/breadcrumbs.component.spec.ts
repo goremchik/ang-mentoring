@@ -1,13 +1,15 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 // Components
 import { BreadcrumbsComponent } from './breadcrumbs.component';
 
 // Mocks
-import { breadcrumbs as breadcrumbsMock } from 'src/app/mock';
+import { breadcrumbs as breadcrumbsMock, courses } from 'src/app/mock';
 
 // Models
 import { BreadcrumbModel } from 'src/app/core';
@@ -41,21 +43,26 @@ describe('BreadcrumbsComponent', () => {
     },
   };
 
-
   const breadcrumbs: BreadcrumbModel[] = [
     { ...breadcrumbParent },
-    { ...breadcrumbBare, label: title }
+    { ...breadcrumbBare, label: of(title) }
   ];
 
-  const SELECTOR_LINK = '.breadcrumbs__item';
+  const SELECTOR_BREADCRUMB = '.breadcrumbs__item';
+  const SELECTOR_CURRENT_BREADCRUMB = '.breadcrumbs__link--selected';
+  const SELECTOR_LINK = '.breadcrumbs__link';
+
+  const obj: Partial<CourseService> = {
+    getItemById: () => of(courses[0])
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, HttpClientTestingModule ],
       declarations: [BreadcrumbsComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: COURSES_SERVICE_TOKEN, useClass: CourseService },
+        { provide: COURSES_SERVICE_TOKEN, useValue: obj },
       ],
     })
       .compileComponents();
@@ -71,12 +78,18 @@ describe('BreadcrumbsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render breadcrumbs', () => {
-    const links = fixture.nativeElement.querySelectorAll(SELECTOR_LINK);
+  it('should render all breadcrumbs', () => {
+    const links = fixture.nativeElement.querySelectorAll(SELECTOR_BREADCRUMB);
     expect(links.length).toEqual(breadcrumbsMock.length);
   });
 
-  it('should init breadcrumbs and get breadcrumb from title', () => {
-    expect(component.breadcrumbs).toEqual(breadcrumbs);
+  it('should render id specific breadcrumb', () => {
+    const item = fixture.nativeElement.querySelector(SELECTOR_CURRENT_BREADCRUMB);
+    expect(item.textContent).toEqual(title);
+  });
+
+  it('should render correct link in parent breadcrumb', () => {
+    const item = fixture.nativeElement.querySelector(SELECTOR_LINK);
+    expect(item.getAttribute('href')).toEqual('/courses');
   });
 });

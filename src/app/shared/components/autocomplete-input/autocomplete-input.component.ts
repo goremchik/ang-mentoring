@@ -13,16 +13,24 @@ import { InputModifier } from 'src/app/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteInputComponent {
-  @Input() value = '';
+  @Input() value: any[] = [];
   @Input() name = '';
   @Input() placeholder = '';
   @Input() label = '';
   @Input() required = false;
   @Input() modifier: InputModifier = InputModifier.Default;
 
-  @Output() inputChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output() inputChanged: EventEmitter<any[]> = new EventEmitter<any[]>();
 
-  onInput(value): void {
-    this.inputChanged.emit(value);
+  getStrValue(): string {
+    // Temporary solution
+    return this.value && this.value
+      .map(({ name, lastName }) => `${name} ${lastName}`.trim())
+      .join(', ');
+  }
+
+  onInput(): void {
+    // Will be replaced in future commits
+    this.inputChanged.emit(this.value);
   }
 }

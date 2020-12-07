@@ -1,5 +1,5 @@
 // Core
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 
 // Models
 import { ICourse } from 'src/app/core';
@@ -9,7 +9,7 @@ import { ICourse } from 'src/app/core';
   templateUrl: './add-course-form.component.html',
   styleUrls: ['./add-course-form.component.scss']
 })
-export class AddCourseFormComponent implements OnInit {
+export class AddCourseFormComponent implements OnChanges {
   @Input() course: ICourse;
   @Output() formSubmit = new EventEmitter<any>();
 
@@ -17,15 +17,16 @@ export class AddCourseFormComponent implements OnInit {
   description = '';
   duration = '';
   creationDate = '';
-  authors = '';
+  authors = [];
 
-  ngOnInit() {
+  ngOnChanges() {
     this.title = this.title || this.course?.title || '';
     this.description = this.description || this.course?.description || '';
     this.duration = this.duration || this.course?.duration.toString() || '';
     this.creationDate = this.creationDate
       || this.course?.creationDate.toString() || '';
-    this.authors = this.authors || this.course?.authors?.join(',') || '';
+
+    this.authors = this.course?.authors || [];
   }
 
   onSubmit(e: Event): void {
