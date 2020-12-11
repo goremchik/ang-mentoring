@@ -1,9 +1,10 @@
 // Core
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-// Services
-import { LoaderService } from 'src/app/core/services/loader/loader.service';
+// Store
+import * as globalSelectors from 'src/app/core/store/global/global.selectors';
 
 @Component({
   selector: 'app-loader',
@@ -11,11 +12,11 @@ import { LoaderService } from 'src/app/core/services/loader/loader.service';
   styleUrls: ['./loader.component.scss'],
 })
 export class LoaderComponent implements OnInit {
-  isShown$$: BehaviorSubject<boolean>;
+  isShown$: Observable<boolean>;
 
-  constructor(public loader: LoaderService) { }
+  constructor(public store$: Store) { }
 
   ngOnInit(): void {
-    this.isShown$$ = this.loader.loaderStatus$$;
+    this.isShown$ = this.store$.pipe(select(globalSelectors.getLoaderStatus));
   }
 }

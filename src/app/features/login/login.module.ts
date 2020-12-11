@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/core/core.module';
 import { LoginRoutingModule } from './login-routing.module';
 
 // Components
@@ -20,7 +19,6 @@ import { LoginContainerComponent } from './login-container/login-container.compo
   imports: [
     CommonModule,
     SharedModule,
-    CoreModule,
     RouterModule,
     LoginRoutingModule,
   ],

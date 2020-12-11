@@ -1,13 +1,16 @@
 // Core
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 // Models
 import { ICourse } from 'src/app/core';
 
-// Services
-import { CourseService } from 'src/app/core/services/courses/courses.service';
+// Store
+import * as coursesSelectors from 'src/app/core/store/courses/courses.selectors';
+import * as coursesActions from 'src/app/core/store/courses/courses.actions';
 
 // Utils
 import { routeUtils } from 'src/app/utils';
@@ -18,48 +21,47 @@ import { routeUtils } from 'src/app/utils';
   styleUrls: ['./add-course-container.component.scss']
 })
 export class AddCourseContainerComponent implements OnInit {
-  course: ICourse;
+  course$: Observable<ICourse>;
+  courseId: string;
 
   constructor(
-    public courseService: CourseService,
-    public router: Router,
+    public store$: Store,
     public activatedRoute: ActivatedRoute,
     public titleService: Title,
   ) {}
 
   ngOnInit() {
     const { snapshot: { params = {} } } = this.activatedRoute;
-    this.courseService.getItemById(params.id)
-      .subscribe((data) => {
-        this.course = data;
-        const title = params.id
-          ? this.course.title
+    this.courseId = params.id;
+    if (this.courseId) {
+      this.store$.dispatch(
+        coursesActions.loadCourseById({ id: this.courseId })
+      );
+    }
+
+    this.course$ = this.store$.select(coursesSelectors.getCurrentItem);
+    this.course$.subscribe(course => {
+        const title = this.courseId
+          ? course.title
           : routeUtils.getTitle(this.activatedRoute);
         this.titleService.setTitle(title);
-      });
-  }
-
-  successHandler = () => {
-    this.router.navigate(['/']);
+    });
   }
 
   onFormSubmit(courseBareData: any): void {
-    const courseData: ICourse = {
-      id: this.course?.id || null,
+    const course: ICourse = {
+      id: this.courseId || null,
       title: courseBareData.title,
       description: courseBareData.description,
       duration: +courseBareData.duration,
       creationDate: new Date(courseBareData.creationDate),
       authors: courseBareData.authors,
-      topRated: this.course?.topRated || false,
     };
 
-    if (this.course) {
-      this.courseService.updateItem(courseData)
-        .subscribe(this.successHandler);
+    if (this.courseId) {
+      this.store$.dispatch(coursesActions.updateCourse({ course }));
     } else {
-      this.courseService.createCourse(courseData)
-        .subscribe(this.successHandler);
+      this.store$.dispatch(coursesActions.createCourse({ course }));
     }
   }
 }

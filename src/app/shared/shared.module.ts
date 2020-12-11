@@ -33,7 +33,6 @@ import { FilterPipe } from '../shared/pipes/filter/filter.pipe';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 // Services
-import { COURSES_SERVICE_TOKEN, CourseService } from '../core/services/courses/courses.service';
 import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
@@ -100,6 +99,5 @@ import { LoaderComponent } from './components/loader/loader.component';
     DateStatusDirective,
     DisableElDirective,
   ],
-  providers: [{ provide: COURSES_SERVICE_TOKEN, useClass: CourseService }],
 })
 export class SharedModule { }

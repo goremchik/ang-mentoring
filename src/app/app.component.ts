@@ -1,8 +1,9 @@
 // Core
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-// Services
-import { AuthenticationService } from './core/services/authentication/authentication.service';
+// Store
+import * as userActions from './core/store/user/user.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,9 @@ import { AuthenticationService } from './core/services/authentication/authentica
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private auth: AuthenticationService) {}
+  constructor(private store$: Store) {}
 
   ngOnInit() {
-    this.auth.getUserInfo().subscribe();
+    this.store$.dispatch(userActions.loadProfile());
   }
 }

@@ -1,15 +1,15 @@
 <section class="breadcrumbs">
     <ul class="breadcrumbs__container container">
-        <li class="breadcrumbs__item" *ngFor="let breadcrumb of breadcrumbs; let i = index">
+        <li class="breadcrumbs__item" *ngFor="let breadcrumb of (breadcrumbs$ | async); let i = index">
             <a
               class="breadcrumbs__link"
-              *ngIf="i < breadcrumbs.length - 1"
+              *ngIf="i < (breadcrumbs$ | async).length - 1"
               [routerLink]="breadcrumb.url"
-            >{{getBreadcrumb(breadcrumb) | async}}</a>
+            >{{breadcrumb.label | async}}</a>
             <span
               class="breadcrumbs__link breadcrumbs__link--selected"
-              *ngIf="i === breadcrumbs.length - 1"
-            >{{getBreadcrumb(breadcrumb) | async}}</span>
+              *ngIf="i === (breadcrumbs$ | async).length - 1"
+            >{{breadcrumb.label | async}}</span>
         </li>
     </ul>
 </section>

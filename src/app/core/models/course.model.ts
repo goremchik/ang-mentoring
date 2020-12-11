@@ -1,5 +1,5 @@
 import { IAuthors } from './authors.model';
-import { from } from 'rxjs';
+
 export interface ICourse {
     id: string;
     title: string;

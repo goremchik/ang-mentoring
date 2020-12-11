@@ -1,10 +1,11 @@
 // Core
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-
-// Services
-import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+// Store
+import * as userSelectors from 'src/app/core/store/user/user.selectors';
+import * as userActions from 'src/app/core/store/user/user.actions';
 
 // Models
 import { IUser } from 'src/app/core';
@@ -15,15 +16,15 @@ import { IUser } from 'src/app/core';
   styleUrls: ['./auth-action.component.scss'],
 })
 export class AuthActionComponent implements OnInit {
-  user$$: BehaviorSubject<IUser>;
+  user$: Observable<IUser>;
 
-  constructor(public authService: AuthenticationService) {}
+  constructor(public store$: Store) {}
 
   ngOnInit() {
-    this.user$$ = this.authService.subject$$;
+    this.user$ = this.store$.select(userSelectors.getUser);
   }
 
   onLogoutClick(): void {
-    this.authService.logout();
+    this.store$.dispatch(userActions.logout());
   }
 }

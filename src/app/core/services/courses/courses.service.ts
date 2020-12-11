@@ -1,29 +1,20 @@
 // Core
 import { Injectable, InjectionToken } from '@angular/core';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { map, catchError, tap, finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // Models
 import { ICourse } from '../../index';
 
 // Services
 import { HttpService } from '../http/http.service';
-import { LoggerService } from '../logger/logger.service';
-import { LoaderService } from '../loader/loader.service';
-
-export const COURSES_SERVICE_TOKEN = new InjectionToken<string>('CourseService');
 
 const COURSES_URL = 'api/courses/';
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CourseService {
-  courses: ICourse[] = [];
-  public subject$$ = new BehaviorSubject<ICourse[]>([]);
-
-  constructor(
-    public http: HttpService,
-    public logger: LoggerService,
-    public loader: LoaderService,
-  ) {}
+  constructor(public http: HttpService) {}
 
   mapDataToCourse = (item: any): ICourse =>
     item
@@ -59,29 +50,9 @@ export class CourseService {
     return obj;
   }
 
-  handleError = (err: any): Observable<any> => {
-    this.logger.error(err);
-    return of(null);
-  }
-
-  handleArrayError = (err: any): Observable<any> => {
-    this.logger.error(err);
-    return of([]);
-  }
-
-  updateCourses = (data: ICourse[]): void => {
-    this.subject$$.next(data);
-    this.courses = data;
-  }
-
-  resetLoader = (): void => {
-    this.loader.setStatus(false);
-  }
-
   getList(
-    textFragment = '', start = 0, count = 5, sort = ''
+    textFragment = '', start = 0, count = 5, sort = 'date'
   ): Observable<ICourse[]> {
-    this.loader.setStatus(true);
     return this.http.get<ICourse[]>(COURSES_URL, {
       params: {
         textFragment,
@@ -89,54 +60,26 @@ export class CourseService {
         count: count.toString(),
         sort
       },
-    }).pipe(
-      catchError(this.handleArrayError),
-      map((data: any) => data.map(this.mapDataToCourse)),
-      tap(this.updateCourses),
-      finalize(this.resetLoader),
-    );
+    }).pipe(map((data: any) => data.map(this.mapDataToCourse)));
   }
 
   createCourse(course: ICourse): Observable<any> {
-    this.loader.setStatus(true);
     return this.http.post(COURSES_URL, this.mapCourseToData(course))
-      .pipe(
-        catchError(this.handleError),
-        finalize(this.resetLoader),
-      );
   }
 
   getItemById(courseId: string): Observable<ICourse> {
-    const course = this.courses.find(({ id }) => id === courseId);
-    if (course) {
-      return of(course);
-    }
-    this.loader.setStatus(true);
     return this.http.get<ICourse>(`${COURSES_URL}${courseId}`)
-      .pipe(
-        catchError(this.handleError),
-        map(this.mapDataToCourse),
-        finalize(this.resetLoader),
-      );
+      .pipe(map(this.mapDataToCourse));
   }
 
   updateItem(course: ICourse): Observable<any> {
-    this.loader.setStatus(true);
     return this.http.patch(
       `${COURSES_URL}${course.id}`,
       this.mapCourseToData(course),
-    ).pipe(
-      catchError(this.handleError),
-      finalize(this.resetLoader),
     );
   }
 
   removeItem(courseId: string): Observable<any> {
-    this.loader.setStatus(true);
-    return this.http.delete(`${COURSES_URL}${courseId}`)
-      .pipe(
-        catchError(this.handleError),
-        finalize(this.resetLoader),
-      );
+    return this.http.delete(`${COURSES_URL}${courseId}`);
   }
 }

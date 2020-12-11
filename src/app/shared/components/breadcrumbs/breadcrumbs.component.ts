@@ -1,77 +1,59 @@
 // Core
-import { Component, OnInit, OnDestroy, Injector, InjectionToken } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { Subscription, Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 // Models
 import { BreadcrumbModel } from 'src/app/core';
+
+// Store
+import * as routerSelector from 'src/app/core/store/router/router.selectors';
 
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss']
 })
-export class BreadcrumbsComponent implements OnInit, OnDestroy {
-
+export class BreadcrumbsComponent implements OnInit {
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
-  breadcrumbs: BreadcrumbModel[];
-  breadcrumbsSubscription: Subscription;
+  breadcrumbs$: Observable<BreadcrumbModel[]>;
   regexp = /{{(.*?)}}/;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private injector: Injector
-  ) {}
+  constructor(private store$: Store) {}
 
   ngOnInit(): void {
-    this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
-
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
-      });
+    this.breadcrumbs$ = this.store$.select(routerSelector.getRouterRoot)
+      .pipe(map(this.createBreadcrumbs))
   }
 
-  ngOnDestroy(): void {
-    this.destroySubscription();
-  }
+  public createBreadcrumbs = (route: any): BreadcrumbModel[] => {
+    let breadcrumbs: BreadcrumbModel[] = [];
+    let url = '';
+    let child = route;
+    
+    while (child) {
+      const routeURL = child.url.map(({ path }) => path).join('/');
 
-  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: BreadcrumbModel[] = []): any[] {
-    const children: ActivatedRoute[] = route.children;
-
-    if (children.length === 0) {
-      return breadcrumbs;
-    }
-
-    for (const child of children) {
-      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
-
-      if (routeURL !== '') {
+      if (routeURL) {
         url += `/${routeURL}`;
       }
 
-      const label: string = child.snapshot.data[BreadcrumbsComponent.ROUTE_DATA_BREADCRUMB];
+      const label = child.data[BreadcrumbsComponent.ROUTE_DATA_BREADCRUMB];
       let label$: string | Observable<string>;
+
       if (label) {
         if (this.checkId(label)) {
-          const serviceToken = child.snapshot.data.service;
-          label$ = this.replaceId(label, child, serviceToken);
+          const selector = child.data.selector;
+          label$ = this.replaceId(label, child.params, selector);
         }
-        breadcrumbs.push({ label: label$ || label, url });
+        breadcrumbs.push({ label: label$ || of(label || ''), url });
       }
 
-      return this.createBreadcrumbs(child, url, breadcrumbs);
-    }
-  }
+      child = child.firstChild;
+    };
 
-  private destroySubscription(): void {
-    if (!!this.breadcrumbsSubscription) {
-      this.breadcrumbsSubscription.unsubscribe();
-      this.breadcrumbsSubscription = null;
-    }
+    return breadcrumbs;
   }
 
   private checkId(str: string): boolean {
@@ -79,19 +61,14 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   }
 
   private replaceId(
-    str: string, route: ActivatedRoute, serviceToken: InjectionToken<string>,
+    str: string, params: any, selector: any
   ): string | Observable<string> {
-    if (serviceToken) {
+    if (selector && params) {
       const [, key] = str.match(this.regexp);
-      const service: any = this.injector.get(serviceToken);
-      const { id } = route.snapshot.params;
-      return service.getItemById(id).pipe(map((item) => item[key]));
+      return this.store$.select(selector, params.id)
+        .pipe(map((item) => item[key]));
     }
 
     return str;
-  }
-
-  public getBreadcrumb({ label }): Observable<string> {
-    return !label || typeof label === 'string' ? of(label || '') : label;
   }
 }
