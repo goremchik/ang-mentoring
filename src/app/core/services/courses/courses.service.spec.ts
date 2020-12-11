@@ -128,4 +128,18 @@ describe('CourseService', () => {
     expect(spy).toHaveBeenCalledWith(err);
     observer.subscribe(res => expect(res).toEqual([]));
   });
+
+  it('updateCourses should set courses data', () => {
+    const subjectSpy = spyOn(service.subject$$, 'next');
+    service.updateCourses(courses);
+
+    expect(subjectSpy).toHaveBeenCalledWith(courses);
+    expect(service.courses).toEqual(courses);
+  });
+
+  it('resetLoader should reset loader status', () => {
+    const loaderSpy = spyOn(service.loader, 'setStatus');
+    service.resetLoader();
+    expect(loaderSpy).toHaveBeenCalledWith(false);
+  });
 });

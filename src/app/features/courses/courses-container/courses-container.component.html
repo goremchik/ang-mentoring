@@ -6,19 +6,19 @@
                 <app-add-course class="courses__add-btn"></app-add-course>
             </div>
 
-            <div *ngIf="courses.length">
+            <div *ngIf="(courses$$ | async)?.length">
                 <app-courses-list
-                    [courses]="courses"
+                    [courses]="courses$$ | async"
                     (delete)="onDelete($event)"
                 ></app-courses-list>
                 <app-load-more
-                    *ngIf="courses.length >= coursesCount"
+                    *ngIf="(courses$$ | async)?.length >= coursesCount"
                     class="content-block content-block--centered"
                     (loadMore)="onLoadMore()"
                 ></app-load-more>
             </div>
 
-            <div *ngIf="!courses.length"
+            <div *ngIf="!(courses$$ | async)?.length"
                 class="content-block content-block--centered courses__no-msg"
             >
                 No data. Fell free to add new course.

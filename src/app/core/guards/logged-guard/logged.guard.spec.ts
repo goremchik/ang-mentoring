@@ -1,5 +1,6 @@
 // Core
 import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
 // Services
@@ -12,7 +13,7 @@ describe('LoggedGuard', () => {
   let service: LoggedGuard;
   let isLogin = false;
   const AuthenticationServiceStub: Partial<AuthenticationService> = {
-    isAuthenticated: () => isLogin
+    isAuthenticated: () => of(isLogin),
   };
 
   beforeEach(() => {
@@ -31,11 +32,15 @@ describe('LoggedGuard', () => {
   });
 
   it('should redirect to root when logged in', () => {
-    expect(service.canActivate()).toEqual(true);
+    service.canActivate().subscribe((data) => {
+      expect(data).toEqual(true);
+    });
   });
 
   it('should allow redirect when not logged in', () => {
     isLogin = true;
-    expect(service.canActivate()).toEqual(service.router.parseUrl(ROOT_URL));
+    service.canActivate().subscribe((data) => {
+      expect(data).toEqual(service.router.parseUrl(ROOT_URL));
+    });
   });
 });

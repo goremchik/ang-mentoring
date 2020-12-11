@@ -1,8 +1,13 @@
 // Core
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 
 // Services
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+
+// Models
+import { IUser } from 'src/app/core';
 
 @Component({
   selector: 'app-auth-action',
@@ -10,13 +15,12 @@ import { AuthenticationService } from 'src/app/core/services/authentication/auth
   styleUrls: ['./auth-action.component.scss'],
 })
 export class AuthActionComponent implements OnInit {
-  isLoggedIn = false;
+  user$$: BehaviorSubject<IUser>;
 
   constructor(public authService: AuthenticationService) {}
 
   ngOnInit() {
-    // TODO: it will be changed dynamically after RxJS module
-    this.isLoggedIn = this.authService.isAuthenticated();
+    this.user$$ = this.authService.subject$$;
   }
 
   onLogoutClick(): void {

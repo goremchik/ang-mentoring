@@ -1,5 +1,7 @@
 // Core
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 
 // Services
@@ -16,13 +18,9 @@ export class LoggedGuard implements CanActivate {
     private authService: AuthenticationService,
   ) {}
 
-  canActivate(): boolean | UrlTree {
-    const isAuthenticated = this.authService.isAuthenticated();
-
-    if (isAuthenticated) {
-      return this.router.parseUrl(ROOT_URL);
-    }
-
-    return true;
+  canActivate(): Observable<boolean | UrlTree>  {
+    return this.authService.isAuthenticated().pipe(
+      map(data => data ? this.router.parseUrl(ROOT_URL) : true)
+    );
   }
 }

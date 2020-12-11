@@ -1,7 +1,4 @@
-<form 
-    class="search"
-    (submit)="onSubmit($event)"
->
+<div class="search">
     <app-input
         class="search__input"
         [value]="searchValue"
@@ -9,11 +6,4 @@
         placeholder="Text to search"
         (inputChanged)="onInput($event)"
     ></app-input>
-    <app-button
-        class="search__btn" 
-        text="Search"
-        type="submit"
-        (click)="onSubmit($event)"
-        modifier="success"
-    ></app-button>
-</form>
+</div>

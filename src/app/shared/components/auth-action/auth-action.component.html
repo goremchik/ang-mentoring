@@ -1,13 +1,20 @@
-<a class="auth-action login" [routerLink]="['/auth']" *ngIf="!isLoggedIn">
-    <app-icon code="user"></app-icon>
-    User login
-</a>
+<div class="auth-action">
+    <a class="auth-action__item login" [routerLink]="['/auth']" *ngIf="!(user$$ | async)">
+        <app-icon code="user"></app-icon>
+        Login
+    </a>
 
-<a  *ngIf="isLoggedIn"
-    class="auth-action logout"
-    (click)="onLogoutClick()"
-    [routerLink]="['/auth']"
->
-    <app-icon code="logout"></app-icon>
-    Log out
-</a>
+    <a class="auth-action__item auth-action__item--text" *ngIf="(user$$ | async)">
+        <app-icon code="user"></app-icon>
+        <span>{{ (user$$ | async)?.name?.first }} {{ (user$$ | async)?.name?.last }}</span>
+    </a>
+
+    <a *ngIf="(user$$ | async)"
+        class="auth-action__item logout"
+        (click)="onLogoutClick()"
+        [routerLink]="['/auth']"
+    >
+        <app-icon code="logout"></app-icon>
+        Log out
+    </a>
+</div>

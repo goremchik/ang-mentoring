@@ -79,4 +79,14 @@
             content: '\f00d';
         }
     }
+
+    &--loading {
+        padding: 0;
+        font-weight: 900;
+        font-size: 50px;
+
+        &::before {
+            content: '\f110';
+        }
+    }
 }

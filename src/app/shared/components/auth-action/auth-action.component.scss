@@ -1,9 +1,19 @@
 .auth-action {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+    &__item {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+        margin-left: 10px;
 
-    &:hover {
-        text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &--text {
+            cursor: default;
+            &:hover {
+                text-decoration: none;
+            }
+        }
     }
 }

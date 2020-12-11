@@ -4,16 +4,18 @@ import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler } from '@angular/c
 import { Observable } from 'rxjs';
 
 // Services
-import { AuthenticationService } from '../services/authentication/authentication.service';
+import { STORAGE_AUTH } from '../services/authentication/authentication.service';
+import { BrowserStorageService } from '../services/browser-storage/browser-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 constructor(
-    private authService: AuthenticationService,
+    private storage: BrowserStorageService,
 ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authService.getToken();
+    // Use here storage service, but not authentication, because I have cyclic dependency
+    const token = this.storage.getItem(STORAGE_AUTH);
     const authReq = token ? req.clone({
         setHeaders: {
           Authorization: token,
