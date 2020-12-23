@@ -2,8 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 // Components
 import { AddCourseContainerComponent } from './add-course-container.component';
@@ -12,20 +11,23 @@ import { AddCourseFormComponent } from '../add-course-form/add-course-form.compo
 // Mocks
 import { courses } from 'src/app/mock/courses';
 
-// Services
-import { CourseService } from 'src/app/core/services/courses/courses.service';
-import { HttpService } from 'src/app/core/services/http/http.service';
+// Store
+import * as coursesSelectors from 'src/app/core/store/courses/courses.selectors';
+import * as coursesActions from 'src/app/core/store/courses/courses.actions';
 
 describe('AddCourseContainerComponent', () => {
   let component: AddCourseContainerComponent;
   let fixture: ComponentFixture<AddCourseContainerComponent>;
   let de;
+  let store: MockStore;
 
-  const CourseServiceStub: Partial<CourseService> = {
-    updateItem: () => of(null),
-    createCourse: () => of(null),
-    getItemById: () => of(courses[0]),
+  const initialState = {
+    courses: {
+      currentItemId: '1',
+      entries: courses,
+    },
   };
+
   const authors = [{ id: 1, name: 'name', lastName: 'test' }];
 
   const bareFormData = {
@@ -34,7 +36,6 @@ describe('AddCourseContainerComponent', () => {
     authors,
     duration: '10',
     creationDate: '10/09/2020',
-    topRated: false,
   };
 
   const formData = {
@@ -44,23 +45,19 @@ describe('AddCourseContainerComponent', () => {
     authors,
     duration: 10,
     creationDate: new Date('10/09/2020'),
-    topRated: false,
   };
 
-  const updatedFormData = { ...formData, id: '1', topRated: true };
-
-  const homePage = ['/'];
+  const updatedFormData = { ...formData, id: '1' };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, HttpClientTestingModule ],
+      imports: [ RouterTestingModule ],
       declarations: [ AddCourseContainerComponent, AddCourseFormComponent ],
-      providers: [
-        HttpService,
-        { provide: CourseService, useValue: CourseServiceStub },
-      ],
+      providers: [ provideMockStore({ initialState }) ],
     })
     .compileComponents();
+
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
@@ -83,27 +80,24 @@ describe('AddCourseContainerComponent', () => {
   });
 
   it('onFormSubmit should create course', () => {
-    const spyCreate = spyOn(component.courseService, 'createCourse')
-      .and.returnValue(of(null));
-    component.course = null;
+    const spyCreate = spyOn(component.store$, 'dispatch');
+    store.overrideSelector(coursesSelectors.getCurrentItem, null);
+    store.refreshState();
+    fixture.detectChanges();
     component.onFormSubmit(bareFormData);
 
-    expect(spyCreate).toHaveBeenCalledWith(formData);
+    expect(spyCreate).toHaveBeenCalledWith(
+      coursesActions.createCourse({ course: formData })
+    );
   });
 
   it('onFormSubmit should update course', () => {
-    const spyUpdate = spyOn(component.courseService, 'updateItem')
-      .and.returnValue(of(null));
-
-    component.course = courses[0];
+    const spyCreate = spyOn(component.store$, 'dispatch');
+    component.courseId = '1';
     component.onFormSubmit(bareFormData);
 
-    expect(spyUpdate).toHaveBeenCalledWith(updatedFormData);
-  });
-
-  it('successHandler should redirect to home', () => {
-    const spyRedirect = spyOn(component.router, 'navigate');
-    component.successHandler();
-    expect(spyRedirect).toHaveBeenCalledWith(homePage);
+    expect(spyCreate).toHaveBeenCalledWith(
+      coursesActions.updateCourse({ course: updatedFormData })
+    );
   });
 });

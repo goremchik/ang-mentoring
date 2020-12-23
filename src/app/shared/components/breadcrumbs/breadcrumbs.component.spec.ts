@@ -1,71 +1,61 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 // Components
 import { BreadcrumbsComponent } from './breadcrumbs.component';
 
 // Mocks
-import { breadcrumbs as breadcrumbsMock, courses } from 'src/app/mock';
+import { breadcrumbs, courses } from 'src/app/mock';
 
-// Models
-import { BreadcrumbModel } from 'src/app/core';
-
-// Services
-import { COURSES_SERVICE_TOKEN, CourseService } from 'src/app/core/services/courses/courses.service';
+// Store
+import * as courseSelectors from 'src/app/core/store/courses/courses.selectors';
 
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
   let fixture: ComponentFixture<BreadcrumbsComponent>;
+  let store: MockStore;
 
   const title = 'Video Course 1';
-  const [breadcrumbParent, breadcrumbBare] = breadcrumbsMock;
+  const [breadcrumbParent, breadcrumbBare] = breadcrumbs;
 
-  const activatedRouteStub = {
-    root: {
-      children: [{
-        snapshot: {
-          data: { breadcrumb: breadcrumbParent.label },
-          url: [{ path: 'courses' }],
-        },
-        children: [{
-          snapshot: {
-            data: { breadcrumb: breadcrumbBare.label, service: COURSES_SERVICE_TOKEN },
-            url: [{ path: '1' }],
-            params: { id : '1' }
-          },
-          children: [],
-        }],
-      }],
+  const routerRoot = {
+    data: { breadcrumb: breadcrumbParent.label },
+    url: [{ path: 'courses' }],
+
+    firstChild: {
+      data: {
+        breadcrumb: breadcrumbBare.label,
+        selector: courseSelectors.getItemById,
+      },
+      url: [{ path: '1' }],
+      params: { id : '1' },
+
+      firstChild: null,
     },
   };
 
-  const breadcrumbs: BreadcrumbModel[] = [
-    { ...breadcrumbParent },
-    { ...breadcrumbBare, label: of(title) }
-  ];
+  const initialState = {
+    router: {
+      state: { root: routerRoot }
+    },
+    courses: { entries: courses }
+  };
 
   const SELECTOR_BREADCRUMB = '.breadcrumbs__item';
   const SELECTOR_CURRENT_BREADCRUMB = '.breadcrumbs__link--selected';
   const SELECTOR_LINK = '.breadcrumbs__link';
 
-  const obj: Partial<CourseService> = {
-    getItemById: () => of(courses[0])
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, HttpClientTestingModule ],
+      imports: [ RouterTestingModule ],
       declarations: [BreadcrumbsComponent],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: COURSES_SERVICE_TOKEN, useValue: obj },
-      ],
+      providers: [ provideMockStore({ initialState }) ],
     })
       .compileComponents();
+
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
@@ -80,7 +70,7 @@ describe('BreadcrumbsComponent', () => {
 
   it('should render all breadcrumbs', () => {
     const links = fixture.nativeElement.querySelectorAll(SELECTOR_BREADCRUMB);
-    expect(links.length).toEqual(breadcrumbsMock.length);
+    expect(links.length).toEqual(breadcrumbs.length);
   });
 
   it('should render id specific breadcrumb', () => {

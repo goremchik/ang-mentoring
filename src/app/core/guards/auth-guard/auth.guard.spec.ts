@@ -1,30 +1,34 @@
 // Core
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
-// Services
-import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 // Guards
 import { AuthGuard, AUTH_URL } from './auth.guard';
 
+// Store
+import * as userSelectors from 'src/app/core/store/user/user.selectors';
+
+// Mocks
+import { user } from 'src/app/mock';
+
 describe('AuthGuard', () => {
   let service: AuthGuard;
   let isLogin = false;
-  const AuthenticationServiceStub: Partial<AuthenticationService> = {
-    isAuthenticated: () => of(isLogin)
+  let store: MockStore;
+
+  const initialState = {
+    user: { profile: null },
   };
 
   beforeEach(() => {
     isLogin = false;
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule ],
-      providers: [
-        { provide: AuthenticationService, useValue: AuthenticationServiceStub },
-    ],
+      providers: [ provideMockStore({ initialState }) ],
     });
     service = TestBed.inject(AuthGuard);
+    store = TestBed.inject(MockStore);
   });
 
   it('should be created', () => {
@@ -32,7 +36,9 @@ describe('AuthGuard', () => {
   });
 
   it('should allow redirect when logged in', () => {
-    isLogin = true;
+    store.overrideSelector(userSelectors.getUser, user);
+    store.refreshState();
+
     service.canActivate().subscribe((data) => {
       expect(data).toEqual(true);
     });

@@ -1,6 +1,6 @@
 // Core
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,19 +9,21 @@ import { Observable } from 'rxjs';
 export class HttpService {
   constructor(private http: HttpClient) { }
 
-  get<T>(url: string, options?): Observable<HttpEvent<T>> {
-    return this.http.get<T>(url, options);
+  get<T>(url: string, options = {}): Observable<T> {
+    return this.http.get<T>(url, {
+      ...options,
+    });
   }
 
-  post<T>(url: string, options?, data?): Observable<HttpEvent<T>> {
-    return this.http.post<T>(url, options, data);
+  post<T>(url: string, data?): Observable<T> {
+    return this.http.post<T>(url, data);
   }
 
-  patch<T>(url: string, options?, data?): Observable<HttpEvent<T>> {
-    return this.http.patch<T>(url, options, data);
+  patch<T>(url: string, data?): Observable<T> {
+    return this.http.patch<T>(url, data);
   }
 
-  delete<T>(url: string, options?): Observable<HttpEvent<T>> {
-    return this.http.delete<T>(url, options);
+  delete<T>(url: string): Observable<T> {
+    return this.http.delete<T>(url);
   }
 }

@@ -1,7 +1,9 @@
 <section class="login">
     <div class="login__content content-block">
         <h2 class="login__title">Login</h2>
-        <p class="login__error" *ngIf="errorText">{{ errorText }}</p>
+        <p class="login__error" *ngIf="errorText$ | async">
+            {{ errorText$ | async }}
+        </p>
 
         <app-login-form 
             class="login__form"

@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoursesContainerComponent } from './courses-container/courses-container.component';
 import { AddCourseContainerComponent } from './add-course-container/add-course-container.component';
 
-// Services
-import { COURSES_SERVICE_TOKEN } from 'src/app/core/services/courses/courses.service';
+// Store
+import * as coursesSelectors from 'src/app/core/store/courses/courses.selectors';
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: ':id',
     component: AddCourseContainerComponent,
-    data: { breadcrumb: '{{title}}', service: COURSES_SERVICE_TOKEN },
+    data: { breadcrumb: '{{title}}', selector: coursesSelectors.getItemById },
   },
 ];
 

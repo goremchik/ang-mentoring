@@ -1,16 +1,16 @@
 // Core
-import {
-  Component, ViewChild, OnInit, ChangeDetectorRef, ChangeDetectionStrategy
-} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 // Models
 import { IAuth } from 'src/app/core';
 
-// Services
-import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+// Store
+import * as userActions from 'src/app/core/store/user/user.actions';
+import * as userSelectors from 'src/app/core/store/user/user.selectors';
 
 // Components
 import { LoginFormComponent } from '../login-form/login-form.component';
@@ -22,37 +22,23 @@ import { routeUtils } from 'src/app/utils';
   selector: 'app-login-container',
   templateUrl: './login-container.component.html',
   styleUrls: ['./login-container.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginContainerComponent implements OnInit {
-  errorText = '';
+  errorText$: Observable<string>;
   @ViewChild(LoginFormComponent) form: LoginFormComponent;
 
   constructor(
-    public authService: AuthenticationService,
-    public router: Router,
+    public store$: Store,
     public titleService: Title,
     public activatedRoute: ActivatedRoute,
-    private ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
     this.titleService.setTitle(routeUtils.getTitle(this.activatedRoute));
-  }
-
-  handleError = (err: HttpErrorResponse): void => {
-    this.errorText = err.error;
-    this.ref.markForCheck();
-  }
-
-  handleSuccess = (): void => {
-    this.form.clearForm();
-    this.router.navigate(['/']);
+    this.errorText$ = this.store$.select(userSelectors.getError);
   }
 
   onFormSubmit(authData: IAuth): void {
-    this.errorText = '';
-    this.authService.login(authData)
-      .subscribe(this.handleSuccess, this.handleError);
+    this.store$.dispatch(userActions.login(authData))
   }
 }

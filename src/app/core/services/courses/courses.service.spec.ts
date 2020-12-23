@@ -44,7 +44,7 @@ describe('CourseService', () => {
     );
     service.getList();
     expect(spy).toHaveBeenCalledWith('api/courses/', {
-      params: { textFragment: '', start: '0', count: '5', sort: '' },
+      params: { textFragment: '', start: '0', count: '5', sort: 'date' },
     });
   });
 
@@ -110,36 +110,5 @@ describe('CourseService', () => {
 
   it('mapDataToCourse should convert request data to course', () => {
     expect(service.mapDataToCourse(serverData)).toEqual(courseData);
-  });
-
-  const err = 'error';
-  it('handleError should call logger and return null', () => {
-    const spy = spyOn(service.logger, 'error');
-    const observer = service.handleError(err);
-
-    expect(spy).toHaveBeenCalledWith(err);
-    observer.subscribe(res => expect(res).toEqual(null));
-  });
-
-  it('handleArrayError should call logger and return empty array', () => {
-    const spy = spyOn(service.logger, 'error');
-    const observer = service.handleArrayError(err);
-
-    expect(spy).toHaveBeenCalledWith(err);
-    observer.subscribe(res => expect(res).toEqual([]));
-  });
-
-  it('updateCourses should set courses data', () => {
-    const subjectSpy = spyOn(service.subject$$, 'next');
-    service.updateCourses(courses);
-
-    expect(subjectSpy).toHaveBeenCalledWith(courses);
-    expect(service.courses).toEqual(courses);
-  });
-
-  it('resetLoader should reset loader status', () => {
-    const loaderSpy = spyOn(service.loader, 'setStatus');
-    service.resetLoader();
-    expect(loaderSpy).toHaveBeenCalledWith(false);
   });
 });

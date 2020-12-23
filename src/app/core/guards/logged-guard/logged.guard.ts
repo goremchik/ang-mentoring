@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CanActivate, Router, UrlTree } from '@angular/router';
+import { Store, select } from '@ngrx/store';
 
-// Services
-import { AuthenticationService } from '../../services/authentication/authentication.service';
+// Store
+import * as userSelectors from '../../store/user/user.selectors';
 
 export const ROOT_URL = '/';
 
@@ -15,12 +16,13 @@ export const ROOT_URL = '/';
 export class LoggedGuard implements CanActivate {
   constructor(
     public router: Router,
-    private authService: AuthenticationService,
+    private store$: Store,
   ) {}
 
   canActivate(): Observable<boolean | UrlTree>  {
-    return this.authService.isAuthenticated().pipe(
-      map(data => data ? this.router.parseUrl(ROOT_URL) : true)
+    return this.store$.pipe(
+      select(userSelectors.getUser),
+      map(data => !!data ? this.router.parseUrl(ROOT_URL) : true)
     );
   }
 }

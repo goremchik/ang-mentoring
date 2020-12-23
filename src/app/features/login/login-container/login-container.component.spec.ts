@@ -1,38 +1,41 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpErrorResponse } from '@angular/common/http';
-import { of } from 'rxjs';
-
-// Services
-import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 
 // Components
 import { LoginContainerComponent } from './login-container.component';
 import { LoginFormComponent } from '../login-form/login-form.component';
 
+// Store
+import * as userActions from 'src/app/core/store/user/user.actions';
+import * as userSelectors from 'src/app/core/store/user/user.selectors';
+
 describe('LoginContainerComponent', () => {
   let component: LoginContainerComponent;
   let fixture: ComponentFixture<LoginContainerComponent>;
   let de;
+  let store: MockStore;
 
-  const token = 'token';
+  const SELECTOR_ERROR = '.login__error';
   const userData = { login: 'e', password: 'p' };
-  const AuthenticationServiceStub = {
-    login: () => null,
+  const initialState = {
+    user: {
+      profile: null,
+      error: '',
+    },
   };
-
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [ RouterTestingModule ],
       declarations: [ LoginContainerComponent, LoginFormComponent ],
-      providers: [
-        { provide: AuthenticationService, useValue: AuthenticationServiceStub }
-      ],
+      providers: [ provideMockStore({ initialState }) ],
     })
     .compileComponents();
+
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
@@ -42,8 +45,9 @@ describe('LoginContainerComponent', () => {
     de = fixture.debugElement;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('error should be hidden', () => {
+    const loaderObj = de.query(By.css(SELECTOR_ERROR));
+    expect(loaderObj).toBeFalsy();
   });
 
   it('formSubmit should call onFormSubmit', () => {
@@ -51,33 +55,21 @@ describe('LoginContainerComponent', () => {
 
     const form = de.query(By.directive(LoginFormComponent)).componentInstance;
     form.formSubmit.emit(userData);
-
     expect(spy).toHaveBeenCalledWith(userData);
   });
 
-  it('onFormSubmit should clear error and login', () => {
-    const spyLogin = spyOn(component.authService, 'login')
-      .and.returnValue(of({ token }));
+  it('onFormSubmit should login', () => {
+    const spyLogin = spyOn(component.store$, 'dispatch');
     component.onFormSubmit(userData);
-
-    expect(spyLogin).toHaveBeenCalledWith(userData);
-    expect(component.errorText).toBe('');
+    expect(spyLogin).toHaveBeenCalledWith(userActions.login(userData));
   });
 
-  it('handleError should set error text', () => {
-    const error = 'error';
-    component.handleError(new HttpErrorResponse({ error }));
-    expect(component.errorText).toBe(error);
+  it('should show error on login error', () => {
+    store.overrideSelector(userSelectors.getError, 'error');
+    store.refreshState();
+    fixture.detectChanges();
+
+    const loaderBlock = de.query(By.css(SELECTOR_ERROR)).componentInstance;
+    expect(loaderBlock).toBeTruthy();
   });
-
-  it('handleSuccess should login, clear form and redirect to home page', () => {
-    const spyClear = spyOn(component.form, 'clearForm');
-    const spyNavigate = spyOn(component.router, 'navigate');
-
-    component.handleSuccess();
-
-    expect(spyClear).toHaveBeenCalled();
-    expect(spyNavigate).toHaveBeenCalledWith(['/']);
-  });
-  
 });
