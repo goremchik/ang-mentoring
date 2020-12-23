@@ -1,30 +1,43 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 
 // Components
 import { AddCourseFormComponent } from './add-course-form.component';
+import { DurationInputComponent } from 'src/app/shared/components/duration-input/duration-input.component';
+import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
+import { AutocompleteInputComponent } from 'src/app/shared/components/autocomplete-input/autocomplete-input.component';
+
+// Pipes
+import { DurationPipe } from 'src/app/shared/pipes/duration/duration.pipe';
 
 // Mocks
-import { courses } from 'src/app/mock';
+import { courses, authors } from 'src/app/mock';
 
 describe('AddCourseFormComponent', () => {
   let component: AddCourseFormComponent;
   let fixture: ComponentFixture<AddCourseFormComponent>;
   let de;
 
-  const newTitle = 'new title';
-  const SELECTOR_SUBMIT = '.form__save';
+  const SELECTOR_FORM = 'form';
 
   const title = 'test title';
   const description = 'test description';
   const duration = '10';
   const creationDate = '10/20/2020';
-  const authors = [{ id: 1, name: 'test', lastName: 'test' }];
-  const formData = { title, description, duration, creationDate, authors };
+  const formData = { id: null, title, description, duration, creationDate, authors };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddCourseFormComponent ],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [
+        AddCourseFormComponent,
+        DurationInputComponent,
+        DatePickerComponent,
+        AutocompleteInputComponent,
+        DurationPipe,
+      ],
+      providers: [ FormBuilder ],
     })
     .compileComponents();
   }));
@@ -32,11 +45,6 @@ describe('AddCourseFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddCourseFormComponent);
     component = fixture.componentInstance;
-    component.title = title;
-    component.description = description;
-    component.duration = duration;
-    component.creationDate = creationDate;
-    component.authors = authors;
 
     fixture.detectChanges();
     de = fixture.debugElement;
@@ -47,48 +55,35 @@ describe('AddCourseFormComponent', () => {
   });
 
   it('should init course data', () => {
-    component.title = '';
-    component.description = '';
-    component.duration = '';
-    component.creationDate = '';
-    component.authors = [];
+    const spy = spyOn(component.form, 'patchValue');
     component.course = courses[0];
     component.ngOnChanges();
 
-    expect(component.title).toEqual(courses[0].title);
-    expect(component.description).toEqual(courses[0].description);
-    expect(component.duration).toEqual(courses[0].duration.toString());
-    expect(component.creationDate).toEqual(courses[0].creationDate.toString());
-    expect(component.authors).toEqual(courses[0].authors);
+    expect(spy).toHaveBeenCalledWith(courses[0]);
   });
 
   it('should call onSubmit', () => {
     const spy = spyOn(component, 'onSubmit');
-    const button = de.nativeElement.querySelector(SELECTOR_SUBMIT);
-    button.click();
+    const form = de.nativeElement.querySelector(SELECTOR_FORM);
+    form.dispatchEvent(new Event('submit'));
 
     expect(spy).toHaveBeenCalled();
   });
 
-  it('onSubmit should emit event', () => {
+  it('onSubmit should emit default course data', () => {
     const spy = spyOn(component.formSubmit, 'emit');
-    component.onSubmit(new Event('submit'));
+    component.course = courses[0];
+    component.ngOnChanges();
+    component.onSubmit();
+    const { topRated, ...expectedData } = courses[0];
+    expect(spy).toHaveBeenCalledWith(expectedData);
+  });
 
+  it('onSubmit should emit form data', () => {
+    const spy = spyOn(component.formSubmit, 'emit');
+    component.form.patchValue(formData);
+
+    component.onSubmit();
     expect(spy).toHaveBeenCalledWith(formData);
-  });
-
-  it('form should be valid', () => {
-    expect(component.isValid()).toBeTrue();
-  });
-
-  it('form should be invalid', () => {
-    component.title = '';
-    fixture.detectChanges();
-    expect(component.isValid()).toBeFalse();
-  });
-
-  it('inputHandler should change component state', () => {
-    component.inputHandler(newTitle, 'title');
-    expect(component.title).toEqual(newTitle);
   });
 });

@@ -1,7 +1,18 @@
+@import 'mixins/input';
+
 .form {
-    &__input {
+    @include define-input-elements;
+
+    &__input-group {
         margin-top: 12px;
-        display: block;
+
+        &--quarter {
+            width: 25%;
+        }
+
+        &--half {
+            width: 50%;
+        }
     }
 
     &__actions {
@@ -12,5 +23,17 @@
 
     &__cancel {
         margin-right: 12px;
+    }
+
+    &__input-block {
+        display: block;
+        width: 100%;
+    }
+
+    &__input {
+        &--autocomplete {
+            padding: 4px 5px;
+            line-height: 29px;
+        }
     }
 }

@@ -2,7 +2,7 @@
 import { createSelector } from '@ngrx/store';
 
 // Models
-import { ICoursesState, IAppState, ICourse } from '../..';
+import { ICoursesState, IAppState, ICourse, IAuthor } from '../..';
 
 const getState = (state: IAppState): ICoursesState => state.courses;
 
@@ -43,4 +43,9 @@ export const getItemById = createSelector(
 export const getItemIdToDelete = createSelector(
   getState,
   (state: ICoursesState): string => state.itemIdToDelete,
+);
+
+export const getAuthors = createSelector(
+  getState,
+  (state: ICoursesState): IAuthor[] => state.authors || [],
 );

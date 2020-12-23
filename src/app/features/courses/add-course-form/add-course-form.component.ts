@@ -1,8 +1,9 @@
 // Core
 import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 // Models
-import { ICourse } from 'src/app/core';
+import { ICourse, IAuthor } from 'src/app/core';
 
 @Component({
   selector: 'app-add-course-form',
@@ -11,48 +12,35 @@ import { ICourse } from 'src/app/core';
 })
 export class AddCourseFormComponent implements OnChanges {
   @Input() course: ICourse;
+  @Input() authors: IAuthor[] = [];
   @Output() formSubmit = new EventEmitter<any>();
 
-  title = '';
-  description = '';
-  duration = '';
-  creationDate = '';
-  authors = [];
+  form: FormGroup;
+
+  constructor(public formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      id: [null],
+      title: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
+      duration: [0, [Validators.required, Validators.min(1)]],
+      creationDate: [new Date(), Validators.required],
+      authors: [null, Validators.required],
+    })
+  }
 
   ngOnChanges() {
-    this.title = this.title || this.course?.title || '';
-    this.description = this.description || this.course?.description || '';
-    this.duration = this.duration || this.course?.duration.toString() || '';
-    this.creationDate = this.creationDate
-      || this.course?.creationDate.toString() || '';
-
-    this.authors = this.course?.authors || [];
-  }
-
-  onSubmit(e: Event): void {
-    e.preventDefault();
-    if (!this.isValid()) {
-      return;
+    if (this.course) {
+      this.form.patchValue(this.course);
     }
-
-    this.formSubmit.emit({
-      title: this.title,
-      description: this.description,
-      duration: this.duration,
-      creationDate: this.creationDate,
-      authors: this.authors,
-    });
   }
 
-  isValid(): boolean {
-    return !!this.authors
-      && !!this.creationDate
-      && !!this.description
-      && !!this.title
-      && !!this.duration;
+  onSubmit(): void {
+    const formData = Object.entries(this.form.controls)
+      .reduce((acc, [key, item]) => ({ ...acc, [key]: item.value }), {});
+    this.formSubmit.emit(formData);
   }
 
-  inputHandler(value, name): void {
-    this[name] = value;
+  getField(fieldName: string): AbstractControl {
+    return this.form.get(fieldName);
   }
 }

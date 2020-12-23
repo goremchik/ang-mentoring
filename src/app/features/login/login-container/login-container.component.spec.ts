@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { LoginContainerComponent } from './login-container.component';
@@ -29,7 +30,7 @@ describe('LoginContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, ReactiveFormsModule ],
       declarations: [ LoginContainerComponent, LoginFormComponent ],
       providers: [ provideMockStore({ initialState }) ],
     })

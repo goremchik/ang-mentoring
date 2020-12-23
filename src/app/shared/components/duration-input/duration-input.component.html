@@ -1,18 +1,10 @@
-<label class="input input--{{modifier}}">
-    <div class="input__container">
-        <span class="input__label" *ngIf="!!label">{{label}}</span>
-        <span class="input__required" *ngIf="required">*required</span>
-
-        <input
-            [name]="name"
-            [placeholder]="placeholder"
-            type="number"
-            class="input__item"
-            [(ngModel)]="value"
-            (ngModelChange)="onInput($event)"
-        />
-    </div>
-    <div *ngIf="value" class="input__info">
-        {{convertToNumber() | duration}}
-    </div>
-</label>
+<div class="input">
+  <input
+    #input
+    [placeholder]="placeholder"
+    type="text"
+    class="input__item {{invalid ? 'input__item--error' : ''}}"   
+    (input)="onInput($event)"
+  />
+  <div class="input__info">{{value | duration}}</div>
+</div>

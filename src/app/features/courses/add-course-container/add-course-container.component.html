@@ -5,6 +5,7 @@
             [course]="course$ | async"
             class="add-course__form"
             (formSubmit)="onFormSubmit($event)"
+            [authors]="(authors$ | async) || []"
         ></app-add-course-form>
     </div>
 </section>

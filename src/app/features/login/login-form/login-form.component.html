@@ -1,36 +1,37 @@
-<form class="login-form" (submit)="onSubmit($event)">
-    <app-input
-        class="login-form__input"
-        label="E-mail:"
-        name="email"
-        [value]="email"
-        [required]="true"
-        placeholder="Enter e-mail"
-        type="text"
-        (inputChanged)="onEmailChange($event)"
-    ></app-input>
+<form [formGroup]="form" class="login-form" (submit)="onSubmit()">
+  <label class="login-form__input-group">
+    <span class="login-form__label">E-mail:</span>
+    <span class="login-form__required">*required</span>
 
-    <app-input
-        class="login-form__input"
-        label="Password:"
-        name="password"
-        [value]="password"
-        [required]="true"
-        placeholder="Enter password"
-        type="password"
-        (inputChanged)="onPasswordChange($event)"
-    ></app-input>
+    <input
+      class="login-form__input"
+      formControlName="login"
+      placeholder="Enter e-mail"
+      type="text"
+    />
+  </label>
 
-    <div class="login-form__actions">
-        <a class="login-form__link" [routerLink]="['#forgot-password']">
-            Forgot password?
-        </a>
-        <app-button 
-            type="submit" 
-            [btnDisabled]="!isValid()"
-            text="Login"
-            modifier="success"
-            (click)="onSubmit($event)"
-        ></app-button>
-    </div>
+  <label class="login-form__input-group">
+    <span class="login-form__label">Password:</span>
+    <span class="login-form__required">*required</span>
+
+    <input
+      class="login-form__input"
+      formControlName="password"
+      placeholder="Enter password"
+      type="password"
+    />
+  </label>
+
+  <div class="login-form__actions">
+    <a class="login-form__link" [routerLink]="['#forgot-password']">
+      Forgot password?
+    </a>
+    <app-button 
+      type="submit" 
+      [btnDisabled]="!form.valid"
+      text="Login"
+      modifier="success"
+    ></app-button>
+  </div>
 </form>

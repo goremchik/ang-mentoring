@@ -74,9 +74,16 @@ export class CoursesEffects {
   loadCourseById$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadCourseById),
     withLatestFrom(this.store$.select(selectors.getCurrentItem)),
-    mergeMap(([{ id }, course]) => course
-      ? of(globalActions.noAction())
-      : this.coursesService.getItemById(id)
+    mergeMap(([{ id }, course]) => {
+      if (!id) {
+        return of(actions.setCurrentLoadedItem({ course: null }));
+      }
+
+      if (course) {
+        return of(globalActions.noAction());
+      }
+  
+      return this.coursesService.getItemById(id)
         .pipe(
           map(course => actions.setCurrentLoadedItem({ course })),
           catchError(error =>  {
@@ -85,7 +92,7 @@ export class CoursesEffects {
           }),
           finalize(() => this.store$.dispatch(globalActions.removeLoader())),
         )
-    ),
+    }),
   ));
 
   updateCourse$ = createEffect(() => this.actions$.pipe(
@@ -119,6 +126,27 @@ export class CoursesEffects {
             return of(globalActions.noAction());
           }),
           tap(() => this.router.navigate(['/'])),
+          finalize(() => this.store$.dispatch(globalActions.removeLoader())),
+        );
+    })
+  ));
+
+  loadAuthors$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.loadAuthors),
+    withLatestFrom(this.store$.select(selectors.getAuthors)),
+    mergeMap(([_, authors]) => {
+      if (authors.length) {
+        return of(globalActions.noAction());
+      }
+
+      this.store$.dispatch(globalActions.addLoader());
+      return this.coursesService.getAuthors()
+        .pipe(
+          map(authors => actions.setAuthors({ authors })),
+          catchError(error =>  {
+            this.logger.error(error);
+            return of(globalActions.noAction());
+          }),
           finalize(() => this.store$.dispatch(globalActions.removeLoader())),
         );
     })

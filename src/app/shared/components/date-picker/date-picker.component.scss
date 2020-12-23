@@ -1,6 +1,5 @@
-@import 'variables';
 @import 'mixins/input';
 
 .input {
-    @include define-input-elements(&);
+    @include get-input-styles;
 }

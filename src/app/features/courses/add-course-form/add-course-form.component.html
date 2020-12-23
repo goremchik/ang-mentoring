@@ -1,75 +1,82 @@
-<form class="form" (submit)="onSubmit($event)">
-    <app-input
-        class="form__input"
-        name="title" 
-        placeholder="Add title"
-        label="Title:"
-        modifier="full"
-        [required]="true"
-        [value]="title || course?.title"
-        (inputChanged)="inputHandler($event, 'title')"
-    ></app-input>
+<form class="form" [formGroup]="form" (submit)="onSubmit()">
+  <input formControlName="id" type="hidden" />
+  
+  <label class="form__input-group">
+    <span class="form__label">Title:</span>
+    <span class="form__required">*required</span>
 
-    <app-textarea
-        class="form__input"
-        name="description" 
-        placeholder="Add description"
-        label="Description:"
-        modifier="full"
-        [required]="true"
-        [value]="description || course?.description"
-        (inputChanged)="inputHandler($event, 'description')"
-    ></app-textarea>
+    <input
+      formControlName="title"
+      placeholder="Add title"
+      type="text"
+      class="form__input {{getField('title').valid ? '' : 'form__input--error'}}"
+    />
+  </label>
 
-    <app-duration-input
-        class="form__input"
-        name="duration" 
+  <label class="form__input-group">
+    <span class="form__label">Description:</span>
+    <span class="form__required">*required</span>
+
+    <textarea
+      formControlName="description"
+      placeholder="Add description"
+      class="form__input {{getField('description').valid ? '' : 'form__input--error'}}"
+    ></textarea>
+  </label>
+
+  
+    <label class="form__input-group form__input-group--quarter">
+      <span class="form__label">Duration:</span>
+      <span class="form__required">*required</span>
+
+      <app-duration-input
+        formControlName="duration"
         placeholder="minutes"
-        label="Duration:"
-        modifier="quarter"
-        [required]="true"
-        [value]="duration || course?.duration"
-        (inputChanged)="inputHandler($event, 'duration')"
-    ></app-duration-input>
+        class="form__input-block"
+        [invalid]="!getField('duration').valid"
+      ></app-duration-input>
+    </label>
+
+  <label class="form__input-group form__input-group--quarter">
+    <span class="form__label">Date:</span>
+    <span class="form__required">*required</span>
 
     <app-date-picker
-        class="form__input"
-        name="creationDate" 
+        formControlName="creationDate"
         placeholder="MM/DD/YYYY"
-        label="Date:"
-        modifier="quarter"
-        [required]="true"
-        [value]="creationDate || course?.creationDate"
-        (inputChanged)="inputHandler($event, 'creationDate')"
+        class="form__input-block"
+        [invalid]="!getField('creationDate').valid"
     ></app-date-picker>
+  </label>
+
+  <label class="form__input-group form__input-group--half">
+    <span class="form__label">Authors:</span>
+    <span class="form__required">*required</span>
 
     <app-autocomplete-input
-        class="form__input"
-        name="authors" 
-        placeholder="Start typing"
-        label="Authors:"
-        modifier="half"
-        [required]="true"
-        [value]="authors || course?.authors"
-        (inputChanged)="inputHandler($event, 'authors')"
+      formControlName="authors"
+      class="form__input-block"
+      placeholder="Start typing"
+      [suggestions]="authors"
+      [invalid]="!getField('authors').valid"
     ></app-autocomplete-input>
+  </label>
 
-    <div class="form__actions">
-        <app-button
-            class="form__cancel"
-            type="link"
-            text="Cancel"
-            modifier="grey"
-            link="/"
-        ></app-button>
+  <div class="form__actions">
+      <app-button
+          class="form__cancel"
+          type="link"
+          text="Cancel"
+          modifier="grey"
+          link="/"
+      ></app-button>
 
-        <app-button
-            class="form__save"
-            text="Save"
-            type="submit"
-            modifier="success"
-            [btnDisabled]="!this.isValid()"
-            (click)="onSubmit($event)"
-        ></app-button>
-    </div>
+      <app-button
+          class="form__save"
+          text="Save"
+          type="submit"
+          modifier="success"
+          [btnDisabled]="!form.valid"
+      ></app-button>
+  </div>
 </form>

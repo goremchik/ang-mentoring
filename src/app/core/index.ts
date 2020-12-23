@@ -13,3 +13,4 @@ export * from './models/courses-state.model';
 export * from './models/user-state.model';
 export * from './models/app-state.model';
 export * from './models/global-state.model';
+export * from './models/author.model';

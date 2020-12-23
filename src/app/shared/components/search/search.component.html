@@ -1,9 +1,16 @@
-<div class="search">
-    <app-input
-        class="search__input"
-        [value]="searchValue"
-        name="search"
+<form class="search" [formGroup]="form" (submit)="onSubmit()">
+    <input
+        [ngClass]="{
+            'search__input': true,
+            'search__input--error': !getField('search').valid
+        }"
+        formControlName="search"
         placeholder="Text to search"
-        (inputChanged)="onInput($event)"
-    ></app-input>
-</div>
+    />
+    <app-button 
+        class="search__btn"
+        type="submit"
+        text="Search"
+        modifier="success"
+    ></app-button>
+</form>

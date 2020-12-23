@@ -1,6 +1,18 @@
-@import 'variables';
 @import 'mixins/input';
 
 .input {
-    @include define-input-elements(&, true);
+    position: relative;
+    
+    &__item {
+        @include get-input-styles;
+    }
+
+    &__info {
+        position: absolute;
+        left: 100%;
+        top: 0;
+        line-height: 40px;
+        margin-left: 19px;
+        white-space: nowrap;
+    }
 }

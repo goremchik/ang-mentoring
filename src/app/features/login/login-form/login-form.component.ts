@@ -1,5 +1,6 @@
 // Core
 import { Component, Output, EventEmitter } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 // Models
 import { IAuth } from 'src/app/core';
@@ -11,38 +12,23 @@ import { IAuth } from 'src/app/core';
 })
 export class LoginFormComponent {
   @Output() formSubmit = new EventEmitter<IAuth>();
+  form: FormGroup;
 
-  email = '';
-  password = '';
-
-  isValid(): boolean {
-    return !!this.email && !!this.password;
+  constructor(public formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      login: ['', [Validators.required, Validators.maxLength(50)]],
+      password: ['', [Validators.required, Validators.maxLength(50)]],
+    })
   }
 
-  onSubmit(e: Event): boolean {
-    e.preventDefault();
-
-    if (!this.isValid()) {
-      return false;
-    }
-
+  onSubmit(): void {
     this.formSubmit.emit({
-      login: this.email,
-      password: this.password,
+      login: this.getField('login').value,
+      password: this.getField('password').value,
     });
-    return true;
   }
 
-  onEmailChange(value): void {
-    this.email = value;
-  }
-
-  onPasswordChange(value): void {
-    this.password = value;
-  }
-
-  clearForm(): void {
-    this.email = '';
-    this.password = '';
+  getField(fieldName: string): AbstractControl {
+    return this.form.get(fieldName);
   }
 }

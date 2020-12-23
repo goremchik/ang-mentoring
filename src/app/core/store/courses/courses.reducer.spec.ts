@@ -2,7 +2,7 @@ import { reducer, initialState } from './courses.reducer';
 import * as actions from './courses.actions';
 
 // Mocks
-import { courses } from 'src/app/mock';
+import { courses, authors } from 'src/app/mock';
 
 describe('Courses reducer', () => {
   const courseId = '1';
@@ -39,5 +39,10 @@ describe('Courses reducer', () => {
   it('on setCurrentLoadedItem', () => {
       expect(reducer(initialState, actions.setCurrentLoadedItem({ course })))
         .toEqual({ ...initialState, currentLoadedItem: course });
+  });
+
+  it('on setAuthors', () => {
+      expect(reducer(initialState, actions.setAuthors({ authors })))
+        .toEqual({ ...initialState, authors });
   });
 });

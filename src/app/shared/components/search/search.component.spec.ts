@@ -1,20 +1,22 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { SearchComponent } from './search.component';
-import { InputComponent } from '../input/input.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let de;
+
   const inputValue = 'input';
+  const SELECTOR_FORM = 'form';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchComponent, InputComponent ],
+      imports: [ ReactiveFormsModule ],
+      declarations: [ SearchComponent ],
     })
     .compileComponents();
   }));
@@ -26,18 +28,17 @@ describe('SearchComponent', () => {
     de = fixture.debugElement;
   });
 
-  it('inputChanged should call onInput', () => {
-    const spy = spyOn(component, 'onInput');
-    const input = de.query(By.directive(InputComponent)).componentInstance;
-    input.inputChanged.emit(inputValue);
-    expect(spy).toHaveBeenCalledWith(inputValue);
+  it('submit event should call onSubmit', () => {
+    const spy = spyOn(component, 'onSubmit');
+    const form = de.nativeElement.querySelector(SELECTOR_FORM);
+    form.dispatchEvent(new Event('submit'));
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('onInput should change value', () => {
-    const spy = spyOn(component.subject$$, 'next');
-    component.onInput(inputValue);
-
-    expect(component.searchValue).toBe(inputValue);
+  it('onSubmit should change value', () => {
+    const spy = spyOn(component.searchChange, 'emit');
+    component.form.patchValue({ search: inputValue });
+    component.onSubmit();
     expect(spy).toHaveBeenCalledWith(inputValue);
   });
 });
