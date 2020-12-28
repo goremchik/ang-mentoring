@@ -1,10 +1,9 @@
 // Core
 import {
-  Component, Input, forwardRef, ViewChild, ElementRef, AfterViewInit
+  Component, Input, ViewChild, ElementRef, AfterViewInit
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms';
 
-const NUMBER_REG = /^\d*\.?\d*$/;
 @Component({
   selector: 'app-duration-input',
   templateUrl: './duration-input.component.html',
@@ -12,9 +11,14 @@ const NUMBER_REG = /^\d*\.?\d*$/;
   providers: [     
     {
       provide: NG_VALUE_ACCESSOR, 
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: DurationInputComponent,
       multi: true     
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: DurationInputComponent,
+      multi: true
+    }
   ],
 })
 export class DurationInputComponent 
@@ -41,15 +45,22 @@ export class DurationInputComponent
     }
   }
 
-  updateElementValue(val: string): void {
-    this.inputChild.nativeElement.value = val;
-  }
-
   registerOnChange(fn: any): void {
     this.onChanged = fn
   }
   registerOnTouched(fn: any): void {
     this.onTouched = fn
+  }
+
+  validate({ value }: FormControl) {
+    const isNotValid = !Number.isInteger(value);
+    return isNotValid && {
+      invalid: true
+    }
+  }
+
+  updateElementValue(val: string): void {
+    this.inputChild.nativeElement.value = val;
   }
 
   setDisabledState(isDisabled: boolean): void {

@@ -1,6 +1,8 @@
 // Core
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import {
+  ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-date-picker',
@@ -9,9 +11,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   providers: [     
     {
       provide: NG_VALUE_ACCESSOR, 
-      useExisting: forwardRef(() => DatePickerComponent),
+      useExisting: DatePickerComponent,
       multi: true     
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: DatePickerComponent,
+      multi: true
+    }
   ],
 })
 export class DatePickerComponent implements ControlValueAccessor {
@@ -36,6 +43,13 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any){
     this.onTouched = fn
+  }
+
+  validate({ value }: FormControl) {
+    const isNotValid = !(value instanceof Date);
+    return isNotValid && {
+      invalid: true
+    }
   }
 
   setDisabledState(isDisabled: boolean): void {

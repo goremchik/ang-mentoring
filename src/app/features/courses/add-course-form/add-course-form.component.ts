@@ -23,7 +23,7 @@ export class AddCourseFormComponent implements OnChanges {
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
       duration: [0, [Validators.required, Validators.min(1)]],
-      creationDate: [new Date(), Validators.required],
+      creationDate: [new Date()],
       authors: [null, Validators.required],
     })
   }
