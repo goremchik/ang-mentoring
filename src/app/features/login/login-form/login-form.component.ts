@@ -1,5 +1,5 @@
 // Core
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 // Models
@@ -10,11 +10,13 @@ import { IAuth } from 'src/app/core';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit {
   @Output() formSubmit = new EventEmitter<IAuth>();
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public formBuilder: FormBuilder) {}
+
+  ngOnInit() {
     this.form = this.formBuilder.group({
       login: ['', [Validators.required, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.maxLength(50)]],
@@ -22,10 +24,8 @@ export class LoginFormComponent {
   }
 
   onSubmit(): void {
-    this.formSubmit.emit({
-      login: this.getField('login').value,
-      password: this.getField('password').value,
-    });
+    console.log(this.form.getRawValue());
+    this.formSubmit.emit(this.form.getRawValue());
   }
 
   getField(fieldName: string): AbstractControl {

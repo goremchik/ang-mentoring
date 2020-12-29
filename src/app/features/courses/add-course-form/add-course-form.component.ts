@@ -1,5 +1,7 @@
 // Core
-import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
+import {
+  Component, EventEmitter, Output, Input, OnChanges, OnInit
+} from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 // Models
@@ -10,14 +12,16 @@ import { ICourse, IAuthor } from 'src/app/core';
   templateUrl: './add-course-form.component.html',
   styleUrls: ['./add-course-form.component.scss']
 })
-export class AddCourseFormComponent implements OnChanges {
+export class AddCourseFormComponent implements OnChanges, OnInit {
   @Input() course: ICourse;
   @Input() authors: IAuthor[] = [];
   @Output() formSubmit = new EventEmitter<any>();
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public formBuilder: FormBuilder) {}
+
+  ngOnInit() {
     this.form = this.formBuilder.group({
       id: [null],
       title: ['', [Validators.required, Validators.maxLength(50)]],
@@ -26,18 +30,22 @@ export class AddCourseFormComponent implements OnChanges {
       creationDate: [new Date()],
       authors: [null, Validators.required],
     })
+
+    this.setCourseData();
   }
 
   ngOnChanges() {
-    if (this.course) {
+    this.setCourseData();
+  }
+
+  setCourseData() {
+    if (this.course && this.form) {
       this.form.patchValue(this.course);
     }
   }
 
   onSubmit(): void {
-    const formData = Object.entries(this.form.controls)
-      .reduce((acc, [key, item]) => ({ ...acc, [key]: item.value }), {});
-    this.formSubmit.emit(formData);
+    this.formSubmit.emit(this.form.getRawValue());
   }
 
   getField(fieldName: string): AbstractControl {

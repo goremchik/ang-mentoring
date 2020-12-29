@@ -33,7 +33,7 @@
         formControlName="duration"
         placeholder="minutes"
         class="form__input-block"
-        [invalid]="!getField('duration').valid"
+        [invalid]="getField('duration').invalid"
       ></app-duration-input>
     </label>
 
@@ -45,7 +45,7 @@
         formControlName="creationDate"
         placeholder="MM/DD/YYYY"
         class="form__input-block"
-        [invalid]="!getField('creationDate').valid"
+        [invalid]="getField('creationDate').invalid"
     ></app-date-picker>
   </label>
 
@@ -58,7 +58,7 @@
       class="form__input-block"
       placeholder="Start typing"
       [suggestions]="authors"
-      [invalid]="!getField('authors').valid"
+      [invalid]="getField('authors').invalid"
     ></app-autocomplete-input>
   </label>
 
@@ -76,7 +76,7 @@
           text="Save"
           type="submit"
           modifier="success"
-          [btnDisabled]="!form.valid"
+          [btnDisabled]="form.invalid"
       ></app-button>
   </div>
 </form>

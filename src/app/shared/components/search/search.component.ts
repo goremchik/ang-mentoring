@@ -1,5 +1,5 @@
 // Core
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 @Component({
@@ -7,11 +7,13 @@ import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/fo
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
   form: FormGroup;
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public formBuilder: FormBuilder) {}
+
+  ngOnInit() {
     this.form = this.formBuilder.group({
       search: ['', Validators.minLength(3)],
     })

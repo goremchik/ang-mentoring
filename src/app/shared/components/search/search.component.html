@@ -2,7 +2,7 @@
     <input
         [ngClass]="{
             'search__input': true,
-            'search__input--error': !getField('search').valid
+            'search__input--error': getField('search').invalid
         }"
         formControlName="search"
         placeholder="Text to search"
