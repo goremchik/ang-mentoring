@@ -14,7 +14,7 @@ import * as coursesSelectors from 'src/app/core/store/courses/courses.selectors'
 import * as coursesActions from 'src/app/core/store/courses/courses.actions';
 
 // Components
-import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { DialogComponent } from 'src/app/shared/components/common/dialog/dialog.component';
 
 // Utils
 import { routeUtils, componentUtils } from 'src/app/utils';

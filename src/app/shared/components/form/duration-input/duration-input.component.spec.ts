@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DurationInputComponent } from './duration-input.component';
 
 // Pipes
-import { DurationPipe } from '../../pipes/duration/duration.pipe';
+import { DurationPipe } from '../../../pipes/duration/duration.pipe';
 
 describe('DurationInputComponent', () => {
   let component: DurationInputComponent;

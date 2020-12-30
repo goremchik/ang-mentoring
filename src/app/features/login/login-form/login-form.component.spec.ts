@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { LoginFormComponent } from './login-form.component';
-import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { ButtonComponent } from 'src/app/shared/components/form/button/button.component';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
