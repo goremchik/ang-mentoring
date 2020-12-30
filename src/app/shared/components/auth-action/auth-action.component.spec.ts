@@ -1,6 +1,7 @@
 // Core
 import { async, ComponentFixture, TestBed, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { AuthActionComponent } from './auth-action.component';
@@ -29,6 +30,7 @@ describe('AuthActionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AuthActionComponent ],
+      imports: [ TranslateModule.forRoot() ],
       providers: [
         provideMockStore({ initialState }),
         { provide: ComponentFixtureAutoDetect, useValue: true },

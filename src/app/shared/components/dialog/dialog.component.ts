@@ -12,7 +12,7 @@ import { IDialog } from 'src/app/core';
 export class DialogComponent implements IDialog {
   @Input() title = '';
   @Input() confirmText = '';
-  @Input() cancelText = 'Cancel';
+  @Input() cancelText = '';
   @Input() hasActions = false;
 
   @Output() cancel = new EventEmitter<string>();

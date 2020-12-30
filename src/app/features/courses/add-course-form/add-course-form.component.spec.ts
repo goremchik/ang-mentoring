@@ -1,6 +1,7 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { AddCourseFormComponent } from './add-course-form.component';
@@ -29,7 +30,7 @@ describe('AddCourseFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, FormsModule ],
+      imports: [ ReactiveFormsModule, FormsModule, TranslateModule.forRoot() ],
       declarations: [
         AddCourseFormComponent,
         DurationInputComponent,

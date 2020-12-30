@@ -1,11 +1,15 @@
+// Core
 import { TestBed, async } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
+
+// Components
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [ TranslateModule.forRoot() ],
       declarations: [ AppComponent ],
       providers: [ provideMockStore({ initialState: {} }) ],
     }).compileComponents();

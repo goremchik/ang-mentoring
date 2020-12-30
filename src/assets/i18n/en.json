@@ -1,0 +1,48 @@
+{
+  "GLOBAL": {
+    "REQUIRED": "required"
+  },
+  "SHARED": {
+    "SEARCH_BTN": "Search",
+    "SEARCH_PLACEHOLDER": "Text to search",
+    "PAGE_NOT_FOUND_TITLE": "Page was not found",
+    "PAGE_NOT_FOUND_LINK": "You could find courses here",
+    "LOGO": "Video Course",
+    "LOAD_MORE_BTN": "Load more",
+    "COPYRIGHT": "Copyright © Video courses. All rights reserved",
+    "LOGIN_LINK": "Login",
+    "LOGOUT_LINK": "Log out"
+  },
+  "PAGES": {
+    "COURSES": {
+      "NO_DATA": "No data. Fell free to add new course.",
+      "REMOVE_CONFIRMATION_TITLE": "Are you sure you want to delete",
+      "REMOVE_CONFIRM_TEXT": "Yes, delete",
+      "EDIT_BTN": "Edit",
+      "DELETE_BTN": "Delete",
+      "LABEL_TITLE": "Title",
+      "PLACEHOLDER_TITLE": "Add title",
+      "LABEL_DESCRIPTION": "Description",
+      "PLACEHOLDER_DESCRIPTION": "Add description",
+      "LABEL_DURATION": "Duration",
+      "PLACEHOLDER_DURATION": "minutes",
+      "LABEL_DATE": "Date",
+      "LABEL_AUTHORS": "Authors",
+      "PLACEHOLDER_AUTHORS": "Start typing",
+      "SAVE_BTN": "Save",
+      "CANCEL_BTN": "Cancel",
+      "EDIT_TITLE": "Edit course",
+      "NEW_TITLE": "New course",
+      "ADD_BTN": "Add course"
+    },
+    "AUTH": {
+      "LOGIN_TITLE": "Login",
+      "LOGIN_BTN": "Login",
+      "FORGOT_PASSWORD": "Forgot password?",
+      "LABEL_LOGIN": "E-mail",
+      "PLACEHOLDER_LOGIN": "Enter e-mail",
+      "LABEL_PASSWORD": "Password",
+      "PLACEHOLDER_PASSWORD": "Enter password"
+    }
+  }
+}

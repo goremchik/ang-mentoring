@@ -1,16 +1,16 @@
 <form class="search" [formGroup]="form" (submit)="onSubmit()">
-    <input
-        [ngClass]="{
-            'search__input': true,
-            'search__input--error': getField('search').invalid
-        }"
-        formControlName="search"
-        placeholder="Text to search"
-    />
-    <app-button 
-        class="search__btn"
-        type="submit"
-        text="Search"
-        modifier="success"
-    ></app-button>
+  <input
+    [ngClass]="{
+      'search__input': true,
+      'search__input--error': !getField('search').invalid
+    }"
+    formControlName="search"
+    [placeholder]="'SHARED.SEARCH_PLACEHOLDER' | translate"
+  />
+  <app-button 
+    class="search__btn"
+    type="submit"
+    [text]="'SHARED.SEARCH_BTN' | translate"
+    modifier="success"
+  ></app-button>
 </form>

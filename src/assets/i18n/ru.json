@@ -1,0 +1,48 @@
+{
+  "GLOBAL": {
+    "REQUIRED": "обязательный"
+  },
+  "SHARED": {
+    "SEARCH_BTN": "Поиск",
+    "SEARCH_PLACEHOLDER": "Введите для поиска",
+    "PAGE_NOT_FOUND_TITLE": "Страница не найдена",
+    "PAGE_NOT_FOUND_LINK": "Вы можете найти курсы здесь",
+    "LOGO": "Video Course",
+    "LOAD_MORE_BTN": "Загрузить больше",
+    "COPYRIGHT": "Авторское право © Video courses. Все права защищены",
+    "LOGIN_LINK": "Войти",
+    "LOGOUT_LINK": "Выйти"
+  },
+  "PAGES": {
+    "COURSES": {
+      "NO_DATA": "Нет данных. Вы можете добавить новый курс.",
+      "REMOVE_CONFIRMATION_TITLE": "Вы уверены, что хотите удалить",
+      "REMOVE_CONFIRM_TEXT": "Да, удалить",
+      "EDIT_BTN": "Изменить",
+      "DELETE_BTN": "Удалить",
+      "LABEL_TITLE": "Заголовок",
+      "PLACEHOLDER_TITLE": "Добавьте заголовок",
+      "LABEL_DESCRIPTION": "Описание",
+      "PLACEHOLDER_DESCRIPTION": "Добавьте описание",
+      "LABEL_DURATION": "Длительность",
+      "PLACEHOLDER_DURATION": "минуты",
+      "LABEL_DATE": "Дата",
+      "LABEL_AUTHORS": "Авторы",
+      "PLACEHOLDER_AUTHORS": "Начните вводить",
+      "SAVE_BTN": "Сохранить",
+      "CANCEL_BTN": "Отменить",
+      "EDIT_TITLE": "Изменить курс",
+      "NEW_TITLE": "Новый курс",
+      "ADD_BTN": "Добавить курс"
+    },
+    "AUTH": {
+      "LOGIN_TITLE": "Вход в систему",
+      "LOGIN_BTN": "Войти",
+      "FORGOT_PASSWORD": "Забыли пароль?",
+      "LABEL_LOGIN": "E-mail",
+      "PLACEHOLDER_LOGIN": "Введите e-mail",
+      "LABEL_PASSWORD": "Пароль",
+      "PLACEHOLDER_PASSWORD": "Введите пароль"
+    }
+  }
+}

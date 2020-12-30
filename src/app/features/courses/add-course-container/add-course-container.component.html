@@ -1,11 +1,15 @@
 <section class="add-course">
-    <div class="add-course__container content-block">
-        <h2 class="add-course__title">{{(course$ | async) ? 'Edit' : 'New'}} course</h2>
-        <app-add-course-form
-            [course]="course$ | async"
-            class="add-course__form"
-            (formSubmit)="onFormSubmit($event)"
-            [authors]="(authors$ | async) || []"
-        ></app-add-course-form>
-    </div>
+  <div class="add-course__container content-block">
+    <h2 class="add-course__title">
+      {{ (
+        (course$ | async) ? 'PAGES.COURSES.EDIT_TITLE' : 'PAGES.COURSES.NEW_TITLE'
+      ) | translate }}
+    </h2>
+    <app-add-course-form
+      [course]="course$ | async"
+      class="add-course__form"
+      (formSubmit)="onFormSubmit($event)"
+      [authors]="(authors$ | async) || []"
+    ></app-add-course-form>
+  </div>
 </section>

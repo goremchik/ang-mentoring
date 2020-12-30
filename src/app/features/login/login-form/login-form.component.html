@@ -1,36 +1,44 @@
 <form [formGroup]="form" class="login-form" (submit)="onSubmit()">
   <label class="login-form__input-group">
-    <span class="login-form__label">E-mail:</span>
-    <span class="login-form__required">*required</span>
+    <span class="login-form__label">
+      {{ 'PAGES.AUTH.LABEL_LOGIN' | translate }}:
+    </span>
+    <span class="login-form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
     <input
       class="login-form__input"
       formControlName="login"
-      placeholder="Enter e-mail"
+      [placeholder]="'PAGES.AUTH.PLACEHOLDER_LOGIN' | translate"
       type="text"
     />
   </label>
 
   <label class="login-form__input-group">
-    <span class="login-form__label">Password:</span>
-    <span class="login-form__required">*required</span>
+    <span class="login-form__label">
+      {{ 'PAGES.AUTH.LABEL_PASSWORD' | translate }}:
+    </span>
+    <span class="login-form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
     <input
       class="login-form__input"
       formControlName="password"
-      placeholder="Enter password"
+      [placeholder]="'PAGES.AUTH.PLACEHOLDER_PASSWORD' | translate"
       type="password"
     />
   </label>
 
   <div class="login-form__actions">
     <a class="login-form__link" [routerLink]="['#forgot-password']">
-      Forgot password?
+      {{ 'PAGES.AUTH.FORGOT_PASSWORD' | translate }}
     </a>
     <app-button 
       type="submit" 
       [btnDisabled]="form.invalid"
-      text="Login"
+      [text]="'PAGES.AUTH.LOGIN_BTN' | translate"
       modifier="success"
     ></app-button>
   </div>

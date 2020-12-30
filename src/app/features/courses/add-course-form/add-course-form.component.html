@@ -2,44 +2,59 @@
   <input formControlName="id" type="hidden" />
   
   <label class="form__input-group">
-    <span class="form__label">Title:</span>
-    <span class="form__required">*required</span>
+    <span class="form__label">
+      {{ 'PAGES.COURSES.LABEL_TITLE' | translate }}:
+    </span>
+    <span class="form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
     <input
       formControlName="title"
-      placeholder="Add title"
+      [placeholder]="'PAGES.COURSES.PLACEHOLDER_TITLE' | translate"
       type="text"
       class="form__input {{getField('title').valid ? '' : 'form__input--error'}}"
     />
   </label>
 
   <label class="form__input-group">
-    <span class="form__label">Description:</span>
-    <span class="form__required">*required</span>
+    <span class="form__label">
+      {{ 'PAGES.COURSES.LABEL_DESCRIPTION' | translate }}:
+    </span>
+    <span class="form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
     <textarea
       formControlName="description"
-      placeholder="Add description"
+      [placeholder]="'PAGES.COURSES.PLACEHOLDER_DESCRIPTION' | translate"
       class="form__input {{getField('description').valid ? '' : 'form__input--error'}}"
     ></textarea>
   </label>
 
-  
-    <label class="form__input-group form__input-group--quarter">
-      <span class="form__label">Duration:</span>
-      <span class="form__required">*required</span>
+  <label class="form__input-group form__input-group--quarter">
+    <span class="form__label">
+      {{ 'PAGES.COURSES.LABEL_DURATION' | translate }}:
+    </span>
+    <span class="form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
-      <app-duration-input
-        formControlName="duration"
-        placeholder="minutes"
-        class="form__input-block"
-        [invalid]="getField('duration').invalid"
-      ></app-duration-input>
-    </label>
+    <app-duration-input
+      formControlName="duration"
+      [placeholder]="'PAGES.COURSES.PLACEHOLDER_DURATION' | translate"
+      class="form__input-block"
+      [invalid]="getField('duration').invalid"
+    ></app-duration-input>
+  </label>
 
   <label class="form__input-group form__input-group--quarter">
-    <span class="form__label">Date:</span>
-    <span class="form__required">*required</span>
+    <span class="form__label">
+      {{ 'PAGES.COURSES.LABEL_DATE' | translate }}:
+    </span>
+    <span class="form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
     <app-date-picker
         formControlName="creationDate"
@@ -50,13 +65,17 @@
   </label>
 
   <label class="form__input-group form__input-group--half">
-    <span class="form__label">Authors:</span>
-    <span class="form__required">*required</span>
+    <span class="form__label">
+      {{ 'PAGES.COURSES.LABEL_AUTHORS' | translate }}:
+    </span>
+    <span class="form__required">
+      *{{ 'GLOBAL.REQUIRED' | translate }}
+    </span>
 
     <app-autocomplete-input
       formControlName="authors"
       class="form__input-block"
-      placeholder="Start typing"
+      [placeholder]="'PAGES.COURSES.PLACEHOLDER_AUTHORS' | translate"
       [suggestions]="authors"
       [invalid]="getField('authors').invalid"
     ></app-autocomplete-input>
@@ -66,14 +85,14 @@
       <app-button
           class="form__cancel"
           type="link"
-          text="Cancel"
+          [text]="'PAGES.COURSES.CANCEL_BTN' | translate"
           modifier="grey"
           link="/"
       ></app-button>
 
       <app-button
           class="form__save"
-          text="Save"
+          [text]="'PAGES.COURSES.SAVE_BTN' | translate"
           type="submit"
           modifier="success"
           [btnDisabled]="form.invalid"

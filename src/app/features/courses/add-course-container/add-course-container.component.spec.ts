@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { AddCourseContainerComponent } from './add-course-container.component';
@@ -49,7 +50,12 @@ describe('AddCourseContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, ReactiveFormsModule, FormsModule ],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [
         AddCourseContainerComponent,
         AddCourseFormComponent,

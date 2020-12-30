@@ -21,7 +21,7 @@ describe('AutocompleteInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AutocompleteInputComponent ],
-      imports: [ FormsModule, ],
+      imports: [ FormsModule ],
       providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }]
     })
     .compileComponents();

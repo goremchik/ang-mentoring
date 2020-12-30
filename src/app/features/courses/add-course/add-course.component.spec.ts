@@ -1,5 +1,6 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { AddCourseComponent } from './add-course.component';
@@ -13,7 +14,8 @@ describe('AddCourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddCourseComponent ]
+      declarations: [ AddCourseComponent ],
+      imports: [ TranslateModule.forRoot() ],
     })
     .compileComponents();
   }));

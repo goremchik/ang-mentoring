@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { LogoComponent } from './components/logo/logo.component';
@@ -19,6 +20,7 @@ import { DurationInputComponent } from './components/duration-input/duration-inp
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { IconComponent } from './components/icon/icon.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { LangSelectorComponent } from './components/lang-selector/lang-selector.component';
 
 // Directives
 import { DateStatusDirective } from '../shared/directives/date-status/date-status.directive';
@@ -48,6 +50,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     DatePickerComponent,
     IconComponent,
     DialogComponent,
+    LangSelectorComponent,
 
     // Pipes
     DurationPipe,
@@ -57,12 +60,14 @@ import { LoaderComponent } from './components/loader/loader.component';
     DisableElDirective,
     NotFoundComponent,
     LoaderComponent,
+    LangSelectorComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
   ],
   exports: [
     // Components
@@ -80,6 +85,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     DatePickerComponent,
     IconComponent,
     DialogComponent,
+    LangSelectorComponent,
 
     // Pipes
     DurationPipe,
@@ -87,6 +93,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     // Directives
     DateStatusDirective,
     DisableElDirective,
+
+    TranslateModule,
   ],
 })
 export class SharedModule { }

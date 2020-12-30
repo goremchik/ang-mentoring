@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -31,6 +32,7 @@ import { AddCourseContainerComponent } from './add-course-container/add-course-c
     RouterModule,
     CoursesRoutingModule,
     ReactiveFormsModule,
+    TranslateModule.forChild({ extend: true }),
   ],
   exports: [
     AddCourseComponent,
@@ -39,6 +41,7 @@ import { AddCourseContainerComponent } from './add-course-container/add-course-c
     CoursesContainerComponent,
     AddCourseFormComponent,
     AddCourseContainerComponent,
+    TranslateModule,
   ],
 })
 export class CoursesModule { }

@@ -1,0 +1,10 @@
+<ul class="lang-selector" >
+  <li
+    [ngClass]="{
+      'lang-selector__item': true,
+      'lang-selector__item--current': translate.currentLang === language
+    }"
+    *ngFor="let language of languages"
+    (click)="selectLanguage(language)"
+  >{{ language | uppercase }}</li>
+</ul>

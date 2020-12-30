@@ -1,17 +1,18 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { CourseItemComponent } from './course-item.component';
 
 // Pipes
-import { DurationPipe } from '../../../shared/pipes/duration/duration.pipe';
+import { DurationPipe } from 'src/app/shared/pipes/duration/duration.pipe';
 
 // Models
-import { ICourse } from '../../../core';
+import { ICourse } from 'src/app/core';
 
 // Mocks
-import { courses } from '../../../mock';
+import { courses } from 'src/app/mock';
 
 describe('CourseItemComponent', () => {
   let component: CourseItemComponent;
@@ -23,7 +24,8 @@ describe('CourseItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, DurationPipe ]
+      declarations: [ CourseItemComponent, DurationPipe ],
+      imports: [ TranslateModule.forRoot() ],
     })
     .compileComponents();
   }));
