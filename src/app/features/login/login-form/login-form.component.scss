@@ -1,7 +1,9 @@
 @import 'variables';
+@import 'mixins/input';
 
 .login-form {
     position: relative;
+    @include define-input-elements;
 
     &__actions {
         display: flex;

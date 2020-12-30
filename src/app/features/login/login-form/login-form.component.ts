@@ -1,5 +1,6 @@
 // Core
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 // Models
 import { IAuth } from 'src/app/core';
@@ -9,40 +10,25 @@ import { IAuth } from 'src/app/core';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit {
   @Output() formSubmit = new EventEmitter<IAuth>();
+  form: FormGroup;
 
-  email = '';
-  password = '';
+  constructor(public formBuilder: FormBuilder) {}
 
-  isValid(): boolean {
-    return !!this.email && !!this.password;
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      login: ['', [Validators.required, Validators.maxLength(50)]],
+      password: ['', [Validators.required, Validators.maxLength(50)]],
+    })
   }
 
-  onSubmit(e: Event): boolean {
-    e.preventDefault();
-
-    if (!this.isValid()) {
-      return false;
-    }
-
-    this.formSubmit.emit({
-      login: this.email,
-      password: this.password,
-    });
-    return true;
+  onSubmit(): void {
+    console.log(this.form.getRawValue());
+    this.formSubmit.emit(this.form.getRawValue());
   }
 
-  onEmailChange(value): void {
-    this.email = value;
-  }
-
-  onPasswordChange(value): void {
-    this.password = value;
-  }
-
-  clearForm(): void {
-    this.email = '';
-    this.password = '';
+  getField(fieldName: string): AbstractControl {
+    return this.form.get(fieldName);
   }
 }

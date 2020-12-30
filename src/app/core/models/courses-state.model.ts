@@ -1,4 +1,5 @@
 import { ICourse } from './course.model';
+import { IAuthor } from './author.model';
 
 export interface ICoursesState {
     entries: ICourse[],
@@ -7,4 +8,5 @@ export interface ICoursesState {
     searchValue: string,
     loadedItems: number,
     currentLoadedItem: ICourse,
+    authors: IAuthor[],
 }

@@ -4,7 +4,9 @@ import { ICourse } from '../core';
 // Utils
 import { dateUtils } from '../utils';
 
-// TODO: will be moved to service in future tasks
+// Mocks
+import { authors } from './authors';
+
 const description = `
 	Learn about where you can find course descriptions, what information they include,
 	how they work, and details about various components of a course description.
@@ -22,7 +24,7 @@ export const courses: ICourse[] = [
     duration: 78,
     description: description + 'description 1',
     topRated: true,
-    authors: [{ id: 1, name: 'test', lastName: 'last'}],
+    authors,
   },
   {
     id: '2',
@@ -30,7 +32,7 @@ export const courses: ICourse[] = [
     creationDate: dateUtils.shiftDate(currDate, { daysShift: 1 }),
     duration: 79,
     description: description + 'description 2',
-    authors: [{ id: 1, name: 'test', lastName: 'last'}],
+    authors,
   },
   {
     id: '3',
@@ -38,6 +40,6 @@ export const courses: ICourse[] = [
     creationDate: dateUtils.shiftDate(currDate, { daysShift: -15 }),
     duration: 80,
     description: description + 'description 3',
-    authors: [{ id: 1, name: 'test', lastName: 'last'}],
+    authors,
   },
 ];

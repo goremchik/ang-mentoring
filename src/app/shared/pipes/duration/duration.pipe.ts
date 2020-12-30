@@ -7,7 +7,8 @@ export const MINUTES_IN_HOUR = 60;
   name: 'duration'
 })
 export class DurationPipe implements PipeTransform {
-  transform(duration = 0): string {
+  transform(input: number | string = 0): string {
+    const duration = +input || 0;
     let minutes = duration;
     let hours = 0;
 

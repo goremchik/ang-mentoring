@@ -1,15 +1,22 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 // Components
 import { AddCourseContainerComponent } from './add-course-container.component';
 import { AddCourseFormComponent } from '../add-course-form/add-course-form.component';
+import { DurationInputComponent } from 'src/app/shared/components/duration-input/duration-input.component';
+import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
+import { AutocompleteInputComponent } from 'src/app/shared/components/autocomplete-input/autocomplete-input.component';
+
+// Pipes
+import { DurationPipe } from 'src/app/shared/pipes/duration/duration.pipe';
 
 // Mocks
-import { courses } from 'src/app/mock/courses';
+import { courses, authors } from 'src/app/mock';
 
 // Store
 import * as coursesSelectors from 'src/app/core/store/courses/courses.selectors';
@@ -25,17 +32,8 @@ describe('AddCourseContainerComponent', () => {
     courses: {
       currentItemId: '1',
       entries: courses,
+      authors,
     },
-  };
-
-  const authors = [{ id: 1, name: 'name', lastName: 'test' }];
-
-  const bareFormData = {
-    title: 'title',
-    description: 'description',
-    authors,
-    duration: '10',
-    creationDate: '10/09/2020',
   };
 
   const formData = {
@@ -51,9 +49,16 @@ describe('AddCourseContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
-      declarations: [ AddCourseContainerComponent, AddCourseFormComponent ],
-      providers: [ provideMockStore({ initialState }) ],
+      imports: [ RouterTestingModule, ReactiveFormsModule, FormsModule ],
+      declarations: [
+        AddCourseContainerComponent,
+        AddCourseFormComponent,
+        DurationInputComponent,
+        AutocompleteInputComponent,
+        DatePickerComponent,
+        DurationPipe,
+      ],
+      providers: [ FormBuilder, provideMockStore({ initialState }) ],
     })
     .compileComponents();
 
@@ -74,9 +79,9 @@ describe('AddCourseContainerComponent', () => {
   it('formSubmit event should call onFormSubmit', () => {
     const spy = spyOn(component, 'onFormSubmit');
     const form = de.query(By.directive(AddCourseFormComponent)).componentInstance;
-    form.formSubmit.emit(bareFormData);
+    form.formSubmit.emit(formData);
 
-    expect(spy).toHaveBeenCalledWith(bareFormData);
+    expect(spy).toHaveBeenCalledWith(formData);
   });
 
   it('onFormSubmit should create course', () => {
@@ -84,7 +89,7 @@ describe('AddCourseContainerComponent', () => {
     store.overrideSelector(coursesSelectors.getCurrentItem, null);
     store.refreshState();
     fixture.detectChanges();
-    component.onFormSubmit(bareFormData);
+    component.onFormSubmit(formData);
 
     expect(spyCreate).toHaveBeenCalledWith(
       coursesActions.createCourse({ course: formData })
@@ -94,7 +99,7 @@ describe('AddCourseContainerComponent', () => {
   it('onFormSubmit should update course', () => {
     const spyCreate = spyOn(component.store$, 'dispatch');
     component.courseId = '1';
-    component.onFormSubmit(bareFormData);
+    component.onFormSubmit(updatedFormData);
 
     expect(spyCreate).toHaveBeenCalledWith(
       coursesActions.updateCourse({ course: updatedFormData })

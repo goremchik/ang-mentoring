@@ -15,6 +15,7 @@ export const initialState: ICoursesState = {
   currentLoadedItem: null,
   searchValue: '',
   loadedItems: DEFAULT_COURSES_COUNT,
+  authors: [],
 };
 
 export const key = 'courses';
@@ -23,11 +24,15 @@ export const reducer = createReducer(
   initialState,
   on(
     actions.setEntries, 
-    (state: ICoursesState, { entries }): ICoursesState => ({ ...state, entries })
+    (state: ICoursesState, { entries }): ICoursesState => ({
+      ...state, entries
+    })
   ),
   on(
     actions.setItemIdToDelete, 
-    (state: ICoursesState, { itemIdToDelete }): ICoursesState => ({ ...state, itemIdToDelete })
+    (state: ICoursesState, { itemIdToDelete }): ICoursesState => ({
+      ...state, itemIdToDelete
+    })
   ),
   on(
     actions.setSearchValue,
@@ -51,6 +56,12 @@ export const reducer = createReducer(
     actions.setCurrentLoadedItem,
     (state: ICoursesState, { course }): ICoursesState => ({ 
       ...state, currentLoadedItem: course,
+    })
+  ),
+  on(
+    actions.setAuthors,
+    (state: ICoursesState, { authors }): ICoursesState => ({ 
+      ...state, authors,
     })
   ),
 );

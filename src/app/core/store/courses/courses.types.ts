@@ -9,4 +9,6 @@ export enum types {
   updateCourse = 'COURSES.UPDATE_COURSE',
   createCourse = 'COURSES.CREATE_COURSE',
   setCurrentLoadedItem = 'COURSES.SET_CURRENT_LOADED_ITEM',
+  loadAuthors = 'COURSES.LOAD_AUTHORS',
+  setAuthors = 'COURSES.SET_AUTHORS',
 }

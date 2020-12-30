@@ -1,10 +1,10 @@
 // Core
-import { Injectable, InjectionToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 // Models
-import { ICourse } from '../../index';
+import { ICourse, IAuthor } from '../../index';
 
 // Services
 import { HttpService } from '../http/http.service';
@@ -20,7 +20,7 @@ export class CourseService {
     item
       ? ({
         id: item.id.toString(),
-        authors: item.authors,
+        authors: item.authors.map(this.mapAuthor),
         creationDate: new Date(item.date),
         description: item.description,
         topRated: item.isTopRated,
@@ -49,6 +49,11 @@ export class CourseService {
 
     return obj;
   }
+
+  mapAuthor = ({ id, name = '', lastName = '' }): IAuthor => ({
+    id: id.toString(),
+    name: name + (lastName ? ` ${lastName}` : ''),
+  })
 
   getList(
     textFragment = '', start = 0, count = 5, sort = 'date'
@@ -81,5 +86,9 @@ export class CourseService {
 
   removeItem(courseId: string): Observable<any> {
     return this.http.delete(`${COURSES_URL}${courseId}`);
+  }
+
+  getAuthors(): Observable<any> {
+    return this.http.get('api/authors');
   }
 }

@@ -1,4 +1,4 @@
-import { IAuthors } from './authors.model';
+import { IAuthor } from './author.model';
 
 export interface ICourse {
     id: string;
@@ -7,5 +7,5 @@ export interface ICourse {
     duration: number;
     description: string;
     topRated?: boolean;
-    authors?: IAuthors[];
+    authors?: IAuthor[];
 }

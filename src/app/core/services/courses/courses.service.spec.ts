@@ -9,7 +9,7 @@ import { CourseService } from './courses.service';
 import { HttpService } from '../http/http.service';
 
 // Mocks
-import { courses } from 'src/app/mock/courses';
+import { courses, authors } from 'src/app/mock';
 
 // Models
 import { ICourse } from '../../';
@@ -84,6 +84,13 @@ describe('CourseService', () => {
     );
   });
 
+  it('getAuthors should make request to get authors list', () => {
+    const spy = spyOn(service.http, 'get').and.returnValue(of(null));
+    service.getAuthors();
+
+    expect(spy).toHaveBeenCalledWith('api/authors');
+  });
+
   const courseData: ICourse = {
     id: '1',
     authors: [],
@@ -110,5 +117,10 @@ describe('CourseService', () => {
 
   it('mapDataToCourse should convert request data to course', () => {
     expect(service.mapDataToCourse(serverData)).toEqual(courseData);
+  });
+
+  it('mapAuthor should map author name and transform id to string', () => {
+    expect(service.mapAuthor({ id: 1, name: 'name', lastName: 'last' }))
+      .toEqual(authors[0]);
   });
 });

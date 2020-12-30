@@ -7,7 +7,9 @@ import { initialState as initialGlobal } from 'src/app/core/store/global/global.
 import { IAppState } from 'src/app/core';
 
 // Mocks
-import { courses, user } from 'src/app/mock';
+import { courses } from 'src/app/mock/courses';
+import { user } from 'src/app/mock/user';
+import { authors } from 'src/app/mock/authors';
 
 export const initialStore: IAppState = {
   courses: initialCourses,
@@ -24,6 +26,7 @@ export const readyStore: IAppState = {
     currentLoadedItem: courses[0],
     searchValue: 'search',
     loadedItems: 1,
+    authors,
   },
   user: {
     profile: user,

@@ -2,7 +2,7 @@
 import { createAction, props } from '@ngrx/store';
 
 // Models
-import { ICourse } from '../../';
+import { ICourse, IAuthor } from '../../';
 
 // Store
 import { types } from './courses.types';
@@ -50,3 +50,10 @@ export const setCurrentLoadedItem = createAction(
   types.setCurrentLoadedItem,
   props<{ course: ICourse }>(),
 );
+
+export const setAuthors = createAction(
+  types.setAuthors,
+  props<{ authors: IAuthor[] }>(),
+);
+
+export const loadAuthors = createAction(types.loadAuthors);

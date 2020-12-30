@@ -1,58 +1,54 @@
 // Core
-import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
+import {
+  Component, EventEmitter, Output, Input, OnChanges, OnInit
+} from '@angular/core';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 // Models
-import { ICourse } from 'src/app/core';
+import { ICourse, IAuthor } from 'src/app/core';
 
 @Component({
   selector: 'app-add-course-form',
   templateUrl: './add-course-form.component.html',
   styleUrls: ['./add-course-form.component.scss']
 })
-export class AddCourseFormComponent implements OnChanges {
+export class AddCourseFormComponent implements OnChanges, OnInit {
   @Input() course: ICourse;
+  @Input() authors: IAuthor[] = [];
   @Output() formSubmit = new EventEmitter<any>();
 
-  title = '';
-  description = '';
-  duration = '';
-  creationDate = '';
-  authors = [];
+  form: FormGroup;
+
+  constructor(public formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      id: [null],
+      title: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
+      duration: [0, [Validators.required, Validators.min(1)]],
+      creationDate: [new Date()],
+      authors: [null, Validators.required],
+    })
+
+    this.setCourseData();
+  }
 
   ngOnChanges() {
-    this.title = this.title || this.course?.title || '';
-    this.description = this.description || this.course?.description || '';
-    this.duration = this.duration || this.course?.duration.toString() || '';
-    this.creationDate = this.creationDate
-      || this.course?.creationDate.toString() || '';
-
-    this.authors = this.course?.authors || [];
+    this.setCourseData();
   }
 
-  onSubmit(e: Event): void {
-    e.preventDefault();
-    if (!this.isValid()) {
-      return;
+  setCourseData() {
+    if (this.course && this.form) {
+      this.form.patchValue(this.course);
     }
-
-    this.formSubmit.emit({
-      title: this.title,
-      description: this.description,
-      duration: this.duration,
-      creationDate: this.creationDate,
-      authors: this.authors,
-    });
   }
 
-  isValid(): boolean {
-    return !!this.authors
-      && !!this.creationDate
-      && !!this.description
-      && !!this.title
-      && !!this.duration;
+  onSubmit(): void {
+    this.formSubmit.emit(this.form.getRawValue());
   }
 
-  inputHandler(value, name): void {
-    this[name] = value;
+  getField(fieldName: string): AbstractControl {
+    return this.form.get(fieldName);
   }
 }

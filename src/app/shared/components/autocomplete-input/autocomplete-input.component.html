@@ -1,13 +1,30 @@
-<label class="input input--{{modifier}}">
-    <span class="input__label" *ngIf="!!label">{{label}}</span>
-    <span class="input__required" *ngIf="required">*required</span>
+<div class="autocomplete {{invalid ? 'autocomplete--error' : ''}}">
+    <div class="autocomplete__selected-item" 
+        *ngFor="let item of selectedItems"
+    >
+        <span>{{ item.name }}</span>
+        <app-icon
+            class="autocomplete__remove"
+            code="cross"
+            (click)="onDelete(item.id)"
+        ></app-icon>
+    </div>
 
-    <input
-        [name]="name"
+    <input #input
         [placeholder]="placeholder"
         type="text"
-        class="input__item"
-        [value]="getStrValue()"
-        (ngModelChange)="onInput()"
+        [(ngModel)]="value"
+        class="autocomplete__input"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
     />
-</label>
+
+    <ul class="autocomplete__suggestion-list">
+        <li class="autocomplete__suggestion-item" 
+            *ngFor="let suggestion of suggestionsToShow"
+            (click)="onSelect(suggestion)"
+        >
+            {{ suggestion.name }}
+        </li>
+    </ul>
+</div>

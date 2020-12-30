@@ -1,3 +1,5 @@
+@import 'mixins/input';
+
 .search {
     display: flex;
 
@@ -6,6 +8,7 @@
     }
 
     &__input {
+        @include get-input-styles();
         width: 240px;
     }
 }

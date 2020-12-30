@@ -1,34 +1,29 @@
-@mixin define-input-elements($root, $withContainer: false) {
-    @if $withContainer {
-        display: flex;
-        align-items: flex-end;
+@import '../variables';
 
-        &__container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-    } @else {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+@mixin get-input-styles() {
+    line-height: 18px;
+    color: $dark-text2;
+    padding: 9px 12px;
+    border: 1px solid $input-border;
+    border-radius: 3px;
+    box-sizing: border-box;
+    outline: none;
+    width: 100%;
+
+    &::placeholder, 
+    &::-webkit-input-placeholder,
+    &:-ms-input-placeholder {
+        color: $placeholder-color;
     }
 
-    &__item {
-        line-height: 18px;
-        color: $dark-text2;
-        padding: 9px 12px;
-        border: 1px solid $input-border;
-        border-radius: 3px;
-        box-sizing: border-box;
-        outline: none;
-        width: 100%;
+    &--error {
+        border-color: $error-color;
+    }
+}
 
-        &::placeholder, 
-        &::-webkit-input-placeholder,
-        &:-ms-input-placeholder {
-            color: $placeholder-color;
-        }
+@mixin define-input-elements() {
+    &__input {
+        @include get-input-styles();
     }
 
     &__label {
@@ -44,38 +39,9 @@
         color: $dark-text2;
     }
 
-    &__info {
-        line-height: 40px;
-        margin-left: 19px;
-    }
-
-    &--half {
-        @if $withContainer {
-            #{$root}__container {
-                width: 50%;
-            }
-        } @else {
-            width: 50%;
-        }
-    }
-
-    &--quarter {
-        @if $withContainer {
-            #{$root}__container {
-                width: 25%;
-            }
-        } @else {
-            width: 25%;
-        }
-    }
-
-    &--full {
-        @if $withContainer {
-            #{$root}__container {
-                width: 100%;
-            }
-        } @else {
-            width: 100%;
-        }
+    &__input-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 }

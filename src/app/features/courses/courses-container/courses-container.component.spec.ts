@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { CoursesContainerComponent, ITEMS_TO_ADD } from './courses-container.component';
@@ -35,7 +36,7 @@ describe('CoursesContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, ReactiveFormsModule ],
       declarations: [
         CoursesContainerComponent,
         CoursesListComponent,

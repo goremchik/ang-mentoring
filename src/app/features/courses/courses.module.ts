@@ -1,6 +1,7 @@
 // Core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 // Modules
@@ -29,6 +30,7 @@ import { AddCourseContainerComponent } from './add-course-container/add-course-c
     SharedModule,
     RouterModule,
     CoursesRoutingModule,
+    ReactiveFormsModule,
   ],
   exports: [
     AddCourseComponent,

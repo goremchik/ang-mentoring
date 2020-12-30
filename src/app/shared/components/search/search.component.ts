@@ -1,39 +1,29 @@
 // Core
-import { Component, Output, EventEmitter, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
-// Utils
-import { componentUtils } from 'src/app/utils';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit, OnDestroy {
-  searchValue = '';
+export class SearchComponent implements OnInit {
+  form: FormGroup;
   @Output() searchChange: EventEmitter<string> = new EventEmitter<string>();
-  subject$$ = new BehaviorSubject('');
-  subscriptions: Subscription[] = [];
+
+  constructor(public formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.subject$$
-        .pipe(
-          debounceTime(500),
-          distinctUntilChanged(),
-        )
-        .subscribe(search => this.searchChange.emit(search))
-    );
+    this.form = this.formBuilder.group({
+      search: ['', Validators.minLength(3)],
+    })
   }
 
-  ngOnDestroy() {
-    componentUtils.unsubscribeAll(this.subscriptions);
+  onSubmit(): void {
+    this.searchChange.emit(this.getField('search').value);
   }
 
-  onInput(value): void {
-    this.subject$$.next(value);
-    this.searchValue = value;
+  getField(fieldName: string): AbstractControl {
+    return this.form.get(fieldName);
   }
 }

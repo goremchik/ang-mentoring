@@ -1,7 +1,7 @@
 import * as actions from './courses.actions';
 import { types } from './courses.types';
 
-import { courses } from 'src/app/mock';
+import { courses, authors } from 'src/app/mock';
 
 describe('Courses actions', () => {
   const courseId = '1';
@@ -55,5 +55,14 @@ describe('Courses actions', () => {
   it('setCurrentLoadedItem', () => {
     expect(actions.setCurrentLoadedItem({ course }))
       .toEqual({ type: types.setCurrentLoadedItem, course });
+  });
+
+  it('setAuthors', () => {
+    expect(actions.setAuthors({ authors }))
+      .toEqual({ type: types.setAuthors, authors });
+  });
+
+  it('loadAuthors', () => {
+    expect(actions.loadAuthors()).toEqual({ type: types.loadAuthors });
   });
 });

@@ -1,7 +1,5 @@
 // Core
-import {
-  async, ComponentFixture, TestBed, tick, fakeAsync,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 // Components
@@ -34,32 +32,43 @@ describe('DurationInputComponent', () => {
     de = fixture.debugElement;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should call onInput', fakeAsync(() => {
-    fixture.detectChanges();
-    spyOn(component, 'onInput');
+  it('input event should update input state', () => {
+    const writeSpy = spyOn(component, 'writeValue');
+    const changedSpy = spyOn(component, 'onChanged');
+    const touchedSpy = spyOn(component, 'onTouched');
 
     const input = de.nativeElement.querySelector(SELECTOR_INPUT);
     input.value = inputValue;
     input.dispatchEvent(new Event(EVENT_INPUT));
-    tick(1);
-    fixture.detectChanges();
 
-    expect(component.onInput).toHaveBeenCalledWith(+inputValue);
-  }));
-
-  it('onInput should dispatch inputChanged event', () => {
-    spyOn(component.inputChanged, 'emit');
-    component.onInput(inputValue);
-
-    expect(component.inputChanged.emit).toHaveBeenCalledWith(inputValue);
+    expect(writeSpy).toHaveBeenCalledWith(inputValue);
+    expect(changedSpy).toHaveBeenCalledWith(+inputValue);
+    expect(touchedSpy).toHaveBeenCalled();
   });
 
-  it('should convert input to number', () => {
-    component.value = '10';
-    expect(component.convertToNumber()).toEqual(10);
+  it('empty input event should return old value', () => {
+    const writeSpy = spyOn(component, 'writeValue');
+    component.value = inputValue;
+
+    const input = de.nativeElement.querySelector(SELECTOR_INPUT);
+    input.value = '';
+    input.dispatchEvent(new Event(EVENT_INPUT));
+
+    expect(writeSpy).toHaveBeenCalledWith(inputValue);
+  });
+
+  it('writeValue should set input string value', () => {
+    component.writeValue(inputValue);
+    expect(component.value).toEqual(inputValue);
+  });
+
+  it('updateElementValue should update html el', () => {
+    component.updateElementValue(inputValue);
+    const input = de.nativeElement.querySelector(SELECTOR_INPUT);
+    expect(input.value).toEqual(inputValue);
+  });
+
+  it('filterSymbols should return only numbers number', () => {
+    expect(component.filterSymbols('11q1')).toEqual('111');
   });
 });

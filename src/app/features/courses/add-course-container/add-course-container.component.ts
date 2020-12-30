@@ -1,12 +1,12 @@
 // Core
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 // Models
-import { ICourse } from 'src/app/core';
+import { ICourse, IAuthor } from 'src/app/core';
 
 // Store
 import * as coursesSelectors from 'src/app/core/store/courses/courses.selectors';
@@ -20,9 +20,11 @@ import { routeUtils } from 'src/app/utils';
   templateUrl: './add-course-container.component.html',
   styleUrls: ['./add-course-container.component.scss']
 })
-export class AddCourseContainerComponent implements OnInit {
+export class AddCourseContainerComponent implements OnInit, OnDestroy {
   course$: Observable<ICourse>;
   courseId: string;
+  authors$: Observable<IAuthor[]>;
+  subscription: Subscription;
 
   constructor(
     public store$: Store,
@@ -32,15 +34,15 @@ export class AddCourseContainerComponent implements OnInit {
 
   ngOnInit() {
     const { snapshot: { params = {} } } = this.activatedRoute;
-    this.courseId = params.id;
-    if (this.courseId) {
-      this.store$.dispatch(
-        coursesActions.loadCourseById({ id: this.courseId })
-      );
-    }
+    this.courseId = params.id || null;
+    this.store$.dispatch(
+      coursesActions.loadCourseById({ id: this.courseId })
+    );
+    this.store$.dispatch(coursesActions.loadAuthors());
 
     this.course$ = this.store$.select(coursesSelectors.getCurrentItem);
-    this.course$.subscribe(course => {
+    this.authors$ = this.store$.select(coursesSelectors.getAuthors);
+    this.subscription = this.course$.subscribe(course => {
         const title = this.courseId
           ? course.title
           : routeUtils.getTitle(this.activatedRoute);
@@ -48,16 +50,13 @@ export class AddCourseContainerComponent implements OnInit {
     });
   }
 
-  onFormSubmit(courseBareData: any): void {
-    const course: ICourse = {
-      id: this.courseId || null,
-      title: courseBareData.title,
-      description: courseBareData.description,
-      duration: +courseBareData.duration,
-      creationDate: new Date(courseBareData.creationDate),
-      authors: courseBareData.authors,
-    };
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
+  onFormSubmit(course: ICourse): void {
     if (this.courseId) {
       this.store$.dispatch(coursesActions.updateCourse({ course }));
     } else {
