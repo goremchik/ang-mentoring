@@ -1,12 +1,13 @@
 // Core
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { AddCourseFormComponent } from './add-course-form.component';
-import { DurationInputComponent } from 'src/app/shared/components/duration-input/duration-input.component';
-import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
-import { AutocompleteInputComponent } from 'src/app/shared/components/autocomplete-input/autocomplete-input.component';
+import { DurationInputComponent } from 'src/app/shared/components/form/duration-input/duration-input.component';
+import { DatePickerComponent } from 'src/app/shared/components/form/date-picker/date-picker.component';
+import { AutocompleteInputComponent } from 'src/app/shared/components/form/autocomplete-input/autocomplete-input.component';
 
 // Pipes
 import { DurationPipe } from 'src/app/shared/pipes/duration/duration.pipe';
@@ -29,7 +30,7 @@ describe('AddCourseFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, FormsModule ],
+      imports: [ ReactiveFormsModule, FormsModule, TranslateModule.forRoot() ],
       declarations: [
         AddCourseFormComponent,
         DurationInputComponent,

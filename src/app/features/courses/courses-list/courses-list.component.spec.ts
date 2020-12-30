@@ -2,6 +2,7 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { CoursesListComponent } from './courses-list.component';
@@ -23,7 +24,8 @@ describe('CoursesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesListComponent, CourseItemComponent, DurationPipe ]
+      declarations: [ CoursesListComponent, CourseItemComponent, DurationPipe ],
+      imports: [ TranslateModule.forRoot() ],
     })
     .overrideComponent(CoursesListComponent, {
       set: {

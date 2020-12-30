@@ -26,14 +26,14 @@
         <div class="course__actions">
             <app-button 
                 class="course__edit" 
-                text="Edit" 
+                [text]="'PAGES.COURSES.EDIT_BTN' | translate" 
                 icon="edit"
                 type="link"
                 [link]="'/courses/' + course?.id"
             ></app-button>
             <app-button 
                 class="course__delete" 
-                text="Delete" 
+                [text]="'PAGES.COURSES.DELETE_BTN' | translate" 
                 icon="delete"
                 (click)="onDeleteClick()"
             ></app-button>

@@ -1,13 +1,15 @@
 <section class="login">
-    <div class="login__content content-block">
-        <h2 class="login__title">Login</h2>
-        <p class="login__error" *ngIf="errorText$ | async">
-            {{ errorText$ | async }}
-        </p>
+  <div class="login__content content-block">
+    <h2 class="login__title">
+      {{ 'PAGES.AUTH.LOGIN_TITLE' | translate }}
+    </h2>
+    <p class="login__error" *ngIf="errorText$ | async">
+      {{ errorText$ | async }}
+    </p>
 
-        <app-login-form 
-            class="login__form"
-            (formSubmit)="onFormSubmit($event)"
-        ></app-login-form>
-    </div>
+    <app-login-form 
+      class="login__form"
+      (formSubmit)="onFormSubmit($event)"
+    ></app-login-form>
+  </div>
 </section>

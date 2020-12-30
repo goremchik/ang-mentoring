@@ -1,0 +1,29 @@
+<div class="auth-action">
+  <a 
+    class="auth-action__item login" 
+    [routerLink]="['/auth']" 
+    *ngIf="!(user$ | async)"
+  >
+    <app-icon code="user"></app-icon>
+    {{ 'SHARED.LOGIN_LINK' | translate }}
+  </a>
+
+  <a 
+    class="auth-action__item auth-action__item--text" 
+    *ngIf="(user$ | async)"
+  >
+    <app-icon code="user"></app-icon>
+    <span>
+      {{ (user$ | async)?.name?.first }} {{ (user$ | async)?.name?.last }}
+    </span>
+  </a>
+
+  <a 
+    *ngIf="(user$ | async)"
+    class="auth-action__item logout"
+    (click)="onLogoutClick()"
+  >
+    <app-icon code="logout"></app-icon>
+    {{ 'SHARED.LOGOUT_LINK' | translate }}
+  </a>
+</div>

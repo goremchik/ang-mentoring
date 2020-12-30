@@ -4,13 +4,14 @@ import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { AddCourseContainerComponent } from './add-course-container.component';
 import { AddCourseFormComponent } from '../add-course-form/add-course-form.component';
-import { DurationInputComponent } from 'src/app/shared/components/duration-input/duration-input.component';
-import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
-import { AutocompleteInputComponent } from 'src/app/shared/components/autocomplete-input/autocomplete-input.component';
+import { DurationInputComponent } from 'src/app/shared/components/form/duration-input/duration-input.component';
+import { DatePickerComponent } from 'src/app/shared/components/form/date-picker/date-picker.component';
+import { AutocompleteInputComponent } from 'src/app/shared/components/form/autocomplete-input/autocomplete-input.component';
 
 // Pipes
 import { DurationPipe } from 'src/app/shared/pipes/duration/duration.pipe';
@@ -49,7 +50,12 @@ describe('AddCourseContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, ReactiveFormsModule, FormsModule ],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [
         AddCourseContainerComponent,
         AddCourseFormComponent,

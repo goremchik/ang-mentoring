@@ -1,38 +1,39 @@
 <section class="courses">
-    <section class="courses__container">
-        <div class="container">
-            <div class="courses__header">
-                <app-search (searchChange)="onSearchChange($event)"></app-search>
-                <app-add-course class="courses__add-btn"></app-add-course>
-            </div>
+  <section class="courses__container">
+    <div class="container">
+      <div class="courses__header">
+        <app-search (searchChange)="onSearchChange($event)"></app-search>
+        <app-add-course class="courses__add-btn"></app-add-course>
+      </div>
 
-            <div *ngIf="(courses$ | async)?.length">
-                <app-courses-list
-                    [courses]="courses$ | async"
-                    (delete)="onDelete($event)"
-                ></app-courses-list>
-                <app-load-more
-                    *ngIf="(courses$ | async)?.length >= (coursesCount$ | async)"
-                    class="content-block content-block--centered"
-                    (loadMore)="onLoadMore()"
-                ></app-load-more>
-            </div>
+      <div *ngIf="(courses$ | async)?.length">
+        <app-courses-list
+          [courses]="courses$ | async"
+          (delete)="onDelete($event)"
+        ></app-courses-list>
+        <app-load-more
+          *ngIf="(courses$ | async)?.length >= (coursesCount$ | async)"
+          class="content-block content-block--centered"
+          (loadMore)="onLoadMore()"
+        ></app-load-more>
+      </div>
 
-            <div *ngIf="!(courses$ | async)?.length"
-                class="content-block content-block--centered courses__no-msg"
-            >
-                No data. Fell free to add new course.
-            </div>
-        </div>
-    </section>
+      <div *ngIf="!(courses$ | async)?.length"
+        class="content-block content-block--centered courses__no-msg"
+      >
+        {{ 'PAGES.COURSES.NO_DATA' | translate }}
+      </div>
+    </div>
+  </section>
 </section>
 
 <app-dialog
-    title="Delete course?"
-    confirmText="Yes, delete"
-    [hasActions]="true"
-    (confirm)="onDeleteConfirm()"
+  title="Delete course?"
+  [confirmText]="'PAGES.COURSES.REMOVE_CONFIRM_TEXT' | translate"
+  [cancelText]="'PAGES.COURSES.CANCEL_BTN' | translate"
+  [hasActions]="true"
+  (confirm)="onDeleteConfirm()"
 >
-    <p>Are you sure you want to delete</p>
-    <p>{{(courseToRemove$ | async)?.title}}</p>
+  <p>{{ 'PAGES.COURSES.REMOVE_CONFIRMATION_TITLE' | translate }}</p>
+  <p>{{(courseToRemove$ | async)?.title}}</p>
 </app-dialog>

@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { LoginContainerComponent } from './login-container.component';
@@ -30,7 +31,11 @@ describe('LoginContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, ReactiveFormsModule ],
+      imports: [ 
+        RouterTestingModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
+      ],
       declarations: [ LoginContainerComponent, LoginFormComponent ],
       providers: [ provideMockStore({ initialState }) ],
     })

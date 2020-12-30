@@ -3,28 +3,24 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 // Components
-import { AddCourseComponent } from './add-course.component';
+import { NotFoundComponent } from './not-found.component';
 
-describe('AddCourseComponent', () => {
-  let component: AddCourseComponent;
-  let fixture: ComponentFixture<AddCourseComponent>;
-  let de;
-
-  const SELECTOR_BUTTON = 'app-button';
+describe('NotFoundComponent', () => {
+  let component: NotFoundComponent;
+  let fixture: ComponentFixture<NotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddCourseComponent ],
+      declarations: [ NotFoundComponent ],
       imports: [ TranslateModule.forRoot() ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddCourseComponent);
+    fixture = TestBed.createComponent(NotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    de = fixture.debugElement;
   });
 
   it('should create', () => {

@@ -4,14 +4,15 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Components
 import { CoursesContainerComponent, ITEMS_TO_ADD } from './courses-container.component';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { AddCourseComponent } from '../add-course/add-course.component';
-import { LoadMoreComponent } from 'src/app/shared/components/load-more/load-more.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
-import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { LoadMoreComponent } from 'src/app/shared/components/common/load-more/load-more.component';
+import { SearchComponent } from 'src/app/shared/components/common/search/search.component';
+import { DialogComponent } from 'src/app/shared/components/common/dialog/dialog.component';
 
 // Mocks
 import { courses } from 'src/app/mock';
@@ -36,7 +37,11 @@ describe('CoursesContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, ReactiveFormsModule ],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
+      ],
       declarations: [
         CoursesContainerComponent,
         CoursesListComponent,
